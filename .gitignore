@@ -1,0 +1,17 @@
+.classpath
+dao-api/.settings/
+dao-impl-db/.settings/
+dao-impl-xml/.settings/
+datamodel/.settings/
+datamodel/.project
+services/.project
+services/.settings/
+services/target/
+webapp/.settings/
+dao-impl-xml/target/
+datamodel/target/
+dao-impl-db/target/
+dao-api/target/
+webapp/target/
+.project
+.settings/
