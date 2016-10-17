@@ -1,3 +1,9 @@
+DROP DATABASE [IF EXISTS] hotel;
+
+CREATE DATABASE [IF NOT EXIST] hotel
+	DEFAULT CHARACTER SET cp1251
+	COLLATE cp1251_general_ci;
+
 CREATE TABLE `client` (
 	`id` bigint NOT NULL,
 	`first_name` varchar(256) NOT NULL,
