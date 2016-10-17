@@ -1,68 +1,76 @@
-CREATE TABLE `client_details` (
-	`id` INT NOT NULL,
-	`first_name` VARCHAR(128) NOT NULL,
-	`last_name` VARCHAR(128) NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `request` (
-	`id` INT NOT NULL,
-	`client` INT NOT NULL,
-	`room` INT NOT NULL,
-	`time_of_stay` TIME NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `administrator` (
-	`id` INT NOT NULL,
-	`first_name` VARCHAR(128) NOT NULL,
-	`last_name` VARCHAR(128) NOT NULL,
+CREATE TABLE `client` (
+	`id` bigint NOT NULL,
+	`first_name` varchar(256) NOT NULL,
+	`last_name` varchar(256) NOT NULL,
+	`address` varchar(512) NOT NULL,
+	`phone` varchar(17) NOT NULL,
+	`email` varchar(128) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `room_details` (
-	`id` INT NOT NULL,
-	`number_of_seats` INT(30) NOT NULL,
-	`apartments_class` VARCHAR(32) NOT NULL,
-	`cost_per_day` DECIMAL NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `bill` (
-	`id` INT NOT NULL,
-	`client` INT NOT NULL,
-	`room` INT NOT NULL,
-	`administrator` INT NOT NULL,
-	`time_for_stay` TIME NOT NULL,
-	`total_cost` DECIMAL NOT NULL,
+	`id` bigint NOT NULL,
+	`number_of_places` INT(10) NOT NULL,
+	`apartments_class` varchar(64) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `room` (
-	`id` INT NOT NULL,
-	`room` INT NOT NULL,
+	`id` bigint NOT NULL,
+	`number` varchar(32) NOT NULL UNIQUE,
+	`room_details_id` bigint NOT NULL,
+	`status` char(10) NOT NULL,
+	`client_id` bigint,
+	`administrator_id` bigint,
+	`cost_per_day` DECIMAL NOT NULL,
+	`from_which_busy` DATE,
+	`to_which_busy` DATE,
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `client` (
-	`id` INT NOT NULL,
-	`client` INT NOT NULL,
+CREATE TABLE `application` (
+	`id` bigint NOT NULL,
+	`client_id` bigint NOT NULL,
+	`room_details_id` bigint NOT NULL,
+	`administrator_id` bigint,
+	`arrival_date` DATE NOT NULL,
+	`departure_date` DATE NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `request` ADD CONSTRAINT `request_fk0` FOREIGN KEY (`client`) REFERENCES `client`(`id`);
+CREATE TABLE `administrator` (
+	`id` bigint NOT NULL,
+	`first_name` varchar(256) NOT NULL,
+	`last_name` varchar(256) NOT NULL,
+	PRIMARY KEY (`id`)
+);
 
-ALTER TABLE `request` ADD CONSTRAINT `request_fk1` FOREIGN KEY (`room`) REFERENCES `room`(`id`);
+CREATE TABLE `invoice` (
+	`id` bigint NOT NULL,
+	`client_id` bigint NOT NULL,
+	`room_details_id` bigint NOT NULL,
+	`total_cost` DECIMAL NOT NULL,
+	`arrival_date` DATE NOT NULL,
+	`departure_date` DATE NOT NULL,
+	`administrator_id` bigint NOT NULL,
+	PRIMARY KEY (`id`)
+);
 
-ALTER TABLE `bill` ADD CONSTRAINT `bill_fk0` FOREIGN KEY (`client`) REFERENCES `client`(`id`);
+ALTER TABLE `room` ADD CONSTRAINT `room_fk0` FOREIGN KEY (`room_details_id`) REFERENCES `room_details`(`id`);
 
-ALTER TABLE `bill` ADD CONSTRAINT `bill_fk1` FOREIGN KEY (`room`) REFERENCES `room`(`id`);
+ALTER TABLE `room` ADD CONSTRAINT `room_fk1` FOREIGN KEY (`client_id`) REFERENCES `client`(`id`);
 
-ALTER TABLE `bill` ADD CONSTRAINT `bill_fk2` FOREIGN KEY (`administrator`) REFERENCES `administrator`(`id`);
+ALTER TABLE `room` ADD CONSTRAINT `room_fk2` FOREIGN KEY (`administrator_id`) REFERENCES `administrator`(`id`);
 
-ALTER TABLE `bill` ADD CONSTRAINT `bill_fk3` FOREIGN KEY (`time_for_stay`) REFERENCES `request`(`time_of_stay`);
+ALTER TABLE `application` ADD CONSTRAINT `application_fk0` FOREIGN KEY (`client_id`) REFERENCES `client`(`id`);
 
-ALTER TABLE `room` ADD CONSTRAINT `room_fk0` FOREIGN KEY (`room`) REFERENCES `room_details`(`id`);
+ALTER TABLE `application` ADD CONSTRAINT `application_fk1` FOREIGN KEY (`room_details_id`) REFERENCES `room_details`(`id`);
 
-ALTER TABLE `client` ADD CONSTRAINT `client_fk0` FOREIGN KEY (`client`) REFERENCES `client_details`(`id`);
+ALTER TABLE `application` ADD CONSTRAINT `application_fk2` FOREIGN KEY (`administrator_id`) REFERENCES `administrator`(`id`);
+
+ALTER TABLE `invoice` ADD CONSTRAINT `invoice_fk0` FOREIGN KEY (`client_id`) REFERENCES `client`(`id`);
+
+ALTER TABLE `invoice` ADD CONSTRAINT `invoice_fk1` FOREIGN KEY (`room_details_id`) REFERENCES `room_details`(`id`);
+
+ALTER TABLE `invoice` ADD CONSTRAINT `invoice_fk2` FOREIGN KEY (`administrator_id`) REFERENCES `administrator`(`id`);
 
