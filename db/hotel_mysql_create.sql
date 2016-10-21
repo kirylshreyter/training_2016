@@ -41,7 +41,7 @@ CREATE TABLE `room` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `applying_room` (
+CREATE TABLE `occupied_room_for_a_while` (
 	`id` bigint NOT NULL,
 	`application_id` bigint NOT NULL,
 	`room_id` bigint NOT NULL,
@@ -68,7 +68,7 @@ ALTER TABLE `room_order` ADD CONSTRAINT `room_order_fk2` FOREIGN KEY (`employee_
 
 ALTER TABLE `room` ADD CONSTRAINT `room_fk0` FOREIGN KEY (`room_details_id`) REFERENCES `room_details`(`id`);
 
-ALTER TABLE `applying_room` ADD CONSTRAINT `applying_room_fk0` FOREIGN KEY (`application_id`) REFERENCES `application`(`id`);
+ALTER TABLE `occupied_room_for_a_while` ADD CONSTRAINT `occupied_room_for_a_while_fk0` FOREIGN KEY (`application_id`) REFERENCES `application`(`id`);
 
-ALTER TABLE `applying_room` ADD CONSTRAINT `applying_room_fk1` FOREIGN KEY (`room_id`) REFERENCES `room`(`id`);
+ALTER TABLE `occupied_room_for_a_while` ADD CONSTRAINT `occupied_room_for_a_while_fk1` FOREIGN KEY (`room_id`) REFERENCES `room_order`(`room_id`);
 
