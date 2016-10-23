@@ -9,6 +9,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<common.project.version>1.0</common.project.version>
 		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring.jdbcversion>3.0.4.RELEASE</spring.jdbcversion>
 	</properties>
 	<modules>
 		<module>dao-api</module>
@@ -75,7 +76,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
-				<version>${spring.version}</version>
+				<version>${spring.jdbcversion}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -136,7 +137,6 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.12</version>
-				<scope>test</scope>
 			</dependency>
 
 		</dependencies>

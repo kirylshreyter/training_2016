@@ -1,5 +1,5 @@
 CREATE TABLE `client` (
-	`id` bigint NOT NULL,
+	`id` bigint NOT NULL AUTO_INCREMENT,
 	`first_name` varchar(256) NOT NULL,
 	`last_name` varchar(256) NOT NULL,
 	`address` varchar(512) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE `client` (
 );
 
 CREATE TABLE `booking_request` (
-	`id` bigint NOT NULL,
+	`id` bigint NOT NULL AUTO_INCREMENT,
 	`client_id` bigint NOT NULL,
 	`room_details_id` bigint NOT NULL,
 	`arrival_date` DATE NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `booking_request` (
 );
 
 CREATE TABLE `employee` (
-	`id` bigint NOT NULL,
+	`id` bigint NOT NULL AUTO_INCREMENT,
 	`first_name` varchar(256) NOT NULL,
 	`last_name` varchar(256) NOT NULL,
 	`phone` varchar(16) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE `employee` (
 );
 
 CREATE TABLE `room_order` (
-	`id` bigint NOT NULL,
+	`id` bigint NOT NULL AUTO_INCREMENT,
 	`room_id` bigint NOT NULL,
 	`booking_request_id` bigint NOT NULL,
 	`employee_id` bigint NOT NULL,
@@ -37,14 +37,14 @@ CREATE TABLE `room_order` (
 );
 
 CREATE TABLE `room` (
-	`id` bigint NOT NULL,
+	`id` bigint NOT NULL AUTO_INCREMENT,
 	`number` varchar(8) NOT NULL UNIQUE,
 	`room_details_id` bigint NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `booked_room` (
-	`id` bigint NOT NULL,
+	`id` bigint NOT NULL AUTO_INCREMENT,
 	`booking_request_id` bigint NOT NULL,
 	`room_order_id` bigint NOT NULL,
 	`booked_start_day` DATE NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `booked_room` (
 );
 
 CREATE TABLE `room_details` (
-	`id` bigint NOT NULL,
+	`id` bigint NOT NULL AUTO_INCREMENT,
 	`number_of_places` INT(8) NOT NULL,
 	`cost_per_night` DECIMAL NOT NULL,
 	`room_type` varchar(24) NOT NULL,

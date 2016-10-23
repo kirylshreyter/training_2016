@@ -11,6 +11,10 @@
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.kirylshreyter.training.hotel</groupId>
 			<artifactId>dao-impl-db</artifactId>
 		</dependency>
@@ -23,6 +27,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
