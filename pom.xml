@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.kirylshreyter.training.hotel</groupId>
+	<groupId>com.kirylshreyter.hotel</groupId>
 	<artifactId>parent-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<common.project.version>1.0</common.project.version>
-		<spring.version>4.0.3.RELEASE</spring.version>
+		<spring.version>4.3.3.RELEASE</spring.version>
 		<spring.jdbcversion>3.0.4.RELEASE</spring.jdbcversion>
 	</properties>
 	<modules>
@@ -23,38 +23,37 @@
 		<dependencies>
 			<!-- Project modules -->
 			<dependency>
-				<groupId>com.kirylshreyter.training.hotel</groupId>
+				<groupId>com.kirylshreyter.hotel</groupId>
 				<artifactId>datamodel</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.kirylshreyter.training.hotel</groupId>
+				<groupId>com.kirylshreyter.hotel</groupId>
 				<artifactId>dao-api</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.kirylshreyter.training.hotel</groupId>
+				<groupId>com.kirylshreyter.hotel</groupId>
 				<artifactId>dao-impl-db</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.kirylshreyter.training.hotel</groupId>
+				<groupId>com.kirylshreyter.hotel</groupId>
 				<artifactId>dao-impl-xml</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
-
 			<dependency>
-				<groupId>com.kirylshreyter.training.hotel</groupId>
+				<groupId>com.kirylshreyter.hotel</groupId>
 				<artifactId>services</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.kirylshreyter.training.hotel</groupId>
+				<groupId>com.kirylshreyter.hotel</groupId>
 				<artifactId>webapp</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
@@ -62,83 +61,105 @@
 
 			<!-- Other libraries -->
 
+			<!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
 			<dependency>
 				<groupId>javax.inject</groupId>
 				<artifactId>javax.inject</artifactId>
-				<version>1</version>
+				<version>1.0.0.redhat-6</version>
 			</dependency>
+
 			<!-- Spring framework -->
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
-				<version>${spring.jdbcversion}</version>
+				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 				<version>${spring.version}</version>
-				<scope>test</scope>
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.1</version>
+				<version>3.4</version>
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>1.4</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-dbcp2</artifactId>
+				<version>2.1.1</version>
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>6.0.4</version>
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/junit/junit -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.12</version>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 
