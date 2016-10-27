@@ -1,12 +1,10 @@
 package com.kirylshreyter.training.hotel.daodb.impl;
 
 import java.util.List;
-import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daodb.BookingRequestDao;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 
-@Repository
 public class BookingRequestDaoImpl implements BookingRequestDao {
 
 	@Override

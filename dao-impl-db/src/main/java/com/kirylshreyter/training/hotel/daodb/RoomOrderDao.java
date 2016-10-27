@@ -5,7 +5,7 @@ import java.util.List;
 import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 
 public interface RoomOrderDao {
-
+	
 	RoomOrder get(Long id);
 
 	void insert(RoomOrder entity);
@@ -15,4 +15,5 @@ public interface RoomOrderDao {
 	void delete(Long id);
 
 	List<RoomOrder> getAll();
+
 }

@@ -1,12 +1,10 @@
 package com.kirylshreyter.training.hotel.daodb.impl;
 
 import java.util.List;
-import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daodb.RoomDetailsDao;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 
-@Repository
 public class RoomDetailsDaoImpl implements RoomDetailsDao {
 
 	@Override

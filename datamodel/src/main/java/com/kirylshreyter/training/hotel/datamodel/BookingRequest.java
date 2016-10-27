@@ -2,12 +2,11 @@ package com.kirylshreyter.training.hotel.datamodel;
 
 import java.util.Date;
 
-public class BookingRequest extends AbstractModel {
+public class BookingRequest {
 
 	private Integer clientId;
 	private Integer roomDetailsId;
 	private Date arrivalDate;
-	private Date departureDate;
 
 	public Integer getClientId() {
 		return clientId;
@@ -40,5 +39,7 @@ public class BookingRequest extends AbstractModel {
 	public void setDepartureDate(Date departureDate) {
 		this.departureDate = departureDate;
 	}
+
+	private Date departureDate;
 
 }

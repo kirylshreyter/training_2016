@@ -2,7 +2,8 @@ package com.kirylshreyter.training.hotel.datamodel;
 
 import java.util.Date;
 
-public class BookedRoom extends AbstractModel {
+
+public class BookedRoom extends AbstractModel{
 
 	private Integer bookingRequestId;
 	private Integer roomOrderId;

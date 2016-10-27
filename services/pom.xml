@@ -2,31 +2,33 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.kirylshreyter.hotel</groupId>
+		<groupId>com.kirylshreyter.training.hotel</groupId>
 		<artifactId>parent-project</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>services</artifactId>
 	<packaging>jar</packaging>
+
 	<dependencies>
+
+
+
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.kirylshreyter.hotel</groupId>
+			<groupId>com.kirylshreyter.training.hotel</groupId>
 			<artifactId>dao-impl-db</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 		</dependency>
+
 	</dependencies>
+
 </project>

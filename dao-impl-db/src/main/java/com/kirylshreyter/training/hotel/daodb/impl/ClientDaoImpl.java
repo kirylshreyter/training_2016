@@ -1,12 +1,10 @@
 package com.kirylshreyter.training.hotel.daodb.impl;
 
 import java.util.List;
-import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daodb.ClientDao;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
-@Repository
 public class ClientDaoImpl implements ClientDao {
 
 	@Override

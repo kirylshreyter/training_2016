@@ -1,6 +1,6 @@
 package com.kirylshreyter.training.hotel.datamodel;
 
-public class RoomOrder extends AbstractModel {
+public class RoomOrder {
 
 	private Integer roomId;
 	private Integer bookingRequestId;

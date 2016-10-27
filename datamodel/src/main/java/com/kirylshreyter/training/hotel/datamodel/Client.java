@@ -1,6 +1,6 @@
 package com.kirylshreyter.training.hotel.datamodel;
 
-public class Client extends AbstractModel {
+public class Client {
 
 	private String firstName;
 	private String lastName;
@@ -47,4 +47,5 @@ public class Client extends AbstractModel {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 }

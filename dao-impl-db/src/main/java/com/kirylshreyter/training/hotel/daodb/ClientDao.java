@@ -5,13 +5,15 @@ import java.util.List;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
 public interface ClientDao {
+
 	Client get(Long id);
 
-    void insert(Client entity);
+	void insert(Client entity);
 
-    void update(Client entity);
+	void update(Client entity);
 
-    void delete(Long id);
+	void delete(Long id);
 
-    List<Client> getAll();
+	List<Client> getAll();
+
 }

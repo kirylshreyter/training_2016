@@ -5,6 +5,7 @@ import java.util.List;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 
 public interface BookingRequestDao {
+	
 	BookingRequest get(Long id);
 
     void insert(BookingRequest entity);
@@ -14,4 +15,5 @@ public interface BookingRequestDao {
     void delete(Long id);
 
     List<BookingRequest> getAll();
+
 }

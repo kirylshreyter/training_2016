@@ -16,24 +16,31 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="com.kirylshreyter.training.hotel.daodb.impl"/>
-	<context:component-scan	base-package="com.kirylshreyter.training.hotel.services.impl"/>
+	<context:component-scan base-package="com.epam.training.library.daodb.impl" />
+	<context:component-scan base-package="com.epam.training.library.services.impl" />
+
 
 	<context:property-placeholder
 		ignore-unresolvable="true" location="classpath:db.properties" />
 
+
+
 	<!-- Initialization for data source -->
 	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		class="com.epam.training.library.daodb.util.SchemaNameAwareBasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driverClassName}" />
-		<property name="URL" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-	</bean>
 
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="schema" value="${db.schema}" />
+	</bean>
 
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
+
+
+
 </beans>
