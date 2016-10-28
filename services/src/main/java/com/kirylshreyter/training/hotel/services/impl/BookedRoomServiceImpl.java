@@ -3,18 +3,25 @@ package com.kirylshreyter.training.hotel.services.impl;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 
-import org.springframework.stereotype.Service;
-
-import com.kirylshreyter.training.hotel.daodb.BookedRoomDao;
+import com.kirylshreyter.training.hotel.daodb.impl.BookedRoomDaoImpl;
 import com.kirylshreyter.training.hotel.datamodel.BookedRoom;
 import com.kirylshreyter.training.hotel.services.BookedRoomService;
 
-@Service
+@ContextConfiguration(locations = "classpath**:service-context.xml")
 public class BookedRoomServiceImpl implements BookedRoomService {
+	private DataSource dataSource;
 
-	@Inject
-	private BookedRoomDao bookedRoomDao;
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	ApplicationContext context = new ClassPathXmlApplicationContext("service-context.xml");
+	private BookedRoomDaoImpl bookedRoomDao = (BookedRoomDaoImpl) context.getBean("bookedRoomDao");
 
 	@Override
 	public void saveAll(List<BookedRoom> bookedRooms) {

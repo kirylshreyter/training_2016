@@ -6,7 +6,7 @@ import java.util.Date;
 import org.springframework.jdbc.core.RowMapper;
 import com.kirylshreyter.training.hotel.datamodel.BookedRoom;
 
-public class BookedRoomMapper implements RowMapper<BookedRoom> {
+public final class BookedRoomMapper implements RowMapper<BookedRoom> {
 
 	@Override
 	public BookedRoom mapRow(ResultSet rs, int RowNum) throws SQLException {
