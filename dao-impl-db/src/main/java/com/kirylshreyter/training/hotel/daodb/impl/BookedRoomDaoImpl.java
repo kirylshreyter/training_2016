@@ -1,18 +1,20 @@
 package com.kirylshreyter.training.hotel.daodb.impl;
 
 import java.util.List;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import javax.inject.Inject;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daodb.BookedRoomDao;
 import com.kirylshreyter.training.hotel.datamodel.BookedRoom;
 
+@Repository
 public class BookedRoomDaoImpl implements BookedRoomDao {
 	
-	ApplicationContext context = new ClassPathXmlApplicationContext("service-context.xml");
-	private JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("jdbcTemplate");
+	@Inject
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public BookedRoom get(Long id) {

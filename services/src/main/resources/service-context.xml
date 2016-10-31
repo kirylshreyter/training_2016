@@ -14,6 +14,11 @@
 	    http://www.springframework.org/schema/task
 	    http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.kirylshreyter.training.hotel.services.impl" />
+	<context:component-scan base-package="com.kirylshreyter.training.hotel.daodb.impl" />
+
 	<context:property-placeholder
 		ignore-unresolvable="true" location="classpath:db.properties" />
 
@@ -37,15 +42,4 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
-	<bean id="bookedRoomService"
-		class="com.kirylshreyter.training.hotel.services.impl.BookedRoomServiceImpl">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	
-	<bean id="bookedRoomDao"
-		class="com.kirylshreyter.training.hotel.daodb.impl.BookedRoomDaoImpl">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
 </beans>
