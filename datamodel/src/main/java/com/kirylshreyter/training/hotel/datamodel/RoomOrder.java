@@ -3,7 +3,6 @@ package com.kirylshreyter.training.hotel.datamodel;
 public class RoomOrder {
 
 	private Integer roomId;
-	private Integer bookingRequestId;
 	private Integer employeeId;
 	private Double totalCost;
 
@@ -13,14 +12,6 @@ public class RoomOrder {
 
 	public void setRoomId(Integer roomId) {
 		this.roomId = roomId;
-	}
-
-	public Integer getBookingRequestId() {
-		return bookingRequestId;
-	}
-
-	public void setBookingRequestId(Integer bookingRequestId) {
-		this.bookingRequestId = bookingRequestId;
 	}
 
 	public Integer getEmployeeId() {

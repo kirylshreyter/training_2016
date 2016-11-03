@@ -1,16 +1,13 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 
 import com.kirylshreyter.training.hotel.daodb.BookedRoomDao;
-import com.kirylshreyter.training.hotel.daodb.impl.BookedRoomDaoImpl;
 import com.kirylshreyter.training.hotel.datamodel.BookedRoom;
 import com.kirylshreyter.training.hotel.services.BookedRoomService;
 
@@ -27,13 +24,32 @@ public class BookedRoomServiceImpl implements BookedRoomService {
 
 	@Override
 	public void save(BookedRoom bookedRoom) {
-		// TODO Auto-generated method stub
+		bookedRoomDao.insert(bookedRoom);
 
 	}
 
 	@Override
 	public BookedRoom get(Long id) {
 		return bookedRoomDao.get(id);
+	}
+
+	@Override
+	public void update(BookedRoom bookedRoom) {
+		bookedRoomDao.update(bookedRoom);
+
+	}
+
+	@Override
+	public void delete(Long id) {
+		bookedRoomDao.delete(id);
+
+	}
+
+	@Override
+	public List<BookedRoom> getAll() {
+		List<BookedRoom> ner = new ArrayList<BookedRoom>();
+		ner = bookedRoomDao.getAll();
+		return ner;
 	}
 
 }

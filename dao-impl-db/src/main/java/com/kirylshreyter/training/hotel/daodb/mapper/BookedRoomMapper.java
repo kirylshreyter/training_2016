@@ -10,12 +10,12 @@ public final class BookedRoomMapper implements RowMapper<BookedRoom> {
 
 	@Override
 	public BookedRoom mapRow(ResultSet rs, int RowNum) throws SQLException {
+		BookedRoom entity = new BookedRoom();
 		Long id = rs.getLong("id");
 		Integer bookingRequestId = rs.getInt("booking_request_id");
 		Integer roomOrderId = rs.getInt("room_order_id");
 		Date bookedStartDay = rs.getDate("booked_start_day");
 		Date bookedEndDay = rs.getDate("booked_end_day");
-		BookedRoom entity = new BookedRoom();
 		entity.setId(id);
 		entity.setBookingRequestId(bookingRequestId);
 		entity.setRoomOrderId(roomOrderId);
@@ -23,5 +23,4 @@ public final class BookedRoomMapper implements RowMapper<BookedRoom> {
 		entity.setBookedEndDay(bookedEndDay);
 		return entity;
 	}
-
 }
