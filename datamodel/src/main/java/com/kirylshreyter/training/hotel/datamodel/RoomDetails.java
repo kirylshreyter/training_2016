@@ -1,7 +1,7 @@
 package com.kirylshreyter.training.hotel.datamodel;
 
-public class RoomDetails {
-	
+public class RoomDetails extends AbstractModel {
+
 	private Integer numberOfPlaces;
 	private Double costPerNight;
 	private String roomType;

@@ -1,6 +1,6 @@
 package com.kirylshreyter.training.hotel.datamodel;
 
-public class Employee {
+public class Employee extends AbstractModel {
 
 	private String position;
 

@@ -8,7 +8,7 @@ public interface EmployeeDao {
 	
 	Employee get(Long id);
 
-	void insert(Employee entity);
+	Long insert(Employee entity);
 
 	void update(Employee entity);
 

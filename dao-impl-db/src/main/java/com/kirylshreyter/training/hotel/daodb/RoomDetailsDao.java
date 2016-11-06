@@ -9,7 +9,7 @@ public interface RoomDetailsDao {
 
 	RoomDetails get(Long id);
 
-	void insert(RoomDetails entity);
+	Long insert(RoomDetails entity);
 
 	void update(RoomDetails entity);
 

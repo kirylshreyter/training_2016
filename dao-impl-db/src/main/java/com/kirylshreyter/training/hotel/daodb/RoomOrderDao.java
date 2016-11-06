@@ -8,7 +8,7 @@ public interface RoomOrderDao {
 	
 	RoomOrder get(Long id);
 
-	void insert(RoomOrder entity);
+	Long insert(RoomOrder entity);
 
 	void update(RoomOrder entity);
 

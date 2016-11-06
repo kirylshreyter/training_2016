@@ -1,14 +1,19 @@
 package com.kirylshreyter.training.hotel.daodb.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daodb.BookedRoomDao;
-import com.kirylshreyter.training.hotel.daodb.mapper.AllBookesRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.BookedRoomMapper;
 import com.kirylshreyter.training.hotel.datamodel.BookedRoom;
 
@@ -26,19 +31,29 @@ public class BookedRoomDaoImpl implements BookedRoomDao {
 	}
 
 	@Override
-	public void insert(BookedRoom entity) {
-		jdbcTemplate.update(
-				"INSERT INTO booked_room (booking_request_id,room_order_id,booked_start_day,booked_end_day) VALUES (?,?,?,?)",
-				entity.getBookingRequestId(), entity.getRoomOrderId(), entity.getBookedStartDay(),
-				entity.getBookedEndDay());
+	public Long insert(BookedRoom entity) {
+		final String INSERT_SQL = "INSERT INTO booked_room (booking_request_id,room_order_id) VALUES (?,?)";
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
+				ps.setLong(1, entity.getBookingRequestId());
+				ps.setLong(2, entity.getRoomOrderId());
+				return ps;
+			}
+		}, keyHolder);
+		;
+		entity.setId(keyHolder.getKey().longValue());
+
+		return entity.getId();
 	}
 
 	@Override
 	public void update(BookedRoom entity) {
-		jdbcTemplate.update(
-				"UPDATE booked_room SET booking_request_id = ?, room_order_id = ?, booked_start_day = ?, booked_end_day = ?  where id = ?",
-				entity.getBookingRequestId(), entity.getRoomOrderId(), entity.getBookedStartDay(),
-				entity.getBookedEndDay(), entity.getId());
+		jdbcTemplate.update("UPDATE booked_room SET booking_request_id = ?, room_order_id = ?  where id = ?",
+				entity.getBookingRequestId(), entity.getRoomOrderId(), entity.getId());
 
 	}
 

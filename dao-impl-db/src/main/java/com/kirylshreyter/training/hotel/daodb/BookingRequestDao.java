@@ -8,7 +8,7 @@ public interface BookingRequestDao {
 	
 	BookingRequest get(Long id);
 
-    void insert(BookingRequest entity);
+	Long insert(BookingRequest entity);
 
     void update(BookingRequest entity);
 

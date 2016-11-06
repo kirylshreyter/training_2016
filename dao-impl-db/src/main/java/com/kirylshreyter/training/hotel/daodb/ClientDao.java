@@ -8,7 +8,7 @@ public interface ClientDao {
 
 	Client get(Long id);
 
-	void insert(Client entity);
+	Long insert(Client entity);
 
 	void update(Client entity);
 

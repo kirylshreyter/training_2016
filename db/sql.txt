@@ -1,1 +1,0 @@
-SELECT r.number,a.arrival_date,a.departure_date FROM applying_room ar JOIN application a ON (ar.application_id=a.id) JOIN room r ON (ar.room_id=r.id) JOIN room_details rd ON (r.room_details_id=rd.id) WHERE (a.arrival_date = "2016-10-29" OR a.arrival_date < "2016-10-29") AND (a.departure_date = "2016-10-19" OR a.departure_date > "2016-10-19");

@@ -1,6 +1,6 @@
 package com.kirylshreyter.training.hotel.datamodel;
 
-public class Client {
+public class Client extends AbstractModel {
 
 	private String address;
 

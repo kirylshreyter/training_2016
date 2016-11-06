@@ -1,10 +1,48 @@
 package com.kirylshreyter.training.hotel.datamodel;
 
-public class RoomOrder {
+import java.util.Date;
+
+public class RoomOrder extends AbstractModel {
 
 	private Integer roomId;
 	private Integer employeeId;
 	private Double totalCost;
+	private Date bookedStartDay;
+	private Date bookedEndDay;
+	private String nonConvertedbookedStartDay;
+	private String nonConvertedbookedEndDay;
+
+	public String getNonConvertedbookedStartDay() {
+		return nonConvertedbookedStartDay;
+	}
+
+	public void setNonConvertedbookedStartDay(String nonConvertedbookedStartDay) {
+		this.nonConvertedbookedStartDay = nonConvertedbookedStartDay;
+	}
+
+	public String getNonConvertedbookedEndDay() {
+		return nonConvertedbookedEndDay;
+	}
+
+	public void setNonConvertedbookedEndDay(String nonConvertedbookedEndDay) {
+		this.nonConvertedbookedEndDay = nonConvertedbookedEndDay;
+	}
+
+	public Date getBookedStartDay() {
+		return bookedStartDay;
+	}
+
+	public void setBookedStartDay(Date bookedStartDay) {
+		this.bookedStartDay = bookedStartDay;
+	}
+
+	public Date getBookedEndDay() {
+		return bookedEndDay;
+	}
+
+	public void setBookedEndDay(Date bookedEndDay) {
+		this.bookedEndDay = bookedEndDay;
+	}
 
 	public Integer getRoomId() {
 		return roomId;

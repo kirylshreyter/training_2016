@@ -8,7 +8,7 @@ public interface BookedRoomDao {
 	
 	BookedRoom get(Long id);
 
-    void insert(BookedRoom entity);
+    Long insert(BookedRoom entity);
 
     void update(BookedRoom entity);
 
