@@ -29,7 +29,7 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 	private DateConverters dateConverter;
 
 	@Override
-	public void save(BookingRequest bookingRequest, Client client) {
+	public Long save(BookingRequest bookingRequest, Client client) {
 		bookingRequest.setArrivalDate(dateConverter.stringToDateConverter(bookingRequest.getNonConvertedArrivalDate()));
 		bookingRequest
 				.setDepartureDate(dateConverter.stringToDateConverter(bookingRequest.getNonConvertedDepartureDate()));
@@ -38,6 +38,7 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 		bookingRequest.setClientId(id);
 		Long brId = bookingRequestDao.insert(bookingRequest);
 		LOGGER.info("Booking request was created. id={}", brId);
+		return brId;
 
 	}
 

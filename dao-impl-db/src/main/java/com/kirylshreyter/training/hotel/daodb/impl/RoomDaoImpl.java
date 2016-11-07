@@ -83,9 +83,9 @@ public class RoomDaoImpl implements RoomDao {
 
 		sb.append(bookingRequest.getRoomDetailsId());
 		sb.append(") AND (ro.booked_start_day='");
-		sb.append(dateConverter.dateToStringConverter(bookingRequest.getArrivalDate()));
+		sb.append(dateConverter.dateToStringConverter(bookingRequest.getDepartureDate()));
 		sb.append("' OR ro.booked_start_day < '");
-		sb.append(dateConverter.dateToStringConverter(bookingRequest.getArrivalDate()));
+		sb.append(dateConverter.dateToStringConverter(bookingRequest.getDepartureDate()));
 		sb.append("') AND (ro.booked_end_day='");
 		sb.append(dateConverter.dateToStringConverter(bookingRequest.getArrivalDate()));
 		sb.append("' OR ro.booked_end_day > '");

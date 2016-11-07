@@ -2,6 +2,7 @@ package com.kirylshreyter.training.hotel.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -39,8 +40,12 @@ public class BookingRequestServiceTest {
 		bookingRequestService.save(bookingRequest, client);
 		List<IntersactedDate> list = new ArrayList<IntersactedDate>();
 		list = roomService.getBookedRoomWithIntersactedDate(bookingRequest);
-		System.out.println(list.toString());
-
+		ListIterator<IntersactedDate> li = list.listIterator();
+		while (li.hasNext()) {
+			System.out.println(li.nextIndex());
+					li.next();
+			
+		}
 	}
 
 	/*

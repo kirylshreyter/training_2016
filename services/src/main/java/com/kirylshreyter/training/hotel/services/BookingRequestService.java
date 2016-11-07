@@ -16,6 +16,6 @@ public interface BookingRequestService {
 
 	void delete(Long id);
 
-	void save(BookingRequest bookingRequest, Client client);
+	Long save(BookingRequest bookingRequest, Client client);
 
 }
