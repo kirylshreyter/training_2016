@@ -2,6 +2,7 @@ package com.kirylshreyter.training.hotel.daodb;
 
 import java.util.List;
 
+import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
 import com.kirylshreyter.training.hotel.daodb.customentity.IntersactedDate;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 import com.kirylshreyter.training.hotel.datamodel.Room;
@@ -18,6 +19,8 @@ public interface RoomDao {
 
 	List<Room> getAll();
 
-	public List<IntersactedDate> getBookedRoomWithIntersactedDate(BookingRequest bookingRequest);
+	List<IntersactedDate> getBookedRoomWithIntersactedDate(BookingRequest bookingRequest);
+
+	List<AvailableRoom> getAllAvailableRoom(List<IntersactedDate> listOfIntersactedDates);
 
 }

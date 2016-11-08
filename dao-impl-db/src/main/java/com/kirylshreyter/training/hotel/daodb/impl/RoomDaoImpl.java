@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -14,7 +15,9 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daodb.RoomDao;
+import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
 import com.kirylshreyter.training.hotel.daodb.customentity.IntersactedDate;
+import com.kirylshreyter.training.hotel.daodb.mapper.AvailableRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.IntersactedDateMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomMapper;
 import com.kirylshreyter.training.hotel.daodb.util.DateConverters;
@@ -93,6 +96,30 @@ public class RoomDaoImpl implements RoomDao {
 		sb.append("');");
 		return jdbcTemplate.query(sb.toString(), new IntersactedDateMapper());
 
+	}
+
+	@Override
+	public List<AvailableRoom> getAllAvailableRoom(List<IntersactedDate> listOfIntersactedDates) {
+		ListIterator<IntersactedDate> a = listOfIntersactedDates.listIterator();
+		StringBuilder sb = new StringBuilder();
+		sb.append(
+				"SELECT r.number, r.room_details_id, r.status, rd.cost_per_night,r.id FROM room r JOIN room_details rd ON (r.room_details_id=rd.id) WHERE r.status='available'");
+		try {
+			while (a.hasNext() == true) {
+				sb.append(" AND r.id<>");
+				int i = a.nextIndex();
+				IntersactedDate ide = listOfIntersactedDates.get(i);
+				sb.append(ide.getRoomId());
+				a.next();
+
+			}
+		} catch (Exception e) {
+			sb.append(";");
+		} finally {
+			sb.append(";");
+		}
+
+		return jdbcTemplate.query(sb.toString(), new AvailableRoomMapper());
 	}
 
 }

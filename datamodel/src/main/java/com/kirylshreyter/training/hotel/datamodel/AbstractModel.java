@@ -2,13 +2,13 @@ package com.kirylshreyter.training.hotel.datamodel;
 
 public class AbstractModel {
 
-    private Long id;
-    private String firstName;
+	private Long id;
+	private String firstName;
 	private String lastName;
 	private String phone;
 	private String email;
-	private Integer roomDetailsId;
-	private Integer bookingRequestId;
+	private Long roomDetailsId;
+	private Long bookingRequestId;
 
 	public Long getId() {
 		return id;
@@ -50,22 +50,20 @@ public class AbstractModel {
 		this.email = email;
 	}
 
-	public Integer getRoomDetailsId() {
+	public Long getRoomDetailsId() {
 		return roomDetailsId;
 	}
 
-	public void setRoomDetailsId(Integer roomDetailsId) {
+	public void setRoomDetailsId(Long roomDetailsId) {
 		this.roomDetailsId = roomDetailsId;
 	}
 
-	public Integer getBookingRequestId() {
+	public Long getBookingRequestId() {
 		return bookingRequestId;
 	}
 
-	public void setBookingRequestId(Integer bookingRequestId) {
+	public void setBookingRequestId(Long bookingRequestId) {
 		this.bookingRequestId = bookingRequestId;
 	}
-
-  
 
 }

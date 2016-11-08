@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class RoomOrder extends AbstractModel {
 
-	private Integer roomId;
-	private Integer employeeId;
+	private Long roomId;
+	private Long employeeId;
 	private Double totalCost;
 	private Date bookedStartDay;
 	private Date bookedEndDay;
@@ -44,19 +44,19 @@ public class RoomOrder extends AbstractModel {
 		this.bookedEndDay = bookedEndDay;
 	}
 
-	public Integer getRoomId() {
+	public Long getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(Integer roomId) {
+	public void setRoomId(Long roomId) {
 		this.roomId = roomId;
 	}
 
-	public Integer getEmployeeId() {
+	public Long getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(Integer employeeId) {
+	public void setEmployeeId(Long employeeId) {
 		this.employeeId = employeeId;
 	}
 

@@ -33,12 +33,12 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 		bookingRequest.setArrivalDate(dateConverter.stringToDateConverter(bookingRequest.getNonConvertedArrivalDate()));
 		bookingRequest
 				.setDepartureDate(dateConverter.stringToDateConverter(bookingRequest.getNonConvertedDepartureDate()));
-		Long id = clientDao.insert(client);
-		LOGGER.info("Client was created. id={}", id);
-		bookingRequest.setClientId(id);
-		Long brId = bookingRequestDao.insert(bookingRequest);
-		LOGGER.info("Booking request was created. id={}", brId);
-		return brId;
+		Long insertedClientId = clientDao.insert(client);
+		bookingRequest.setClientId(insertedClientId);
+		Long insertedBookingRequestId = bookingRequestDao.insert(bookingRequest);
+		LOGGER.info("Client and Booking Request was created, Client id = {}, Booking Request id = {}", insertedClientId,
+				insertedBookingRequestId);
+		return insertedBookingRequestId;
 
 	}
 
@@ -62,12 +62,14 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 	@Override
 	public void delete(Long id) {
 		bookingRequestDao.delete(id);
+		LOGGER.info("Booking Request was deleted, id = {}",id);
 
 	}
 
 	@Override
 	public void save(BookingRequest bookingRequest) {
-		bookingRequestDao.insert(bookingRequest);
+		Long returnedId = bookingRequestDao.insert(bookingRequest);
+		LOGGER.info("Booking Request was inserted, id = {}",returnedId);
 	}
 
 }

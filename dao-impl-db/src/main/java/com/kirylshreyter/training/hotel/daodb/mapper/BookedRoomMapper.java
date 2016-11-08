@@ -13,7 +13,7 @@ public final class BookedRoomMapper implements RowMapper<BookedRoom> {
 	public BookedRoom mapRow(ResultSet rs, int RowNum) throws SQLException {
 		BookedRoom entity = new BookedRoom();
 		entity.setId(rs.getLong("id"));
-		entity.setBookingRequestId(rs.getInt("booking_request_id"));
+		entity.setBookingRequestId(rs.getLong("booking_request_id"));
 		entity.setRoomOrderId(rs.getInt("room_order_id"));
 		return entity;
 	}

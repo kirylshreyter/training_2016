@@ -12,7 +12,7 @@ public class RoomMapper implements RowMapper<Room> {
 		Room entity = new Room();
 		entity.setId(rs.getLong("id"));
 		entity.setNumber(rs.getString("number"));
-		entity.setRoomDetailsId(rs.getInt("room_details_id"));
+		entity.setRoomDetailsId(rs.getLong("room_details_id"));
 		entity.setStatus(rs.getString("status"));
 		return entity;
 

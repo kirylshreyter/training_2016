@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.kirylshreyter.training.hotel.daodb.EmployeeDao;
@@ -14,13 +16,15 @@ import com.kirylshreyter.training.hotel.services.EmployeeService;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+
 	@Inject
 	private EmployeeDao employeeDao;
 
 	@Override
 	public void save(Employee employee) {
-		employeeDao.insert(employee);
-
+		Long returnedId = employeeDao.insert(employee);
+		LOGGER.info("Employee was inserted, id = {}", returnedId);
 	}
 
 	@Override
@@ -43,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public void delete(Long id) {
 		employeeDao.delete(id);
+		LOGGER.info("Employee was deleted, id = {}", id);
 
 	}
 

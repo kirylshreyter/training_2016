@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.kirylshreyter.training.hotel.daodb.RoomOrderDao;
@@ -14,6 +16,8 @@ import com.kirylshreyter.training.hotel.services.RoomOrderService;
 
 @Service
 public class RoomOrderServiceImpl implements RoomOrderService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(RoomOrderServiceImpl.class);
 
 	@Inject
 	private RoomOrderDao roomOrderDao;
@@ -25,7 +29,8 @@ public class RoomOrderServiceImpl implements RoomOrderService {
 	public void save(RoomOrder roomOrder) {
 		roomOrder.setBookedStartDay(dateConverter.stringToDateConverter(roomOrder.getNonConvertedbookedStartDay()));
 		roomOrder.setBookedEndDay(dateConverter.stringToDateConverter(roomOrder.getNonConvertedbookedEndDay()));
-		roomOrderDao.insert(roomOrder);
+		Long returnedId = roomOrderDao.insert(roomOrder);
+		LOGGER.info("Room Order was inserted, id = {}", returnedId);
 
 	}
 
@@ -49,6 +54,7 @@ public class RoomOrderServiceImpl implements RoomOrderService {
 	@Override
 	public void delete(Long id) {
 		roomOrderDao.delete(id);
+		LOGGER.info("Room Order was deleted, id = {}", id);
 
 	}
 

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.kirylshreyter.training.hotel.daodb.BookedRoomDao;
@@ -22,13 +23,18 @@ public class BookedRoomServiceImpl implements BookedRoomService {
 
 	@Override
 	public void save(BookedRoom bookedRoom) {
-		bookedRoomDao.insert(bookedRoom);
+		Long returnedId = bookedRoomDao.insert(bookedRoom);
+		LOGGER.info("Booked Room was inserted, id = {}", returnedId);
 
 	}
 
 	@Override
 	public BookedRoom get(Long id) {
-		return bookedRoomDao.get(id);
+		try {
+			return bookedRoomDao.get(id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -40,6 +46,7 @@ public class BookedRoomServiceImpl implements BookedRoomService {
 	@Override
 	public void delete(Long id) {
 		bookedRoomDao.delete(id);
+		LOGGER.info("Booked Room was inserted, id = {}", id);
 
 	}
 
