@@ -2,10 +2,18 @@ package com.kirylshreyter.training.hotel.datamodel;
 
 public class RoomDetails extends AbstractModel {
 
+	private String roomType;
 	private Integer numberOfPlaces;
 	private Double costPerNight;
-	private String roomType;
-	private String floor;
+	private String additionalInformation;
+
+	public String getAdditionalInformation() {
+		return additionalInformation;
+	}
+
+	public void setAdditionalInformation(String additional_information) {
+		this.additionalInformation = additional_information;
+	}
 
 	public Integer getNumberOfPlaces() {
 		return numberOfPlaces;
@@ -29,14 +37,6 @@ public class RoomDetails extends AbstractModel {
 
 	public void setRoomType(String roomType) {
 		this.roomType = roomType;
-	}
-
-	public String getFloor() {
-		return floor;
-	}
-
-	public void setFloor(String floor) {
-		this.floor = floor;
 	}
 
 }

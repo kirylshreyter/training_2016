@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.inject.Inject;
 
@@ -15,13 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daodb.RoomDao;
-import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
-import com.kirylshreyter.training.hotel.daodb.customentity.IntersactedDate;
-import com.kirylshreyter.training.hotel.daodb.mapper.AvailableRoomMapper;
-import com.kirylshreyter.training.hotel.daodb.mapper.IntersactedDateMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomMapper;
-import com.kirylshreyter.training.hotel.daodb.util.DateConverters;
-import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 
 @Repository
@@ -30,8 +23,8 @@ public class RoomDaoImpl implements RoomDao {
 	@Inject
 	private JdbcTemplate jdbcTemplate;
 
-	@Inject
-	private DateConverters dateConverter;
+//	@Inject
+//	private DateConverters dateConverter;
 
 	@Override
 	public Room get(Long id) {
@@ -78,7 +71,7 @@ public class RoomDaoImpl implements RoomDao {
 		return jdbcTemplate.query("SELECT * FROM room", new RoomMapper());
 	}
 
-	@Override
+	/*@Override
 	public List<IntersactedDate> getBookedRoomWithIntersactedDate(BookingRequest bookingRequest) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
@@ -96,9 +89,9 @@ public class RoomDaoImpl implements RoomDao {
 		sb.append("');");
 		return jdbcTemplate.query(sb.toString(), new IntersactedDateMapper());
 
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public List<AvailableRoom> getAllAvailableRoom(List<IntersactedDate> listOfIntersactedDates) {
 		ListIterator<IntersactedDate> a = listOfIntersactedDates.listIterator();
 		StringBuilder sb = new StringBuilder();
@@ -120,6 +113,6 @@ public class RoomDaoImpl implements RoomDao {
 		}
 
 		return jdbcTemplate.query(sb.toString(), new AvailableRoomMapper());
-	}
+	}*/
 
 }

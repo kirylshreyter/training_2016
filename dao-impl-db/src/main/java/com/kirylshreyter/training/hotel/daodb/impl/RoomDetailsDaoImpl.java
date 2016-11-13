@@ -31,7 +31,7 @@ public class RoomDetailsDaoImpl implements RoomDetailsDao {
 
 	@Override
 	public Long insert(RoomDetails entity) {
-		final String INSERT_SQL = "INSERT INTO room_details (number_of_places,cost_per_night,room_type,floor) VALUES (?,?,?,?)";
+		final String INSERT_SQL = "INSERT INTO room_details (number_of_places,cost_per_night,room_type,additional_information) VALUES (?,?,?,?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
@@ -41,7 +41,7 @@ public class RoomDetailsDaoImpl implements RoomDetailsDao {
 				ps.setLong(1, entity.getNumberOfPlaces());
 				ps.setDouble(2, entity.getCostPerNight());
 				ps.setString(3, entity.getRoomType());
-				ps.setString(4, entity.getFloor());
+				ps.setString(4, entity.getAdditionalInformation());
 				return ps;
 			}
 		}, keyHolder);
@@ -55,9 +55,9 @@ public class RoomDetailsDaoImpl implements RoomDetailsDao {
 	@Override
 	public void update(RoomDetails entity) {
 		jdbcTemplate.update(
-				"UPDATE room_details SET number_of_places = ?, cost_per_night = ?, room_type = ?, floor = ?  where id = ?",
-				entity.getNumberOfPlaces(), entity.getCostPerNight(), entity.getRoomType(), entity.getFloor(),
-				entity.getId());
+				"UPDATE room_details SET number_of_places = ?, cost_per_night = ?, room_type = ?, additional_information = ?  where id = ?",
+				entity.getNumberOfPlaces(), entity.getCostPerNight(), entity.getRoomType(),
+				entity.getAdditionalInformation(), entity.getId());
 
 	}
 

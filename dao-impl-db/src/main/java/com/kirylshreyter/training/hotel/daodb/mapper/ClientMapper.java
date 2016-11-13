@@ -15,9 +15,9 @@ public class ClientMapper implements RowMapper<Client> {
 		entity.setId(rs.getLong("id"));
 		entity.setFirstName(rs.getString("first_name"));
 		entity.setLastName(rs.getString("last_name"));
-		entity.setAddress(rs.getString("address"));
 		entity.setPhone(rs.getString("phone"));
 		entity.setEmail(rs.getString("email"));
+		entity.setAddress(rs.getString("address"));
 		return entity;
 	}
 

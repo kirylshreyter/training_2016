@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.kirylshreyter.training.hotel.daodb.RoomOrderDao;
-import com.kirylshreyter.training.hotel.daodb.util.DateConverters;
+import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
 import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 import com.kirylshreyter.training.hotel.services.RoomOrderService;
 
@@ -23,12 +23,12 @@ public class RoomOrderServiceImpl implements RoomOrderService {
 	private RoomOrderDao roomOrderDao;
 
 	@Inject
-	private DateConverters dateConverter;
+	private DateConverter dateConverter;
 
 	@Override
 	public void save(RoomOrder roomOrder) {
-		roomOrder.setBookedStartDay(dateConverter.stringToDateConverter(roomOrder.getNonConvertedbookedStartDay()));
-		roomOrder.setBookedEndDay(dateConverter.stringToDateConverter(roomOrder.getNonConvertedbookedEndDay()));
+		roomOrder.setBookedStartDay(dateConverter.stringToJavaUtilDateConverter(roomOrder.getNonConvertedbookedStartDay()));
+		roomOrder.setBookedEndDay(dateConverter.stringToJavaUtilDateConverter(roomOrder.getNonConvertedbookedEndDay()));
 		Long returnedId = roomOrderDao.insert(roomOrder);
 		LOGGER.info("Room Order was inserted, id = {}", returnedId);
 

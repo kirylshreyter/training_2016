@@ -5,19 +5,27 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.cglib.core.Converter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
 import com.kirylshreyter.training.hotel.daodb.customentity.IntersactedDate;
+import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:service-context.xml")
+@ContextConfiguration(locations = "classpath:test-service-context.xml")
 public class BookingRequestServiceTest {
 
 	@Inject
@@ -29,55 +37,82 @@ public class BookingRequestServiceTest {
 	@Inject
 	private RoomOrderService roomOrderService;
 
+	@Inject
+	private DateConverter dateConverter;
+
+	/*@BeforeClass
+	public static void prepareTestData() {
+		System.out.println("prepareTestData");
+	}
+
+	@AfterClass
+	public static void deleteTestData() {
+		System.out.println("deleteTestData");
+	}
+
+	@Before
+	public void prepareMethodData() {
+		System.out.println("prepareMethodData");
+	}
+
+	@After
+	public void deleteMethodData() {
+		System.out.println("deleteMethodData");
+	}*/
+
 	@Test
+	@Ignore
 	public void BookingRequestSaveTest() {
 		Client client = new Client();
 		client.setFirstName("Иван");
 		client.setLastName("Иванов");
-		client.setAddress("Республика Беларусь, г. Минск, ул. В. Хоружей, д.1, кв. 1");
 		client.setPhone("+375297800000");
 		client.setEmail("ivanov@gmail.com");
+		client.setAddress("Республика Беларусь, г. Минск, ул. В. Хоружей, д.1, кв. 1");
 		BookingRequest bookingRequest = new BookingRequest();
-		bookingRequest.setRoomDetailsId(1L);
-		bookingRequest.setNonConvertedArrivalDate("21-12-2015");
-		bookingRequest.setNonConvertedDepartureDate("28-12-2015");
+		bookingRequest.setRoomId(1L);
+		bookingRequest.setArrivalDate(dateConverter.stringToJavaUtilDateConverter("2015-01-01"));
+		bookingRequest.setDepartureDate(dateConverter.stringToJavaUtilDateConverter("2015-01-03"));
 		Long insertedBookingrequestId = bookingRequestService.save(bookingRequest, client);
 
-		
-		List<IntersactedDate> intersactedDateList = new ArrayList<IntersactedDate>();
-		intersactedDateList = roomService.getBookedRoomWithIntersactedDate(bookingRequest);
-		List<AvailableRoom> availableRoomlist = new ArrayList<AvailableRoom>();
-		availableRoomlist = roomService.getAllAvailableRoom(intersactedDateList);
+		Assert.assertNotNull("booking_request shoud have an id.", insertedBookingrequestId);
+		System.out.println(insertedBookingrequestId.toString());
 
-		
-		AvailableRoom availableRoom = new AvailableRoom();
-		availableRoom = availableRoomlist.get(1);
-		RoomOrder roomOrder = new RoomOrder();
-		roomOrder.setRoomId(availableRoom.getRoomId());
-		roomOrder.setBookingRequestId(insertedBookingrequestId);
-		roomOrder.setEmployeeId(1L);
-		roomOrder.setTotalCost(availableRoom.getCostPerNight());
-		roomOrder.setNonConvertedbookedStartDay(bookingRequest.getNonConvertedArrivalDate());
-		roomOrder.setNonConvertedbookedEndDay(bookingRequest.getNonConvertedDepartureDate());
-		roomOrderService.save(roomOrder);
+		/*
+		 * List<IntersactedDate> intersactedDateList = new
+		 * ArrayList<IntersactedDate>(); intersactedDateList =
+		 * roomService.getBookedRoomWithIntersactedDate(bookingRequest);
+		 * List<AvailableRoom> availableRoomlist = new
+		 * ArrayList<AvailableRoom>(); availableRoomlist =
+		 * roomService.getAllAvailableRoom(intersactedDateList);
+		 * 
+		 * AvailableRoom availableRoom = new AvailableRoom(); availableRoom =
+		 * availableRoomlist.get(1); RoomOrder roomOrder = new RoomOrder();
+		 * roomOrder.setRoomId(availableRoom.getRoomId());
+		 * roomOrder.setBookingRequestId(insertedBookingrequestId);
+		 * roomOrder.setEmployeeId(1L);
+		 * roomOrder.setTotalCost(availableRoom.getCostPerNight());
+		 * roomOrder.setNonConvertedbookedStartDay(bookingRequest.
+		 * getNonConvertedArrivalDate());
+		 * roomOrder.setNonConvertedbookedEndDay(bookingRequest.
+		 * getNonConvertedDepartureDate()); roomOrderService.save(roomOrder);
+		 */ }
+
+	/*
+	 * @Inject private ClientService clientService;
+	 */
+
+	@Test
+	@Ignore
+	public void getTest() {
+		BookingRequest bookingRequest = bookingRequestService.get(3L);
+		Assert.assertNotNull("Booking request for id= 2 should not be null", bookingRequest);
+		Assert.assertEquals(new Long(3), bookingRequest.getId());
+		System.out.println(bookingRequest.getId());
 	}
 
-}
 
 /*
- * @Inject private ClientService clientService;
- */
-
-/*
- * @Test public void getByIdtest() { for (int i = 0; i < 20; i++) {
- * PrepareTestData(); } BookedRoom bookedRoom = bookedRoomService.get(1L);
- * System.out.println(bookedRoom.getId());
- * 
- * Assert.assertNotNull("book for id=1 should not be null", bookedRoom);
- * Assert.assertEquals(new Long(1), bookedRoom.getId());
- * 
- * }
- * 
  * @Test
  * 
  * @Ignore public void BokedRoomSaveTest() { SimpleDateFormat sdf = new
@@ -110,14 +145,23 @@ public class BookingRequestServiceTest {
  * bookedRoomService.update(bookedRoom);
  * 
  * }
- * 
- * @Test
- * 
- * @Ignore public void deleteByIdTest() {
- * 
- * bookedRoomService.delete(1L); }
- * 
- * @Test
+ */
+ @Test
+ @Ignore
+ public void deleteTest() {
+ bookingRequestService.delete(1L);
+ }
+ 
+ 
+ 
+ 
+ @Test
+ //@Ignore
+ public void getAllTest() {
+ bookingRequestService.getAll();
+ }
+}
+ /* @Test
  * 
  * @Ignore public void getAllTest() { bookedRoomService.getAll(); }
  * 

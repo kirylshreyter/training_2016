@@ -32,7 +32,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public Long insert(Employee entity) {
 
-		final String INSERT_SQL = "INSERT INTO employee (first_name,last_name,phone,email,position) VALUES (?,?,?,?,?)";
+		final String INSERT_SQL = "INSERT INTO employee (first_name,last_name,phone,email,address,position) VALUES (?,?,?,?,?,?)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
@@ -43,7 +43,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				ps.setString(2, entity.getLastName());
 				ps.setString(3, entity.getPhone());
 				ps.setString(4, entity.getEmail());
-				ps.setString(5, entity.getPosition());
+				ps.setString(5, entity.getAddress());
+				ps.setString(6, entity.getPosition());
 				return ps;
 			}
 		}, keyHolder);
@@ -57,9 +58,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public void update(Employee entity) {
 		jdbcTemplate.update(
-				"UPDATE employee SET first_name = ?, last_name = ?, phone = ?, email = ?, position = ?  where id = ?",
+				"UPDATE employee SET first_name = ?, last_name = ?, phone = ?, email = ?, position = ?, address = ?  where id = ?",
 				entity.getFirstName(), entity.getLastName(), entity.getPhone(), entity.getEmail(), entity.getPosition(),
-				entity.getId());
+				entity.getAddress(), entity.getId());
 
 	}
 
