@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,36 +35,20 @@ public class BookingRequestDaoImpl implements BookingRequestDao {
 	@Inject
 	DateConverter dateConverter;
 
-	private Boolean notNullChecker(BookingRequest entity) {
-		if (entity.getClientId() == null) {
-			throw new RuntimeException("Client Id is not setted.");
-		}
-		if (entity.getRoomId() == null) {
-			throw new RuntimeException("Room Id is not setted.");
-		}
-		if (entity.getArrivalDate() == null) {
-			throw new RuntimeException("Arrival date is not setted.");
-		}
-		if (entity.getDepartureDate() == null) {
-			throw new RuntimeException("Departure date is not setted.");
-		}
-		return true;
-	}
-
 	@Override
 	public BookingRequest get(Long id) {
 		BookingRequest bookingRequest = new BookingRequest();
-		StringBuilder sb = new StringBuilder();
-		sb.append("Record with id = ");
-		sb.append(id);
-		sb.append(" does not exist.");
 		try {
 			bookingRequest = jdbcTemplate.queryForObject("SELECT * FROM booking_request WHERE id = ?",
 					new Object[] { id }, new BookingRequestMapper());
 		} catch (EmptyResultDataAccessException e) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Record with id = ");
+			sb.append(id);
+			sb.append(" does not exist.");
 			throw new EmptyResultDataAccessException(sb.toString(), toIntExact(id));
 		} catch (CannotGetJdbcConnectionException e) {
-			throw new CannotGetJdbcConnectionException("Cannot establish connectio to database.", new SQLException());
+			throw new CannotGetJdbcConnectionException("Cannot establish connection to database.", new SQLException());
 		}
 
 		return bookingRequest;
@@ -71,7 +56,7 @@ public class BookingRequestDaoImpl implements BookingRequestDao {
 
 	@Override
 	public Long insert(BookingRequest entity) {
-
+		LOGGER.info("Trying to create booking request in table booking_request ...");
 		if (notNullChecker(entity)) {
 			final String INSERT_SQL = "INSERT INTO booking_request (room_id,client_id,arrival_date,departure_date) VALUES (?,?,?,?)";
 
@@ -99,16 +84,29 @@ public class BookingRequestDaoImpl implements BookingRequestDao {
 
 	@Override
 	public void update(BookingRequest entity) {
-		jdbcTemplate.update(
-				"UPDATE booking_request SET room_id, client_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
-				entity.getRoomId(), entity.getClientId(), entity.getArrivalDate(), entity.getDepartureDate(),
-				entity.getId());
-
+		LOGGER.info("Trying to update booking request with id = {} in table booking_request.", entity.getId());
+		if (notNullChecker(entity)) {
+			jdbcTemplate.update(
+					"UPDATE booking_request SET room_id, client_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
+					entity.getRoomId(), entity.getClientId(), entity.getArrivalDate(), entity.getDepartureDate(),
+					entity.getId());
+			LOGGER.info("Booking Request was updated, id = {}", entity.getId());
+		}
 	}
 
 	@Override
 	public void delete(Long id) {
-		Integer deletedRows = jdbcTemplate.update("DELETE FROM booking_request WHERE id = ?", id);
+		LOGGER.info("Trying to delete booking request with id = {} from table booking_request.", id);
+		Integer deletedRows = null;
+		try {
+			deletedRows = jdbcTemplate.update("DELETE FROM booking_request WHERE id = ?", id);
+		} catch (DataIntegrityViolationException e) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Cannot delete booking request with id = ");
+			sb.append(id);
+			sb.append(". This booking request id-key is used as foreign key in other table.");
+			throw new DataIntegrityViolationException(sb.toString());
+		}
 		if (deletedRows == 0) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("Booking Request was NOT deleted. Booking Request with id = ");
@@ -125,6 +123,22 @@ public class BookingRequestDaoImpl implements BookingRequestDao {
 	@Override
 	public List<BookingRequest> getAll() {
 		return jdbcTemplate.query("SELECT * FROM booking_request", new BookingRequestMapper());
+	}
+
+	private Boolean notNullChecker(BookingRequest entity) {
+		if (entity.getClientId() == null) {
+			throw new RuntimeException("Client Id is not setted.");
+		}
+		if (entity.getRoomId() == null) {
+			throw new RuntimeException("Room Id is not setted.");
+		}
+		if (entity.getArrivalDate() == null) {
+			throw new RuntimeException("Arrival date is not setted.");
+		}
+		if (entity.getDepartureDate() == null) {
+			throw new RuntimeException("Departure date is not setted.");
+		}
+		return true;
 	}
 
 }
