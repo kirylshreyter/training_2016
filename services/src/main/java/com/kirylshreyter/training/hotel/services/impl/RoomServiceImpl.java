@@ -1,40 +1,33 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.kirylshreyter.training.hotel.daodb.RoomDao;
 import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
-import com.kirylshreyter.training.hotel.daodb.customentity.IntersactedDate;
-import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
+import com.kirylshreyter.training.hotel.daodb.customentity.RoomWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 import com.kirylshreyter.training.hotel.services.RoomService;
 
 @Service
 public class RoomServiceImpl implements RoomService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RoomServiceImpl.class);
-
 	@Inject
 	private RoomDao roomDao;
 
 	@Override
-	public void save(Room room) {
-		Long returnedId = roomDao.insert(room);
-		LOGGER.info("New Room was inserted, id = {}", returnedId);
-
+	public Long save(Room room) {
+		return roomDao.insert(room);
 	}
 
 	@Override
 	public void update(Room room) {
 		roomDao.update(room);
-
 	}
 
 	@Override
@@ -51,17 +44,16 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public void delete(Long id) {
 		roomDao.delete(id);
-		LOGGER.info("Room was deleted, id = {}", id);
 	}
 
 	@Override
-	public List<IntersactedDate> getBookedRoomWithIntersactedDate(BookingRequest bookingRequest) {
-		return roomDao.getBookedRoomWithIntersactedDate(bookingRequest);
+	public RoomWithAdditionalInfo getWithAdditionalInfo(Long id) {
+		return roomDao.getWithAdditionalInfo(id);
 	}
 
 	@Override
-	public List<AvailableRoom> getAllAvailableRoom(List<IntersactedDate> listOfIntersactedDates) {
-		return roomDao.getAllAvailableRoom(listOfIntersactedDates);
+	public List<AvailableRoom> getAllAvailableRoom(Date arrivalDate, Date departureDate, Integer numberOfPlaces) {
+		return roomDao.getAllAvailableRoom(arrivalDate, departureDate, numberOfPlaces);
 	}
 
 }

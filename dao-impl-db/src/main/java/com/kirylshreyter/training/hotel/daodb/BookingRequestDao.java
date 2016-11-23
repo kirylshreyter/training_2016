@@ -2,6 +2,7 @@ package com.kirylshreyter.training.hotel.daodb;
 
 import java.util.List;
 
+import com.kirylshreyter.training.hotel.daodb.customentity.BookingRequestWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 
 public interface BookingRequestDao {
@@ -15,5 +16,7 @@ public interface BookingRequestDao {
 	void delete(Long id);
 
 	List<BookingRequest> getAll();
+
+	BookingRequestWithAdditionalInfo getWithAdditionalInfo(Long id);
 
 }

@@ -36,7 +36,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public Employee get(Long id) {
 		Employee employee = new Employee();
 		try {
-			jdbcTemplate.queryForObject("SELECT * FROM employee WHERE id = ?", new Object[] { id },
+			employee = jdbcTemplate.queryForObject("SELECT * FROM employee WHERE id = ?", new Object[] { id },
 					new EmployeeMapper());
 		} catch (EmptyResultDataAccessException e) {
 			StringBuilder sb = new StringBuilder();

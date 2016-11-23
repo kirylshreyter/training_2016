@@ -10,14 +10,14 @@ import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
 public class AvailableRoomMapper implements RowMapper<AvailableRoom> {
 
 	@Override
-	public AvailableRoom mapRow(ResultSet rs, int numRows) throws SQLException {
+	public AvailableRoom mapRow(ResultSet rs, int rowNum) throws SQLException {
 		AvailableRoom entity = new AvailableRoom();
-		entity.setRoomId(rs.getLong("id"));
 		entity.setNumber(rs.getString("number"));
-		entity.setRoomDetailsId(rs.getLong("room_details_id"));
-		entity.setStatus(rs.getString("status"));
+		entity.setRoomType(rs.getString("room_type"));
 		entity.setCostPerNight(rs.getDouble("cost_per_night"));
-		return entity;
+		entity.setAdditionalInformation(rs.getString("additional_information"));
+		entity.setRoomId(rs.getLong("room_id"));
+		return null;
 	}
 
 }

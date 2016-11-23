@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kirylshreyter.training.hotel.daodb.BookingRequestDao;
 import com.kirylshreyter.training.hotel.daodb.ClientDao;
+import com.kirylshreyter.training.hotel.daodb.customentity.BookingRequestWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.services.BookingRequestService;
@@ -51,8 +52,13 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 	}
 
 	@Override
-	public void save(BookingRequest bookingRequest) {
-		bookingRequestDao.insert(bookingRequest);
+	public Long save(BookingRequest bookingRequest) {
+		return bookingRequestDao.insert(bookingRequest);
+	}
+
+	@Override
+	public BookingRequestWithAdditionalInfo getWithAdditionalInfo(Long id) {
+		return bookingRequestDao.getWithAdditionalInfo(id);
 	}
 
 }

@@ -10,9 +10,9 @@ public interface ClientDao {
 
 	Long insert(Client entity);
 
-	void update(Client entity);
+	Boolean update(Client entity);
 
-	void delete(Long id);
+	Boolean delete(Long id);
 
 	List<Client> getAll();
 

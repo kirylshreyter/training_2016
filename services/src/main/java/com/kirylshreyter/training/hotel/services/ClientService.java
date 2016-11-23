@@ -5,14 +5,15 @@ import java.util.List;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
 public interface ClientService {
-	void save(Client client);
 
-	void update(Client client);
+	Long save(Client client);
+
+	Boolean update(Client client);
 
 	Client get(Long id);
 
 	List<Client> getAll();
 
-	void delete(Long id);
+	Boolean delete(Long id);
 
 }

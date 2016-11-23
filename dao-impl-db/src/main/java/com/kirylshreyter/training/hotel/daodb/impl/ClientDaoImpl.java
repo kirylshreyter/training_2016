@@ -36,7 +36,8 @@ public class ClientDaoImpl implements ClientDao {
 	public Client get(Long id) {
 		Client client = new Client();
 		try {
-			jdbcTemplate.queryForObject("SELECT * FROM client WHERE id = ?", new Object[] { id }, new ClientMapper());
+			client = jdbcTemplate.queryForObject("SELECT * FROM client WHERE id = ?", new Object[] { id },
+					new ClientMapper());
 		} catch (EmptyResultDataAccessException e) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("Record with id = ");
@@ -46,6 +47,7 @@ public class ClientDaoImpl implements ClientDao {
 		} catch (CannotGetJdbcConnectionException e) {
 			throw new CannotGetJdbcConnectionException("Cannot establish connection to database.", new SQLException());
 		}
+		;
 		return client;
 	}
 
@@ -53,10 +55,9 @@ public class ClientDaoImpl implements ClientDao {
 	public Long insert(Client entity) {
 		LOGGER.info("Trying to create client in table client...");
 		if (notNullChecker(entity) == true) {
-//////////////////////////////////////////////////////////////////////////////////////////////////////
 			final String INSERT_SQL = "INSERT INTO client (first_name, last_name, address,phone,email) VALUES (?,?,?,?,?)";
 			KeyHolder keyHolder = new GeneratedKeyHolder();
-			
+
 			jdbcTemplate.update(new PreparedStatementCreator() {
 				@Override
 				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -72,13 +73,12 @@ public class ClientDaoImpl implements ClientDao {
 			;
 			entity.setId(keyHolder.getKey().longValue());
 		}
-		Long insertedId = entity.getId();
-		LOGGER.info("Client was created, id = {}", insertedId);
-		return insertedId;
+		LOGGER.info("Client was created, id = {}", entity.getId());
+		return entity.getId();
 	}
 
 	@Override
-	public void update(Client entity) {
+	public Boolean update(Client entity) {
 		LOGGER.info("Trying to update client with id = {} in table client...", entity.getId());
 		if (notNullChecker(entity)) {
 			jdbcTemplate.update(
@@ -86,11 +86,14 @@ public class ClientDaoImpl implements ClientDao {
 					entity.getFirstName(), entity.getLastName(), entity.getAddress(), entity.getPhone(),
 					entity.getEmail(), entity.getId());
 			LOGGER.info("Client was updated, id = {}", entity.getId());
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	@Override
-	public void delete(Long id) {
+	public Boolean delete(Long id) {
 		LOGGER.info("Trying to delete client with id = {} from table client.", id);
 		Integer deletedRows = null;
 		try {
@@ -100,7 +103,12 @@ public class ClientDaoImpl implements ClientDao {
 			sb.append("Cannot delete client with id = ");
 			sb.append(id);
 			sb.append(". This client id-key is used as foreign key in other table.");
-			throw new DataIntegrityViolationException(sb.toString());
+			LOGGER.info(sb.toString());
+			return false;
+			// throw new DataIntegrityViolationException(sb.toString());
+		} catch (Exception e) {
+			LOGGER.info(e.getMessage());
+			return false;
 		}
 		if (deletedRows == 0) {
 			StringBuilder sb = new StringBuilder();
@@ -108,9 +116,11 @@ public class ClientDaoImpl implements ClientDao {
 			sb.append(id);
 			sb.append(" does not exist.");
 			LOGGER.info(sb.toString());
-			throw new RuntimeException(sb.toString());
+			return false;
+			// throw new RuntimeException(sb.toString());
 		} else {
 			LOGGER.info("Client with id = {} was deleted.", id);
+			return true;
 		}
 	}
 

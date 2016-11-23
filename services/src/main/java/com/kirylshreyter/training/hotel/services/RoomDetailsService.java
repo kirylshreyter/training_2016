@@ -5,7 +5,7 @@ import java.util.List;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 
 public interface RoomDetailsService {
-	void save(RoomDetails roomDetails);
+	Long save(RoomDetails roomDetails);
 
 	void update(RoomDetails roomDetails);
 

@@ -1,14 +1,14 @@
 package com.kirylshreyter.training.hotel.services;
 
+import java.util.Date;
 import java.util.List;
 
 import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
-import com.kirylshreyter.training.hotel.daodb.customentity.IntersactedDate;
-import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
+import com.kirylshreyter.training.hotel.daodb.customentity.RoomWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 
 public interface RoomService {
-	void save(Room room);
+	Long save(Room room);
 
 	void update(Room room);
 
@@ -18,8 +18,8 @@ public interface RoomService {
 
 	void delete(Long id);
 
-	public List<IntersactedDate> getBookedRoomWithIntersactedDate(BookingRequest bookingRequest);
+	RoomWithAdditionalInfo getWithAdditionalInfo(Long id);
 
-	List<AvailableRoom> getAllAvailableRoom(List<IntersactedDate> listOfIntersactedDates);
+	List<AvailableRoom> getAllAvailableRoom(Date arrivalDate, Date departureDate, Integer numberOfPlaces);
 
 }

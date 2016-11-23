@@ -2,6 +2,7 @@ package com.kirylshreyter.training.hotel.daodb.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -30,6 +31,17 @@ public class DateConverter {
 		} catch (NullPointerException e) {
 			throw new NullPointerException("Date shoud not be null.");
 		}
+	}
+
+	public Integer getDiffTwoDate(Date startDate, Date endDate) {
+		Calendar start = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		Calendar end = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		start.setTime(startDate);
+		end.setTime(endDate);
+		Calendar diff = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		diff.setTime(new Date(endDate.getTime() - startDate.getTime()));
+		return (diff.get(Calendar.DAY_OF_YEAR) - 1);
+
 	}
 
 }
