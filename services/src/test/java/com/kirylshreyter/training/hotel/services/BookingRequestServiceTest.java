@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import javax.inject.Inject;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +31,7 @@ public class BookingRequestServiceTest {
 	 */
 	@Inject
 	private JdbcTemplate jdbcTemplate;
+	
 	public Long newClient() {
 		Client client = new Client();
 		client.setFirstName("Иван");
@@ -128,13 +128,15 @@ public class BookingRequestServiceTest {
 	 */
 
 	
-	  @Test
-	  
-	  @Ignore public void getTest() { BookingRequest bookingRequest =
-	  bookingRequestService.get(3L);
-	  Assert.assertNotNull("Booking request for id= 2 should not be null",
-	  bookingRequest); Assert.assertEquals(new Long(3),
-	  bookingRequest.getId()); System.out.println(bookingRequest.getId()); }
+	/*
+	 * @Test
+	 * 
+	 * @Ignore public void getTest() { BookingRequest bookingRequest =
+	 * bookingRequestService.get(3L);
+	 * Assert.assertNotNull("Booking request for id= 2 should not be null",
+	 * bookingRequest); Assert.assertEquals(new Long(3),
+	 * bookingRequest.getId()); System.out.println(bookingRequest.getId()); }
+	 */
 	  
 	 /* @Test
 	  

@@ -11,10 +11,7 @@ import com.kirylshreyter.training.hotel.daodb.ClientDao;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.services.ClientService;
 
-import javax.ejb.*;
-
-//@Service
-@W
+@Service
 public class ClientServiceImpl implements ClientService {
 
 	@Inject
