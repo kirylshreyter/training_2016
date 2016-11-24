@@ -24,7 +24,10 @@ import com.kirylshreyter.training.hotel.daodb.ClientDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.ClientMapper;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
-@Repository
+import javax.ejb.*;
+
+//@Repository
+@Stateless
 public class ClientDaoImpl implements ClientDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClientDaoImpl.class);
