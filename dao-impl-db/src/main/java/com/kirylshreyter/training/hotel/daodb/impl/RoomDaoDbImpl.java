@@ -23,10 +23,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.kirylshreyter.training.hotel.daodb.RoomDao;
-import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
-import com.kirylshreyter.training.hotel.daodb.customentity.NotAvailableRoom;
-import com.kirylshreyter.training.hotel.daodb.customentity.RoomWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.AvailableRoom;
+import com.kirylshreyter.training.hotel.commons.NotAvailableRoom;
+import com.kirylshreyter.training.hotel.commons.RoomWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.daoapi.IRoomDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.AvailableRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.NotAvailableRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomMapper;
@@ -34,9 +34,9 @@ import com.kirylshreyter.training.hotel.daodb.mapper.RoomWithAdditionalInfoMappe
 import com.kirylshreyter.training.hotel.datamodel.Room;
 
 @Repository
-public class RoomDaoImpl implements RoomDao {
+public class RoomDaoDbImpl implements IRoomDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RoomDaoImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RoomDaoDbImpl.class);
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;

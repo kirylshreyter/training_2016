@@ -16,6 +16,10 @@
 			<groupId>com.kirylshreyter.training.hotel</groupId>
 			<artifactId>dao-impl-db</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.kirylshreyter.training.hotel</groupId>
+			<artifactId>dao-api</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>

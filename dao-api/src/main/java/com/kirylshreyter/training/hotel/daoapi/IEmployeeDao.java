@@ -1,10 +1,10 @@
-package com.kirylshreyter.training.hotel.daodb;
+package com.kirylshreyter.training.hotel.daoapi;
 
 import java.util.List;
 
 import com.kirylshreyter.training.hotel.datamodel.Employee;
 
-public interface EmployeeDao {
+public interface IEmployeeDao {
 	
 	Employee get(Long id);
 

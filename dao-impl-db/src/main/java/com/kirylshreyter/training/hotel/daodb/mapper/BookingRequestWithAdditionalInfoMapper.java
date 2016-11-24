@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.kirylshreyter.training.hotel.daodb.customentity.BookingRequestWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
 
 public class BookingRequestWithAdditionalInfoMapper implements RowMapper<BookingRequestWithAdditionalInfo> {
 

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
+import com.kirylshreyter.training.hotel.commons.AvailableRoom;
 
 public class AvailableRoomMapper implements RowMapper<AvailableRoom> {
 

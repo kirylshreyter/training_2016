@@ -20,14 +20,14 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.kirylshreyter.training.hotel.daodb.EmployeeDao;
+import com.kirylshreyter.training.hotel.daoapi.IEmployeeDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.EmployeeMapper;
 import com.kirylshreyter.training.hotel.datamodel.Employee;
 
 @Repository
-public class EmployeeDaoImpl implements EmployeeDao {
+public class EmployeeDaoDbImpl implements IEmployeeDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeDaoImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeDaoDbImpl.class);
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;

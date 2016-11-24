@@ -2,7 +2,7 @@ package com.kirylshreyter.training.hotel.services;
 
 import java.util.List;
 
-import com.kirylshreyter.training.hotel.daodb.customentity.BookingRequestWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 

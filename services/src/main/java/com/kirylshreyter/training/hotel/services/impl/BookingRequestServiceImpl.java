@@ -7,9 +7,9 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.kirylshreyter.training.hotel.daodb.BookingRequestDao;
-import com.kirylshreyter.training.hotel.daodb.ClientDao;
-import com.kirylshreyter.training.hotel.daodb.customentity.BookingRequestWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.daoapi.IBookingRequestDao;
+import com.kirylshreyter.training.hotel.daoapi.IClientDao;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.services.BookingRequestService;
@@ -18,9 +18,9 @@ import com.kirylshreyter.training.hotel.services.BookingRequestService;
 public class BookingRequestServiceImpl implements BookingRequestService {
 
 	@Inject
-	private BookingRequestDao bookingRequestDao;
+	private IBookingRequestDao bookingRequestDao;
 	@Inject
-	private ClientDao clientDao;
+	private IClientDao clientDao;
 
 	@Override
 	public Long save(BookingRequest bookingRequest, Client client) {

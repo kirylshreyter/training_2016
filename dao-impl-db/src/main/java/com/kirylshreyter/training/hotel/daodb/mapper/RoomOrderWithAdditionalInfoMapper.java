@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.kirylshreyter.training.hotel.daodb.customentity.RoomOrderWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.RoomOrderWithAdditionalInfo;
 
 public class RoomOrderWithAdditionalInfoMapper implements RowMapper<RoomOrderWithAdditionalInfo> {
 

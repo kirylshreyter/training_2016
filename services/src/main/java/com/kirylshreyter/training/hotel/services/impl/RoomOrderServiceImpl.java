@@ -7,8 +7,8 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.kirylshreyter.training.hotel.daodb.RoomOrderDao;
-import com.kirylshreyter.training.hotel.daodb.customentity.RoomOrderWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.RoomOrderWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.daoapi.IRoomOrderDao;
 import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 import com.kirylshreyter.training.hotel.services.RoomOrderService;
 
@@ -16,7 +16,7 @@ import com.kirylshreyter.training.hotel.services.RoomOrderService;
 public class RoomOrderServiceImpl implements RoomOrderService {
 
 	@Inject
-	private RoomOrderDao roomOrderDao;
+	private IRoomOrderDao roomOrderDao;
 
 	@Override
 	public void save(RoomOrder roomOrder) {

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.kirylshreyter.training.hotel.daodb.EmployeeDao;
+import com.kirylshreyter.training.hotel.daoapi.IEmployeeDao;
 import com.kirylshreyter.training.hotel.datamodel.Employee;
 import com.kirylshreyter.training.hotel.services.EmployeeService;
 
@@ -19,7 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	@Inject
-	private EmployeeDao employeeDao;
+	private IEmployeeDao employeeDao;
 
 	@Override
 	public void save(Employee employee) {

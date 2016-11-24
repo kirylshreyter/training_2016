@@ -20,16 +20,16 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.kirylshreyter.training.hotel.daodb.RoomOrderDao;
-import com.kirylshreyter.training.hotel.daodb.customentity.RoomOrderWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.RoomOrderWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.daoapi.IRoomOrderDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomOrderMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomOrderWithAdditionalInfoMapper;
 import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 
 @Repository
-public class RoomOrderDaoImpl implements RoomOrderDao {
+public class RoomOrderDaoDbImpl implements IRoomOrderDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RoomOrderDaoImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RoomOrderDaoDbImpl.class);
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;

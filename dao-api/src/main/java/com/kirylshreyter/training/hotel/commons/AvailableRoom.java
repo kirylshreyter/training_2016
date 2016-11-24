@@ -1,15 +1,20 @@
-package com.kirylshreyter.training.hotel.daodb.customentity;
+package com.kirylshreyter.training.hotel.commons;
 
-import com.kirylshreyter.training.hotel.datamodel.AbstractModel;
+public class AvailableRoom {
 
-public class RoomWithAdditionalInfo extends AbstractModel {
-
+	private Long roomId;
 	private String number;
 	private String roomType;
-	private Integer numberOfPlaces;
 	private Double costPerNight;
 	private String additionalInformation;
-	private String status;
+
+	public Long getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
+	}
 
 	public String getNumber() {
 		return number;
@@ -27,14 +32,6 @@ public class RoomWithAdditionalInfo extends AbstractModel {
 		this.roomType = roomType;
 	}
 
-	public Integer getNumberOfPlaces() {
-		return numberOfPlaces;
-	}
-
-	public void setNumberOfPlaces(Integer numberOfPlaces) {
-		this.numberOfPlaces = numberOfPlaces;
-	}
-
 	public Double getCostPerNight() {
 		return costPerNight;
 	}
@@ -49,14 +46,6 @@ public class RoomWithAdditionalInfo extends AbstractModel {
 
 	public void setAdditionalInformation(String additionalInformation) {
 		this.additionalInformation = additionalInformation;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 }

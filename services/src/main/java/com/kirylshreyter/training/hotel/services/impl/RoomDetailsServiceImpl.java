@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.kirylshreyter.training.hotel.daodb.RoomDetailsDao;
+import com.kirylshreyter.training.hotel.daoapi.IRoomDetailsDao;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 import com.kirylshreyter.training.hotel.services.RoomDetailsService;
 
@@ -15,7 +15,7 @@ import com.kirylshreyter.training.hotel.services.RoomDetailsService;
 public class RoomDetailsServiceImpl implements RoomDetailsService {
 
 	@Inject
-	private RoomDetailsDao roomDetailsDao;
+	private IRoomDetailsDao roomDetailsDao;
 
 	@Override
 	public Long save(RoomDetails roomDetails) {

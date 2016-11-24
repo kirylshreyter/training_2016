@@ -21,17 +21,17 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.kirylshreyter.training.hotel.daodb.BookingRequestDao;
-import com.kirylshreyter.training.hotel.daodb.customentity.BookingRequestWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.daoapi.IBookingRequestDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.BookingRequestMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.BookingRequestWithAdditionalInfoMapper;
 import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 
 @Repository
-public class BookingRequestDaoImpl implements BookingRequestDao {
+public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BookingRequestDaoImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BookingRequestDaoDbImpl.class);
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;

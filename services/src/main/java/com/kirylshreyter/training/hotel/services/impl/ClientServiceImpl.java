@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.kirylshreyter.training.hotel.daodb.ClientDao;
+import com.kirylshreyter.training.hotel.daoapi.IClientDao;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.services.ClientService;
 
@@ -15,7 +15,7 @@ import com.kirylshreyter.training.hotel.services.ClientService;
 public class ClientServiceImpl implements ClientService {
 
 	@Inject
-	private ClientDao clientDao;
+	private IClientDao clientDao;
 
 	@Override
 	public Long save(Client client) {

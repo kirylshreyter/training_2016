@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:test-service-context.xml")
+@ContextConfiguration(locations = "classpath:service-context.xml")
 public class ClientServiceTest {
 
 	@Inject

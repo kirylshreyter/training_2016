@@ -11,6 +11,19 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.kirylshreyter.training.hotel</groupId>
+			<artifactId>dao-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

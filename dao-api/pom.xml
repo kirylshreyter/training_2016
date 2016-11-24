@@ -11,6 +11,10 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.kirylshreyter.training.hotel</groupId>
+			<artifactId>datamodel</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>

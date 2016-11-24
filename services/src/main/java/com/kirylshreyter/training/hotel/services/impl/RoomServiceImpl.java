@@ -8,9 +8,9 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.kirylshreyter.training.hotel.daodb.RoomDao;
-import com.kirylshreyter.training.hotel.daodb.customentity.AvailableRoom;
-import com.kirylshreyter.training.hotel.daodb.customentity.RoomWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.AvailableRoom;
+import com.kirylshreyter.training.hotel.commons.RoomWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.daoapi.IRoomDao;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 import com.kirylshreyter.training.hotel.services.RoomService;
 
@@ -18,7 +18,7 @@ import com.kirylshreyter.training.hotel.services.RoomService;
 public class RoomServiceImpl implements RoomService {
 
 	@Inject
-	private RoomDao roomDao;
+	private IRoomDao roomDao;
 
 	@Override
 	public Long save(Room room) {

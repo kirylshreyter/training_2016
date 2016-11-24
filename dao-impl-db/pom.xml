@@ -16,6 +16,10 @@
 			<groupId>com.kirylshreyter.training.hotel</groupId>
 			<artifactId>datamodel</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.kirylshreyter.training.hotel</groupId>
+			<artifactId>dao-api</artifactId>
+		</dependency>
 
 
 		<dependency>

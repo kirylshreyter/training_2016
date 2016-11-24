@@ -1,4 +1,4 @@
-package com.kirylshreyter.training.hotel.daodb.customentity;
+package com.kirylshreyter.training.hotel.commons;
 
 import java.util.Date;
 

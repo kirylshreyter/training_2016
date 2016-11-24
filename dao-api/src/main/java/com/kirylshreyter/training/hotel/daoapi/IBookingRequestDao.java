@@ -1,11 +1,11 @@
-package com.kirylshreyter.training.hotel.daodb;
+package com.kirylshreyter.training.hotel.daoapi;
 
 import java.util.List;
 
-import com.kirylshreyter.training.hotel.daodb.customentity.BookingRequestWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
+import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
 
-public interface BookingRequestDao {
+public interface IBookingRequestDao {
 
 	BookingRequest get(Long id);
 

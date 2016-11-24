@@ -1,11 +1,11 @@
-package com.kirylshreyter.training.hotel.daodb;
+package com.kirylshreyter.training.hotel.daoapi;
 
 import java.util.List;
 
-import com.kirylshreyter.training.hotel.daodb.customentity.RoomOrderWithAdditionalInfo;
+import com.kirylshreyter.training.hotel.commons.RoomOrderWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 
-public interface RoomOrderDao {
+public interface IRoomOrderDao {
 
 	RoomOrder get(Long id);
 

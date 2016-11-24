@@ -20,14 +20,14 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.kirylshreyter.training.hotel.daodb.ClientDao;
+import com.kirylshreyter.training.hotel.daoapi.IClientDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.ClientMapper;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
 @Repository
-public class ClientDaoImpl implements ClientDao {
+public class ClientDaoDbImpl implements IClientDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ClientDaoImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClientDaoDbImpl.class);
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
