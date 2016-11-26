@@ -1,9 +1,12 @@
 package com.kirylshreyter.training.hotel.daoxml.impl;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daoapi.IRoomDetailsDao;
@@ -12,20 +15,8 @@ import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 @Repository
 public class RoomDetailsDaoXmlImpl implements IRoomDetailsDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RoomDetailsDaoXmlImpl.class);
-
-	private Boolean notNullChecker(RoomDetails entity) {
-		if (entity.getNumberOfPlaces() == null) {
-			throw new RuntimeException("Client's first name is not setted.");
-		}
-		if (entity.getCostPerNight() == null) {
-			throw new RuntimeException("Client's last name is not setted.");
-		}
-		if (entity.getRoomType() == null) {
-			throw new RuntimeException("Client's phone number is not setted.");
-		}
-		return true;
-	}
+	@Inject
+	private Common common;
 
 	@Override
 	public RoomDetails get(Long id) {
@@ -35,8 +26,15 @@ public class RoomDetailsDaoXmlImpl implements IRoomDetailsDao {
 
 	@Override
 	public Long insert(RoomDetails entity) {
-		// TODO Auto-generated method stub
-		return null;
+		List<RoomDetails> allRoomDetails = readCollection(entity);
+		Long id = getNextId(allRoomDetails);
+
+		allRoomDetails.add(entity);
+
+		entity.setId(new Long(id));
+
+		writeCollection(allRoomDetails);
+		return id;
 	}
 
 	@Override
@@ -55,6 +53,28 @@ public class RoomDetailsDaoXmlImpl implements IRoomDetailsDao {
 	public List<RoomDetails> getAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private List<RoomDetails> readCollection(RoomDetails entity) {
+		try {
+			common.intialize(entity);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (List<RoomDetails>) Common.xstream.fromXML(Common.file);
+	}
+
+	private void writeCollection(List<RoomDetails> newList) {
+		try {
+			Common.xstream.toXML(newList, new FileOutputStream(Common.file));
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);// TODO custom exception
+		}
+	}
+
+	private long getNextId(List<RoomDetails> allRoomDetails) {
+		return allRoomDetails.isEmpty() ? 1l : allRoomDetails.get(allRoomDetails.size() - 1).getId() + 1;
 	}
 
 }

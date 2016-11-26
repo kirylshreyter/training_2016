@@ -11,11 +11,31 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>com.kirylshreyter.training.hotel</groupId>
+			<artifactId>datamodel</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.kirylshreyter.training.hotel</groupId>
 			<artifactId>dao-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+
+
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
@@ -23,6 +43,14 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
 		</dependency>
 	</dependencies>
 

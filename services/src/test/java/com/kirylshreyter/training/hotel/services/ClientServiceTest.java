@@ -132,4 +132,27 @@ public class ClientServiceTest {
 		deleteObjectList(selectedObjects);
 
 	}
+
+	@Test
+	@Ignore
+	public void saveXmlTest() {
+		Client client = new Client();
+		client.setFirstName("Иван");
+		client.setLastName("Иванов");
+		client.setPhone("+375297800000");
+		client.setEmail("ivanov@gmail.com");
+		client.setAddress("Республика Беларусь, г. Минск, ул. В. Хоружей, д.1, кв. 1");
+		client.setId(clientService.save(client));
+
+	}
+
+	@Test
+	@Ignore
+	public void getXmlTest() {
+		Client client = clientService.get(1l);
+		Assert.assertNotNull("book for id=1 should not be null", client);
+		Assert.assertEquals(new Long(1), client.getId());
+		System.out.println(client.toString());
+	}
+
 }

@@ -31,6 +31,7 @@ import com.kirylshreyter.training.hotel.daodb.mapper.AvailableRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.NotAvailableRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomWithAdditionalInfoMapper;
+import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 
 @Repository
@@ -40,6 +41,9 @@ public class RoomDaoDbImpl implements IRoomDao {
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
+
+	@Inject
+	private NotNullChecker notNullChecker;
 
 	@Override
 	public Room get(Long id) {
@@ -64,7 +68,7 @@ public class RoomDaoDbImpl implements IRoomDao {
 	@Override
 	public Long insert(Room entity) {
 		LOGGER.info("Trying to create room in table room ...");
-		if (notNullChecker(entity)) {
+		if (notNullChecker.RoomNotNullChecker(entity)) {
 			try {
 				final String INSERT_SQL = "INSERT INTO room (number, room_details_id, status) VALUES (?,?,?)";
 
@@ -95,7 +99,7 @@ public class RoomDaoDbImpl implements IRoomDao {
 	public void update(Room entity) {
 
 		LOGGER.info("Trying to update room with id = {} in table room.", entity.getId());
-		if (notNullChecker(entity)) {
+		if (notNullChecker.RoomNotNullChecker(entity)) {
 			try {
 				jdbcTemplate.update("UPDATE room SET number = ?, room_details_id = ?, status = ? where id = ?",
 						entity.getNumber(), entity.getRoomDetailsId(), entity.getStatus(), entity.getId());
@@ -140,19 +144,6 @@ public class RoomDaoDbImpl implements IRoomDao {
 	@Override
 	public List<Room> getAll() {
 		return jdbcTemplate.query("SELECT * FROM room", new RoomMapper());
-	}
-
-	private Boolean notNullChecker(Room entity) {
-		if (entity.getNumber() == null) {
-			throw new RuntimeException("Room's number is not setted.");
-		}
-		if (entity.getRoomDetailsId() == null) {
-			throw new RuntimeException("Room details is not setted.");
-		}
-		if (entity.getStatus() == null) {
-			throw new RuntimeException("Status is not setted.");
-		}
-		return true;
 	}
 
 	@Override

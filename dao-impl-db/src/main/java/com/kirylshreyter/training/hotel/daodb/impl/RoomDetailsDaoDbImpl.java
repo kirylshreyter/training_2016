@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daoapi.IRoomDetailsDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomDetailsMapper;
+import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 
 @Repository
@@ -31,6 +32,9 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
+
+	@Inject
+	private NotNullChecker notNullChecker;
 
 	@Override
 	public RoomDetails get(Long id) {
@@ -55,7 +59,7 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 	public Long insert(RoomDetails entity) {
 		LOGGER.info("Trying to create room details in table room_details...");
 
-		if (notNullChecker(entity) == true) {
+		if (notNullChecker.RoomDetailsNotNullChecker(entity)) {
 			final String INSERT_SQL = "INSERT INTO room_details (number_of_places,cost_per_night,room_type,additional_information) VALUES (?,?,?,?)";
 
 			KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -81,7 +85,7 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 	@Override
 	public void update(RoomDetails entity) {
 		LOGGER.info("Trying to update room details with id = {} in table room_details...", entity.getId());
-		if (notNullChecker(entity)) {
+		if (notNullChecker.RoomDetailsNotNullChecker(entity)) {
 			jdbcTemplate.update(
 					"UPDATE room_details SET number_of_places = ?, cost_per_night = ?, room_type = ?, additional_information = ?  where id = ?",
 					entity.getNumberOfPlaces(), entity.getCostPerNight(), entity.getRoomType(),
@@ -120,19 +124,6 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 	@Override
 	public List<RoomDetails> getAll() {
 		return jdbcTemplate.query("SELECT * FROM room_details", new RoomDetailsMapper());
-	}
-
-	private Boolean notNullChecker(RoomDetails entity) {
-		if (entity.getNumberOfPlaces() == null) {
-			throw new RuntimeException("Client's first name is not setted.");
-		}
-		if (entity.getCostPerNight() == null) {
-			throw new RuntimeException("Client's last name is not setted.");
-		}
-		if (entity.getRoomType() == null) {
-			throw new RuntimeException("Client's phone number is not setted.");
-		}
-		return true;
 	}
 
 }

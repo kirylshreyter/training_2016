@@ -24,6 +24,7 @@ import com.kirylshreyter.training.hotel.commons.RoomOrderWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.daoapi.IRoomOrderDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomOrderMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomOrderWithAdditionalInfoMapper;
+import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 
 @Repository
@@ -33,6 +34,9 @@ public class RoomOrderDaoDbImpl implements IRoomOrderDao {
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
+
+	@Inject
+	private NotNullChecker notNullChecker;
 
 	@Override
 	public RoomOrder get(Long id) {
@@ -56,7 +60,7 @@ public class RoomOrderDaoDbImpl implements IRoomOrderDao {
 	@Override
 	public Long insert(RoomOrder entity) {
 		LOGGER.info("Trying to create roo order in table room_order ...");
-		if (notNullChecker(entity)) {
+		if (notNullChecker.RoomOrderNotNullChecker(entity)) {
 			try {
 				final String INSERT_SQL = "INSERT INTO room_order (booking_request_id,employee_id,total_cost) VALUES (?,?,?)";
 
@@ -88,7 +92,7 @@ public class RoomOrderDaoDbImpl implements IRoomOrderDao {
 	@Override
 	public void update(RoomOrder entity) {
 		LOGGER.info("Trying to update room order with id = {} in table room_order.", entity.getId());
-		if (notNullChecker(entity)) {
+		if (notNullChecker.RoomOrderNotNullChecker(entity)) {
 			try {
 				jdbcTemplate.update(
 						"UPDATE room_order SET booking_request_id = ?, employee_id = ?, total_cost = ? where id = ?",
@@ -133,19 +137,6 @@ public class RoomOrderDaoDbImpl implements IRoomOrderDao {
 	@Override
 	public List<RoomOrder> getAll() {
 		return jdbcTemplate.query("SELECT * FROM room_order", new RoomOrderMapper());
-	}
-
-	private Boolean notNullChecker(RoomOrder entity) {
-		if (entity.getBookingRequestId() == null) {
-			throw new RuntimeException("Booking request is not setted.");
-		}
-		if (entity.getEmployeeId() == null) {
-			throw new RuntimeException("Employee is not setted.");
-		}
-		if (entity.getTotalCost() == null) {
-			throw new RuntimeException("Total cost is not setted.");
-		}
-		return true;
 	}
 
 	@Override

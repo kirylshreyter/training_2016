@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daoapi.IClientDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.ClientMapper;
+import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
 @Repository
@@ -31,6 +32,9 @@ public class ClientDaoDbImpl implements IClientDao {
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
+
+	@Inject
+	private NotNullChecker notNullChecker;
 
 	@Override
 	public Client get(Long id) {
@@ -54,33 +58,43 @@ public class ClientDaoDbImpl implements IClientDao {
 	@Override
 	public Long insert(Client entity) {
 		LOGGER.info("Trying to create client in table client...");
-		if (notNullChecker(entity) == true) {
+		if (notNullChecker.clientNotNullChecker(entity)) {
 			final String INSERT_SQL = "INSERT INTO client (first_name, last_name, address,phone,email) VALUES (?,?,?,?,?)";
 			KeyHolder keyHolder = new GeneratedKeyHolder();
+			try {
+				jdbcTemplate.update(new PreparedStatementCreator() {
+					@Override
+					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+						PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
+						ps.setString(1, entity.getFirstName());
+						ps.setString(2, entity.getLastName());
+						ps.setString(3, entity.getAddress());
+						ps.setString(4, entity.getPhone());
+						ps.setString(5, entity.getEmail());
+						return ps;
+					}
+				}, keyHolder);
+				;
+				entity.setId(keyHolder.getKey().longValue());
 
-			jdbcTemplate.update(new PreparedStatementCreator() {
-				@Override
-				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-					PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
-					ps.setString(1, entity.getFirstName());
-					ps.setString(2, entity.getLastName());
-					ps.setString(3, entity.getAddress());
-					ps.setString(4, entity.getPhone());
-					ps.setString(5, entity.getEmail());
-					return ps;
-				}
-			}, keyHolder);
-			;
-			entity.setId(keyHolder.getKey().longValue());
+				LOGGER.info("Client was created, id = {}", entity.getId());
+				return entity.getId();
+			}
+
+			catch (CannotGetJdbcConnectionException e) {
+				throw new CannotGetJdbcConnectionException("Cannot establish connection to database.",
+						new SQLException());
+			}
+		} else {
+			throw new NullPointerException("Some of parameters is null");
 		}
-		LOGGER.info("Client was created, id = {}", entity.getId());
-		return entity.getId();
+
 	}
 
 	@Override
 	public Boolean update(Client entity) {
 		LOGGER.info("Trying to update client with id = {} in table client...", entity.getId());
-		if (notNullChecker(entity)) {
+		if (notNullChecker.clientNotNullChecker(entity)) {
 			jdbcTemplate.update(
 					"UPDATE client SET first_name = ?, last_name = ?, address = ?, phone = ?, email = ?  where id = ?",
 					entity.getFirstName(), entity.getLastName(), entity.getAddress(), entity.getPhone(),
@@ -127,25 +141,6 @@ public class ClientDaoDbImpl implements IClientDao {
 	@Override
 	public List<Client> getAll() {
 		return jdbcTemplate.query("SELECT * FROM client", new ClientMapper());
-	}
-
-	private Boolean notNullChecker(Client entity) {
-		if (entity.getFirstName() == null) {
-			throw new RuntimeException("Client's first name is not setted.");
-		}
-		if (entity.getLastName() == null) {
-			throw new RuntimeException("Client's last name is not setted.");
-		}
-		if (entity.getPhone() == null) {
-			throw new RuntimeException("Client's phone number is not setted.");
-		}
-		if (entity.getEmail() == null) {
-			throw new RuntimeException("Client's email is not setted.");
-		}
-		if (entity.getAddress() == null) {
-			throw new RuntimeException("Client's address is not setted.");
-		}
-		return true;
 	}
 
 }

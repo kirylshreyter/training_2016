@@ -1,5 +1,6 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,47 +19,53 @@ import com.kirylshreyter.training.hotel.services.BookingRequestService;
 public class BookingRequestServiceImpl implements BookingRequestService {
 
 	@Inject
-	private IBookingRequestDao bookingRequestDao;
+	private IBookingRequestDao iBookingRequestDao;
 	@Inject
-	private IClientDao clientDao;
+	private IClientDao iClientDao;
 
 	@Override
 	public Long save(BookingRequest bookingRequest, Client client) {
-		Long insertedClientId = clientDao.insert(client);
+		Long insertedClientId = null;
+		try {
+			insertedClientId = iClientDao.insert(client);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		bookingRequest.setClientId(insertedClientId);
-		Long insertedBookingRequestId = bookingRequestDao.insert(bookingRequest);
+		Long insertedBookingRequestId = iBookingRequestDao.insert(bookingRequest);
 		return insertedBookingRequestId;
 	}
 
 	@Override
 	public void update(BookingRequest bookingRequest) {
-		bookingRequestDao.update(bookingRequest);
+		iBookingRequestDao.update(bookingRequest);
 	}
 
 	@Override
 	public BookingRequest get(Long id) {
-		return bookingRequestDao.get(id);
+		return iBookingRequestDao.get(id);
 	}
 
 	@Override
 	public List<BookingRequest> getAll() {
-		List<BookingRequest> BookingRequestList = new ArrayList<BookingRequest>(bookingRequestDao.getAll());
+		List<BookingRequest> BookingRequestList = new ArrayList<BookingRequest>(iBookingRequestDao.getAll());
 		return BookingRequestList;
 	}
 
 	@Override
 	public void delete(Long id) {
-		bookingRequestDao.delete(id);
+		iBookingRequestDao.delete(id);
 	}
 
 	@Override
 	public Long save(BookingRequest bookingRequest) {
-		return bookingRequestDao.insert(bookingRequest);
+		return iBookingRequestDao.insert(bookingRequest);
 	}
 
 	@Override
 	public BookingRequestWithAdditionalInfo getWithAdditionalInfo(Long id) {
-		return bookingRequestDao.getWithAdditionalInfo(id);
+		return iBookingRequestDao.getWithAdditionalInfo(id);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,14 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public Long save(Client client) {
-		return clientDao.insert(client);
+
+		try {
+			return clientDao.insert(client);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daoapi.IEmployeeDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.EmployeeMapper;
+import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.Employee;
 
 @Repository
@@ -31,6 +32,8 @@ public class EmployeeDaoDbImpl implements IEmployeeDao {
 
 	@Inject
 	private JdbcTemplate jdbcTemplate;
+	@Inject
+	private NotNullChecker notNullChecker;
 
 	@Override
 	public Employee get(Long id) {
@@ -53,7 +56,7 @@ public class EmployeeDaoDbImpl implements IEmployeeDao {
 	@Override
 	public Long insert(Employee entity) {
 		LOGGER.info("Trying to create employee in table employee ...");
-		if (notNullChecker(entity)) {
+		if (notNullChecker.EmployeeNotNullChecker(entity)) {
 			final String INSERT_SQL = "INSERT INTO employee (first_name,last_name,phone,email,address,position) VALUES (?,?,?,?,?,?)";
 
 			KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -82,7 +85,7 @@ public class EmployeeDaoDbImpl implements IEmployeeDao {
 	@Override
 	public void update(Employee entity) {
 		LOGGER.info("Trying to update employee with id = {} in table employee...", entity.getId());
-		if (notNullChecker(entity)) {
+		if (notNullChecker.EmployeeNotNullChecker(entity)) {
 			jdbcTemplate.update(
 					"UPDATE employee SET first_name = ?, last_name = ?, phone = ?, email = ?, position = ?, address = ?  where id = ?",
 					entity.getFirstName(), entity.getLastName(), entity.getPhone(), entity.getEmail(),
@@ -119,28 +122,6 @@ public class EmployeeDaoDbImpl implements IEmployeeDao {
 	@Override
 	public List<Employee> getAll() {
 		return jdbcTemplate.query("SELECT * FROM employee", new EmployeeMapper());
-	}
-
-	private Boolean notNullChecker(Employee entity) {
-		if (entity.getFirstName() == null) {
-			throw new RuntimeException("Employee's first name is not setted.");
-		}
-		if (entity.getLastName() == null) {
-			throw new RuntimeException("Employee's last name is not setted.");
-		}
-		if (entity.getPhone() == null) {
-			throw new RuntimeException("Employee's phone number is not setted.");
-		}
-		if (entity.getEmail() == null) {
-			throw new RuntimeException("Employee's email is not setted.");
-		}
-		if (entity.getAddress() == null) {
-			throw new RuntimeException("Employee's address is not setted.");
-		}
-		if (entity.getPosition() == null) {
-			throw new RuntimeException("Employee's position is not setted.");
-		}
-		return true;
 	}
 
 }

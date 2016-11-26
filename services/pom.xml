@@ -18,6 +18,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.kirylshreyter.training.hotel</groupId>
+			<artifactId>dao-impl-xml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.kirylshreyter.training.hotel</groupId>
 			<artifactId>dao-api</artifactId>
 		</dependency>
 

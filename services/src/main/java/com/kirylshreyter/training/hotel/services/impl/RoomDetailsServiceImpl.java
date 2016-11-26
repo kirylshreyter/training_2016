@@ -19,8 +19,7 @@ public class RoomDetailsServiceImpl implements RoomDetailsService {
 
 	@Override
 	public Long save(RoomDetails roomDetails) {
-		Long returnedId = roomDetailsDao.insert(roomDetails);
-		return returnedId;
+		return roomDetailsDao.insert(roomDetails);
 
 	}
 

@@ -26,6 +26,7 @@ import com.kirylshreyter.training.hotel.daoapi.IBookingRequestDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.BookingRequestMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.BookingRequestWithAdditionalInfoMapper;
 import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
+import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
 
 @Repository
@@ -36,7 +37,9 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 	@Inject
 	private JdbcTemplate jdbcTemplate;
 	@Inject
-	DateConverter dateConverter;
+	private DateConverter dateConverter;
+	@Inject
+	private NotNullChecker notNullChecker;
 
 	@Override
 	public BookingRequest get(Long id) {
@@ -60,7 +63,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 	@Override
 	public Long insert(BookingRequest entity) {
 		LOGGER.info("Trying to create booking request in table booking_request ...");
-		if (notNullChecker(entity)) {
+		if (notNullChecker.BookingRequestNotNullChecker(entity)) {
 			if (entity.getArrivalDate().getTime() > entity.getDepartureDate().getTime()) {
 				throw new DateTimeException("Arrival date can not be more than departure date.");
 
@@ -98,7 +101,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 	@Override
 	public void update(BookingRequest entity) {
 		LOGGER.info("Trying to update booking request with id = {} in table booking_request.", entity.getId());
-		if (notNullChecker(entity)) {
+		if (notNullChecker.BookingRequestNotNullChecker(entity)) {
 			try {
 				jdbcTemplate.update(
 						"UPDATE booking_request SET room_id, client_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
@@ -144,22 +147,6 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 	@Override
 	public List<BookingRequest> getAll() {
 		return jdbcTemplate.query("SELECT * FROM booking_request", new BookingRequestMapper());
-	}
-
-	private Boolean notNullChecker(BookingRequest entity) {
-		if (entity.getClientId() == null) {
-			throw new RuntimeException("Client Id is not setted.");
-		}
-		if (entity.getRoomId() == null) {
-			throw new RuntimeException("Room Id is not setted.");
-		}
-		if (entity.getArrivalDate() == null) {
-			throw new RuntimeException("Arrival date is not setted.");
-		}
-		if (entity.getDepartureDate() == null) {
-			throw new RuntimeException("Departure date is not setted.");
-		}
-		return true;
 	}
 
 	@Override
