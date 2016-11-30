@@ -1,7 +1,6 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,8 +43,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public List<Client> getAll() {
-		List<Client> clientList = new ArrayList<Client>(clientDao.getAll());
-		return clientList;
+		return clientDao.getAll();
 	}
 
 	@Override

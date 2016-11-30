@@ -105,8 +105,8 @@ public class ClientDaoXmlImpl implements IClientDao {
 
 	@Override
 	public List<Client> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Client client = new Client();
+		return readCollection(client);
 	}
 
 }

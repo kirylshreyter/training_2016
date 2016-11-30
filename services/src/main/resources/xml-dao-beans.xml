@@ -15,6 +15,9 @@
 	    http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 	<context:component-scan base-package="com.kirylshreyter.training.hotel.daoxml.impl" />
+	
+	<context:property-placeholder
+		ignore-unresolvable="true" location="classpath:xml-db.properties" />
 
 
 </beans>

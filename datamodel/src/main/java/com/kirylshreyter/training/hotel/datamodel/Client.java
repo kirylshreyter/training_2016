@@ -2,9 +2,8 @@ package com.kirylshreyter.training.hotel.datamodel;
 
 public class Client extends AbstractModel {
 
-	/*
-	 * (non-Javadoc)
-	 * 
+
+	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -19,9 +18,7 @@ public class Client extends AbstractModel {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

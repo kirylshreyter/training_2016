@@ -134,7 +134,7 @@ public class ClientServiceTest {
 	}
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void saveXmlTest() {
 		Client client = new Client();
 		client.setFirstName("Иван");
