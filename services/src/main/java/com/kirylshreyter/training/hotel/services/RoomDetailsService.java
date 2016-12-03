@@ -7,12 +7,12 @@ import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 public interface RoomDetailsService {
 	Long save(RoomDetails roomDetails);
 
-	void update(RoomDetails roomDetails);
+	Boolean update(RoomDetails roomDetails);
 
 	RoomDetails get(Long id);
 
 	List<RoomDetails> getAll();
 
-	void delete(Long id);
+	Boolean delete(Long id);
 
 }

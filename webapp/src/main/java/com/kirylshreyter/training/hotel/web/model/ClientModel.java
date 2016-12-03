@@ -1,39 +1,12 @@
 package com.kirylshreyter.training.hotel.web.model;
 
-public class ClientModel {
+public class ClientModel extends ParentModel {
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	private Long id;
 	private String firstName;
 	private String lastName;
 	private String phone;
 	private String email;
 	private String address;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "ClientModel [firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", email="
-				+ email + ", address=" + address + "]";
-	}
 
 	/**
 	 * @return the firstName
@@ -109,5 +82,4 @@ public class ClientModel {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 }

@@ -1,12 +1,12 @@
-package com.kirylshreyter.training.hotel.web.classloader;
+package com.kirylshreyter.training.hotel.web.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
+import org.springframework.stereotype.Component;
 
 import com.kirylshreyter.training.hotel.commons.AvailableRoom;
 import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
@@ -31,11 +31,11 @@ import com.kirylshreyter.training.hotel.web.model.RoomOrderModel;
 import com.kirylshreyter.training.hotel.web.model.RoomOrderWithAdditionalInfoModel;
 import com.kirylshreyter.training.hotel.web.model.RoomWithAdditionalInfoModel;
 
+@Component
 public class MapInitializer {
 
-	public static void main(String[] args) {
-		// Map<String, Object> myObjectAsDict = new HashMap<>();
-		final Map<Object, Object> map = new HashMap<>();
+	public Map<Object, Object> initializeMap() {
+		Map<Object, Object> map = new HashMap<>();
 		List<Object> arrayOfDatamodelObjects = new ArrayList<Object>();
 		arrayOfDatamodelObjects.add(new AvailableRoom());
 		arrayOfDatamodelObjects.add(new BookingRequest());
@@ -63,16 +63,12 @@ public class MapInitializer {
 		arrayOfWebModelObjects.add(new RoomWithAdditionalInfoModel());
 
 		for (int i = 0; i < arrayOfDatamodelObjects.size(); i++) {
-			map.put(arrayOfDatamodelObjects.get(i).getClass(), arrayOfWebModelObjects.get(i).getClass());
-
+			map.put(arrayOfDatamodelObjects.get(i).getClass().getName(), arrayOfWebModelObjects.get(i).getClass().getName());
 		}
-		if (new Client().getClass().isInstance(new Employee())){
-			System.out.println(true);
-		}else{
-			System.out.println(false);
-		};
+		return Collections.unmodifiableMap(map);
 
 	}
+
 }
 
 /*
@@ -129,4 +125,3 @@ public class MapInitializer {
  * System.out.println(abstractModel1.hashCode());
  * System.out.println(abstractModel.equals(abstractModel1));
  */
-

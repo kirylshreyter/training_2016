@@ -11,9 +11,9 @@ public interface IRoomDetailsDao {
 
 	Long insert(RoomDetails entity);
 
-	void update(RoomDetails entity);
+	Boolean update(RoomDetails entity);
 
-	void delete(Long id);
+	Boolean delete(Long id);
 
 	List<RoomDetails> getAll();
 

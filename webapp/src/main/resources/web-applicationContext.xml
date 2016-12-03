@@ -15,15 +15,16 @@
 
 	<mvc:annotation-driven />
 
-	<context:component-scan
-		base-package="com.kirylshreyter.training.hotel.web.controller" />
-
+	<context:component-scan base-package="com.kirylshreyter.training.hotel.web.controller" />
+	<context:component-scan base-package="com.kirylshreyter.training.hotel.web.utils" />
+	<context:component-scan base-package="com.kirylshreyter.training.hotel.web.converter" />
+	
 	<bean id="conversionService"
 		class="org.springframework.context.support.ConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
 				<bean
-					class="com.kirylshreyter.training.hotel.web.converter.CommonConverter" />
+					class="com.kirylshreyter.training.hotel.web.converter.ObjectToObjectConverter" />
 			</set>
 		</property>
 	</bean>

@@ -24,8 +24,9 @@ public class RoomDetailsServiceImpl implements RoomDetailsService {
 	}
 
 	@Override
-	public void update(RoomDetails roomDetails) {
-		roomDetailsDao.update(roomDetails);
+	public Boolean update(RoomDetails roomDetails) {
+		
+		return roomDetailsDao.update(roomDetails);
 
 	}
 
@@ -41,8 +42,8 @@ public class RoomDetailsServiceImpl implements RoomDetailsService {
 	}
 
 	@Override
-	public void delete(Long id) {
-		roomDetailsDao.delete(id);
+	public Boolean delete(Long id) {
+		return roomDetailsDao.delete(id);
 	}
 
 }

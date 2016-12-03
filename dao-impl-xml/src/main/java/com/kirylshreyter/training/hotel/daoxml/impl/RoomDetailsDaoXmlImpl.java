@@ -20,7 +20,12 @@ public class RoomDetailsDaoXmlImpl implements IRoomDetailsDao {
 
 	@Override
 	public RoomDetails get(Long id) {
-		// TODO Auto-generated method stub
+		List<RoomDetails> allRoomDetails = readCollection(new RoomDetails());
+		for (RoomDetails roomDetails : allRoomDetails) {
+			if (roomDetails.getId().equals(id)) {
+				return roomDetails;
+			}
+		}
 		return null;
 	}
 
@@ -38,14 +43,17 @@ public class RoomDetailsDaoXmlImpl implements IRoomDetailsDao {
 	}
 
 	@Override
-	public void update(RoomDetails entity) {
+	public Boolean update(RoomDetails entity) {
+		return null;
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void delete(Long id) {
+	public Boolean delete(Long id) {
 		// TODO Auto-generated method stub
+		return null;
+		
 
 	}
 

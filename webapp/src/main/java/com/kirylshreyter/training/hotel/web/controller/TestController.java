@@ -1,11 +1,9 @@
 package com.kirylshreyter.training.hotel.web.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,30 +12,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kirylshreyter.training.hotel.services.ClientService;
+import com.kirylshreyter.training.hotel.services.RoomDetailsService;
 
 @RestController
-@RequestMapping("/clients")
-public class ClientController {
-
+@RequestMapping("/test")
+public class TestController {
 	@Inject
 	private ClientService clientService;
 
 	@Inject
+	private RoomDetailsService roomDetailsService;
+
+	@Inject
 	private ConversionService conversionService;
+	@Inject
+	private Converter<Object, Object> objectToObjectConverter;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Object>> getAll() {
-		List<Object> all = new ArrayList<Object>(clientService.getAll());
-		List<Object> converted = new ArrayList<>();
-		for (Object object : all) {
-			converted.add(this.conversionService.convert(object, Object.class));
-		}
-		return new ResponseEntity<List<Object>>(converted, HttpStatus.OK);
+	public ResponseEntity<Boolean> test() {
+
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getById(@PathVariable Long clientId) {
-		Object object = clientService.get(clientId);
+		Object object = roomDetailsService.get(clientId);
 		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
 	}
 

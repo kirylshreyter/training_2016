@@ -1,6 +1,6 @@
-package com.kirylshreyter.training.hotel.datamodel;
+package com.kirylshreyter.training.hotel.web.model;
 
-public class AbstractModel {
+public class ParentModel {
 
 	private Long id;
 

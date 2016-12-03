@@ -83,7 +83,7 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 	}
 
 	@Override
-	public void update(RoomDetails entity) {
+	public Boolean update(RoomDetails entity) {
 		LOGGER.info("Trying to update room details with id = {} in table room_details...", entity.getId());
 		if (notNullChecker.RoomDetailsNotNullChecker(entity)) {
 			jdbcTemplate.update(
@@ -92,11 +92,13 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 					entity.getAdditionalInformation(), entity.getId());
 			LOGGER.info("Room details was updated, id = {}", entity.getId());
 		}
+		//TODO
+		return null;
 
 	}
 
 	@Override
-	public void delete(Long id) {
+	public Boolean delete(Long id) {
 		LOGGER.info("Trying to delete room details with id = {} from table room_details.", id);
 		Integer deletedRows = null;
 		try {
@@ -118,6 +120,8 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 		} else {
 			LOGGER.info("Room details with id = {} was deleted.", id);
 		}
+		//TODO
+		return null;
 
 	}
 
