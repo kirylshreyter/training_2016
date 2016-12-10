@@ -10,8 +10,6 @@ public interface ClientService {
 
 	Boolean update(Client client);
 
-	Client get(Long id);
-
 	List<Client> getAll();
 
 	Boolean delete(Long id);

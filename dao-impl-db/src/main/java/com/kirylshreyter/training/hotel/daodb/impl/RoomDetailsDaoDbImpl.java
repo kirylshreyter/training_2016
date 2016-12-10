@@ -1,7 +1,5 @@
 package com.kirylshreyter.training.hotel.daodb.impl;
 
-import static java.lang.Math.toIntExact;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,8 +10,6 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -35,25 +31,6 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 
 	@Inject
 	private NotNullChecker notNullChecker;
-
-	@Override
-	public RoomDetails get(Long id) {
-		RoomDetails roomDetails = new RoomDetails();
-		try {
-			roomDetails = jdbcTemplate.queryForObject("SELECT * FROM room_details WHERE id = ?", new Object[] { id },
-					new RoomDetailsMapper());
-		} catch (EmptyResultDataAccessException e) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Record with id = ");
-			sb.append(id);
-			sb.append(" does not exist.");
-			throw new EmptyResultDataAccessException(sb.toString(), toIntExact(id));
-		} catch (CannotGetJdbcConnectionException e) {
-			throw new CannotGetJdbcConnectionException("Cannot establish connection to database.", new SQLException());
-		}
-		return roomDetails;
-
-	}
 
 	@Override
 	public Long insert(RoomDetails entity) {
@@ -92,7 +69,7 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 					entity.getAdditionalInformation(), entity.getId());
 			LOGGER.info("Room details was updated, id = {}", entity.getId());
 		}
-		//TODO
+		// TODO
 		return null;
 
 	}
@@ -120,7 +97,7 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 		} else {
 			LOGGER.info("Room details with id = {} was deleted.", id);
 		}
-		//TODO
+		// TODO
 		return null;
 
 	}

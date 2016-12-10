@@ -9,8 +9,6 @@ public interface RoomDetailsService {
 
 	Boolean update(RoomDetails roomDetails);
 
-	RoomDetails get(Long id);
-
 	List<RoomDetails> getAll();
 
 	Boolean delete(Long id);

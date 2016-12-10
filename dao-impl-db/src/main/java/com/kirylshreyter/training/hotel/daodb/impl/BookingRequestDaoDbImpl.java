@@ -43,21 +43,9 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 
 	@Override
 	public BookingRequest get(Long id) {
-		BookingRequest bookingRequest = new BookingRequest();
-		try {
-			bookingRequest = jdbcTemplate.queryForObject("SELECT * FROM booking_request WHERE id = ?",
-					new Object[] { id }, new BookingRequestMapper());
-		} catch (EmptyResultDataAccessException e) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Record with id = ");
-			sb.append(id);
-			sb.append(" does not exist.");
-			throw new EmptyResultDataAccessException(sb.toString(), toIntExact(id));
-		} catch (CannotGetJdbcConnectionException e) {
-			throw new CannotGetJdbcConnectionException("Cannot establish connection to database.", new SQLException());
-		}
 
-		return bookingRequest;
+		return jdbcTemplate.queryForObject("SELECT * FROM booking_request WHERE id = ?", new Object[] { id },
+				new BookingRequestMapper());
 	}
 
 	@Override
@@ -72,6 +60,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 					final String INSERT_SQL = "INSERT INTO booking_request (room_id,client_id,arrival_date,departure_date) VALUES (?,?,?,?)";
 
 					KeyHolder keyHolder = new GeneratedKeyHolder();
+					
 					jdbcTemplate.update(new PreparedStatementCreator() {
 						@Override
 						public PreparedStatement createPreparedStatement(Connection con) throws SQLException {

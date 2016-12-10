@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.services.ClientService;
+import com.kirylshreyter.training.hotel.services.CommonService;
 import com.kirylshreyter.training.hotel.services.RoomDetailsService;
 
 @RestController
@@ -22,6 +24,9 @@ public class TestController {
 
 	@Inject
 	private RoomDetailsService roomDetailsService;
+	
+	@Inject
+	private CommonService commonService;
 
 	@Inject
 	private ConversionService conversionService;
@@ -36,8 +41,9 @@ public class TestController {
 
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getById(@PathVariable Long clientId) {
-		Object object = roomDetailsService.get(clientId);
-		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
+		Object object = commonService.get(new Client(), clientId);
+		if(object==null){return new ResponseEntity<Object>(null,HttpStatus.NOT_FOUND);}else{
+		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);}
 	}
 
 }

@@ -17,7 +17,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * parameter -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect
  * with jconsole).
  */
-public class StartJetty {
+public class StartJettyServer {
     /**
      * Main function, starts the jetty server.
      *

@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:service-context.xml")
@@ -20,6 +21,9 @@ public class ClientServiceTest {
 
 	@Inject
 	private ClientService clientService;
+
+	@Inject
+	private CommonService commonService;
 
 	private Client prepareWithInsertEntity() {
 		Client client = new Client();
@@ -66,7 +70,7 @@ public class ClientServiceTest {
 	public void getTest() {
 		Client insertedEntity = new Client();
 		insertedEntity = prepareWithInsertEntity();
-		Client entity = clientService.get(insertedEntity.getId());
+		Client entity = (Client) commonService.get(new Client(), insertedEntity.getId());
 		Assert.assertNotNull("Getted from DB object should not be null.", entity);
 		Assert.assertEquals("Id for inserted and selected objects should be the same.", insertedEntity.getId(),
 				entity.getId());
@@ -79,7 +83,7 @@ public class ClientServiceTest {
 	public void deleteTest() {
 		Client insertedEntity = new Client();
 		insertedEntity = prepareWithInsertEntity();
-		Client entity = clientService.get(insertedEntity.getId());
+		Client entity = (Client) commonService.get(new Client(), insertedEntity.getId());
 		Assert.assertNotNull("Getted from DB object should not be null.", entity);
 		Assert.assertTrue("Object should be deleted, but it's not.", clientService.delete(insertedEntity.getId()));
 	}
@@ -91,7 +95,7 @@ public class ClientServiceTest {
 		nonInsertedEntity = prepareWithoutInsertEntity();
 		Long insertedEntityId = clientService.save(nonInsertedEntity);
 		Client insertedEntity = new Client();
-		insertedEntity = clientService.get(insertedEntityId);
+		insertedEntity = (Client) commonService.get(new Client(), insertedEntityId);
 		insertedEntity.setId(insertedEntityId);
 		Assert.assertEquals("Id for inserted and selected objects should be the same.", nonInsertedEntity.getId(),
 				insertedEntity.getId());
@@ -105,18 +109,20 @@ public class ClientServiceTest {
 	public void updateTest() {
 		Client insertedEntity = new Client();
 		insertedEntity = prepareWithInsertEntity();
-		Client gettedEntity = clientService.get(insertedEntity.getId());
+		Client gettedEntity = (Client) commonService.get(new Client(), insertedEntity.getId());
+		System.out.println(gettedEntity.hashCode());
 		Assert.assertNotNull("Getted from DB object should not be null.", gettedEntity);
 		Assert.assertEquals("Id for inserted and selected object must be the same.", insertedEntity.getId(),
 				gettedEntity.getId());
 		Assert.assertEquals("Inserted object is not the object which getted from database.", insertedEntity,
 				gettedEntity);
 		Client newEntity = new Client();
+		System.out.println(newEntity.hashCode());
 		newEntity = prepareWithoutInsertEntity();
 		Assert.assertNotEquals("Objects must have a differense.", newEntity, gettedEntity);
 		Assert.assertTrue("Object in DB was not updated.", clientService.update(newEntity));
 		newEntity.setId(insertedEntity.getId());
-		gettedEntity = clientService.get(newEntity.getId());
+		gettedEntity = (Client) commonService.get(new Client(), newEntity.getId());
 		Assert.assertEquals("Objects must to be similar.", newEntity, gettedEntity);
 		clientService.delete(gettedEntity.getId());
 
@@ -134,7 +140,7 @@ public class ClientServiceTest {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void saveXmlTest() {
 		Client client = new Client();
 		client.setFirstName("Иван");
@@ -149,10 +155,24 @@ public class ClientServiceTest {
 	@Test
 	@Ignore
 	public void getXmlTest() {
-		Client client = clientService.get(1l);
+		Client client = (Client) commonService.get(new Client(), 1L);
 		Assert.assertNotNull("book for id=1 should not be null", client);
 		Assert.assertEquals(new Long(1), client.getId());
 		System.out.println(client.toString());
+	}
+
+	@Test
+	@Ignore
+	public void get() {
+		Object obj = commonService.get(new Client(), 73L);
+		System.out.println(obj.toString());
+	}
+	
+	@Test
+	//@Ignore
+	public void delete(){
+		Boolean a = commonService.delete(new Client(), 79L);
+		Assert.assertTrue(a);
 	}
 
 }

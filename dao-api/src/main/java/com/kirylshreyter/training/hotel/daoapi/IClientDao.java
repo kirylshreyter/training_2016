@@ -7,8 +7,6 @@ import com.kirylshreyter.training.hotel.datamodel.Client;
 
 public interface IClientDao {
 
-	Client get(Long id);
-
 	Long insert(Client entity) throws IOException;
 
 	Boolean update(Client entity);

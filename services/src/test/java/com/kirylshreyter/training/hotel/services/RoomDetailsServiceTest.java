@@ -17,8 +17,12 @@ import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:service-context.xml")
 public class RoomDetailsServiceTest {
+	
 	@Inject
 	private RoomDetailsService roomDetailsService;
+	
+	@Inject
+	private CommonService commonService;
 	
 	private RoomDetails prepareWithInsertEntity() {
 		RoomDetails roomDetails = new RoomDetails();
@@ -63,7 +67,7 @@ public class RoomDetailsServiceTest {
 	public void getTest() {
 		RoomDetails insertedEntity = new RoomDetails();
 		insertedEntity = prepareWithInsertEntity();
-		RoomDetails entity = roomDetailsService.get(insertedEntity.getId());
+		RoomDetails entity = (RoomDetails) commonService.get(new RoomDetails(), insertedEntity.getId());
 		Assert.assertNotNull("Getted from DB object should not be null.", entity);
 		Assert.assertEquals("Id for inserted and selected objects should be the same.", insertedEntity.getId(),
 				entity.getId());
@@ -76,7 +80,7 @@ public class RoomDetailsServiceTest {
 	public void deleteTest() {
 		RoomDetails insertedEntity = new RoomDetails();
 		insertedEntity = prepareWithInsertEntity();
-		RoomDetails entity = roomDetailsService.get(insertedEntity.getId());
+		RoomDetails entity = (RoomDetails) commonService.get(new RoomDetails(), insertedEntity.getId());
 		Assert.assertNotNull("Getted from DB object should not be null.", entity);
 		Assert.assertTrue("Object should be deleted, but it's not.", roomDetailsService.delete(insertedEntity.getId()));
 	}
@@ -88,7 +92,7 @@ public class RoomDetailsServiceTest {
 		nonInsertedEntity = prepareWithoutInsertEntity();
 		Long insertedEntityId = roomDetailsService.save(nonInsertedEntity);
 		RoomDetails insertedEntity = new RoomDetails();
-		insertedEntity = roomDetailsService.get(insertedEntityId);
+		insertedEntity = (RoomDetails) commonService.get(new RoomDetails(), insertedEntityId);
 		insertedEntity.setId(insertedEntityId);
 		Assert.assertEquals("Id for inserted and selected objects should be the same.", nonInsertedEntity.getId(),
 				insertedEntity.getId());
@@ -102,7 +106,7 @@ public class RoomDetailsServiceTest {
 	public void updateTest() {
 		RoomDetails insertedEntity = new RoomDetails();
 		insertedEntity = prepareWithInsertEntity();
-		RoomDetails gettedEntity = roomDetailsService.get(insertedEntity.getId());
+		RoomDetails gettedEntity = (RoomDetails) commonService.get(new RoomDetails(), insertedEntity.getId());
 		Assert.assertNotNull("Getted from DB object should not be null.", gettedEntity);
 		Assert.assertEquals("Id for inserted and selected object must be the same.", insertedEntity.getId(),
 				gettedEntity.getId());
@@ -113,7 +117,7 @@ public class RoomDetailsServiceTest {
 		Assert.assertNotEquals("Objects must have a differense.", newEntity, gettedEntity);
 		Assert.assertTrue("Object in DB was not updated.", roomDetailsService.update(newEntity));
 		newEntity.setId(insertedEntity.getId());
-		gettedEntity = roomDetailsService.get(newEntity.getId());
+		gettedEntity = (RoomDetails) commonService.get(new RoomDetails(), newEntity.getId());
 		Assert.assertEquals("Objects must to be similar.", newEntity, gettedEntity);
 		roomDetailsService.delete(gettedEntity.getId());
 
@@ -145,7 +149,7 @@ public class RoomDetailsServiceTest {
 	@Test
 	//@Ignore
 	public void getXmlTest() {
-		RoomDetails roomDetails = roomDetailsService.get(1l);
+		RoomDetails roomDetails = (RoomDetails) commonService.get(new RoomDetails(), 1L);
 		Assert.assertNotNull("book for id=1 should not be null", roomDetails);
 		Assert.assertEquals(new Long(1), roomDetails.getId());
 		System.out.println(roomDetails.toString());

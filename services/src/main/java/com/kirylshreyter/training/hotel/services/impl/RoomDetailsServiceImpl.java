@@ -25,14 +25,9 @@ public class RoomDetailsServiceImpl implements RoomDetailsService {
 
 	@Override
 	public Boolean update(RoomDetails roomDetails) {
-		
+
 		return roomDetailsDao.update(roomDetails);
 
-	}
-
-	@Override
-	public RoomDetails get(Long id) {
-		return roomDetailsDao.get(id);
 	}
 
 	@Override

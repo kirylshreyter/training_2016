@@ -37,11 +37,6 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public Client get(Long id) {
-		return clientDao.get(id);
-	}
-
-	@Override
 	public List<Client> getAll() {
 		return clientDao.getAll();
 	}

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.services.ClientService;
+import com.kirylshreyter.training.hotel.services.CommonService;
 
 @RestController
 @RequestMapping("/clients")
@@ -21,6 +23,9 @@ public class ClientController {
 
 	@Inject
 	private ClientService clientService;
+	
+	@Inject
+	private CommonService commonService;
 
 	@Inject
 	private ConversionService conversionService;
@@ -37,7 +42,7 @@ public class ClientController {
 
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getById(@PathVariable Long clientId) {
-		Object object = clientService.get(clientId);
+		Object object = commonService.get(new Client(), clientId);
 		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
 	}
 
