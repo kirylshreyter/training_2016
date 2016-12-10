@@ -9,6 +9,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.services.ClientService;
 import com.kirylshreyter.training.hotel.services.CommonService;
+import com.kirylshreyter.training.hotel.web.model.ClientModel;
 
 @RestController
 @RequestMapping("/clients")
@@ -45,5 +47,12 @@ public class ClientController {
 		Object object = commonService.get(new Client(), clientId);
 		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
 	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> createNewClient(@RequestBody ClientModel clientModel) {
+		clientService.save((Client) this.conversionService.convert(clientModel, Object.class));
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+
+    }
 
 }

@@ -17,7 +17,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * parameter -Dcom.sun.management.jmxremote to startup JMX (and e.g. connect
  * with jconsole).
  */
-public class StartJettyServer {
+public class StartSecondJettyServer {
     /**
      * Main function, starts the jetty server.
      *
@@ -32,7 +32,7 @@ public class StartJettyServer {
 
         ServerConnector http = new ServerConnector(server,
                 new HttpConnectionFactory(http_config));
-        http.setPort(8081);
+        http.setPort(8082);
         http.setIdleTimeout(1000 * 60 * 60);
 
         server.addConnector(http);

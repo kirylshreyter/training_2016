@@ -1,12 +1,9 @@
 package com.kirylshreyter.training.hotel.web.utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.stereotype.Component;
 
 import com.kirylshreyter.training.hotel.commons.AvailableRoom;
 import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
@@ -31,11 +28,12 @@ import com.kirylshreyter.training.hotel.web.model.RoomOrderModel;
 import com.kirylshreyter.training.hotel.web.model.RoomOrderWithAdditionalInfoModel;
 import com.kirylshreyter.training.hotel.web.model.RoomWithAdditionalInfoModel;
 
-@Component
 public class MapInitializer {
 
-	public Map<Object, Object> initializeMap() {
-		Map<Object, Object> map = new HashMap<>();
+	static final Map<Object, Object> MAP = new HashMap<>();
+	static final Map<Object, Object> MAP_MODEL = new HashMap<>();
+
+	static {
 		List<Object> arrayOfDatamodelObjects = new ArrayList<Object>();
 		arrayOfDatamodelObjects.add(new AvailableRoom());
 		arrayOfDatamodelObjects.add(new BookingRequest());
@@ -63,65 +61,12 @@ public class MapInitializer {
 		arrayOfWebModelObjects.add(new RoomWithAdditionalInfoModel());
 
 		for (int i = 0; i < arrayOfDatamodelObjects.size(); i++) {
-			map.put(arrayOfDatamodelObjects.get(i).getClass().getName(), arrayOfWebModelObjects.get(i).getClass().getName());
+			MAP.put(arrayOfDatamodelObjects.get(i).getClass().getName(),
+					arrayOfWebModelObjects.get(i).getClass().getName());
 		}
-		return Collections.unmodifiableMap(map);
-
+		for (int i = 0; i < arrayOfWebModelObjects.size(); i++) {
+			MAP_MODEL.put(arrayOfWebModelObjects.get(i).getClass().getName(),
+					arrayOfDatamodelObjects.get(i).getClass().getName());
+		}
 	}
-	
 }
-
-/*
- * Field[] allFields; for (int i = 0; i < list.size(); i++) { allFields =
- * list.get(i).getClass().getDeclaredFields(); for (Field field : allFields) {
- * Class<?> targetType = field.getType(); Object objectValue = null; try {
- * objectValue = targetType.newInstance(); } catch (InstantiationException e) {
- * // TODO Auto-generated catch block e.printStackTrace(); } catch
- * (IllegalAccessException e) { // TODO Auto-generated catch block
- * e.printStackTrace(); } Object value = null; try { value =
- * field.get(objectValue); } catch (IllegalArgumentException e) { // TODO
- * Auto-generated catch block e.printStackTrace(); } catch
- * (IllegalAccessException e) { // TODO Auto-generated catch block
- * e.printStackTrace(); } myObjectAsDict.put(field.getName(), value); }
- * 
- * }
- */
-
-/*
- * List<Field> allFields = new ArrayList<>(); for (int i = 0; i < list.size();
- * i++) {
- * 
- * ReflectionUtils.doWithFields(list.get(i).getClass(), new FieldCallback() {
- * public void doWith(Field field) throws IllegalArgumentException,
- * IllegalAccessException { field.setAccessible(true); allFields.add(field); }
- * }); }
- * 
- * for (Field field : allFields) { Class<?> targetType = field.getType(); Object
- * objectValue = null; try { objectValue = targetType.newInstance(); } catch
- * (InstantiationException e) { // TODO Auto-generated catch block
- * e.printStackTrace(); } catch (IllegalAccessException e) { // TODO
- * Auto-generated catch block e.printStackTrace(); } Object value = null; try {
- * value = field.get(objectValue); } catch (IllegalArgumentException e) { //
- * TODO Auto-generated catch block e.printStackTrace(); } catch
- * (IllegalAccessException e) { // TODO Auto-generated catch block
- * e.printStackTrace(); } myObjectAsDict.put(field.getName(), value); }
- * 
- * for (int i = 0; i < myObjectAsDict.size(); i++) {
- * System.out.println(myObjectAsDict.get(i).toString()); }
- */
-
-/*
- * abstractModel.setId(75L); System.out.println(abstractModel.hashCode());
- * System.out.println(abstractModel1.hashCode());
- * System.out.println(abstractModel.equals(abstractModel1));
- * ReflectionUtils.doWithFields(abstractModel.getClass(), new FieldCallback() {
- * public void doWith(Field field) throws IllegalArgumentException,
- * IllegalAccessException { field.setAccessible(true); field.set(abstractModel,
- * null); } }); ReflectionUtils.doWithFields(abstractModel1.getClass(), new
- * FieldCallback() { public void doWith(Field field) throws
- * IllegalArgumentException, IllegalAccessException { field.setAccessible(true);
- * field.set(abstractModel1, null); } });
- * System.out.println(abstractModel.hashCode());
- * System.out.println(abstractModel1.hashCode());
- * System.out.println(abstractModel.equals(abstractModel1));
- */

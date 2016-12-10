@@ -1,13 +1,12 @@
 package com.kirylshreyter.training.hotel.daoapi;
 
-import java.io.IOException;
 import java.util.List;
 
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
 public interface IClientDao {
 
-	Long insert(Client entity) throws IOException;
+	Long insert(Client entity);
 
 	Boolean update(Client entity);
 

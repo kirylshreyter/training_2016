@@ -1,6 +1,5 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +25,7 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 	@Override
 	public Long save(BookingRequest bookingRequest, Client client) {
 		Long insertedClientId = null;
-		try {
 			insertedClientId = iClientDao.insert(client);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		bookingRequest.setClientId(insertedClientId);
 		Long insertedBookingRequestId = iBookingRequestDao.insert(bookingRequest);
 		return insertedBookingRequestId;

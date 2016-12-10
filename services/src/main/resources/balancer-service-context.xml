@@ -16,15 +16,18 @@
 
 	<context:annotation-config />
 
-<!-- 	<import resource="classpath:db-dao-beans.xml" /> -->
+	<!-- <import resource="classpath:db-dao-beans.xml" /> -->
 	<!-- <import resource="classpath:xml-dao-beans.xml" /> -->
-	
-	
-	<tx:annotation-driven />
-	
-	<task:annotation-driven />
 
-<!-- 	<context:component-scan	base-package="com.kirylshreyter.training.hotel.services.impl" /> -->
-		
+
+	<tx:annotation-driven />
+
+	<task:annotation-driven />
+	<context:component-scan base-package="com.kirylshreyter.training.hotel.web.cache" />
+
+
+	<!-- <context:component-scan base-package="com.kirylshreyter.training.hotel.services.impl" 
+		/> -->
+
 
 </beans>
