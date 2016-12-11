@@ -49,9 +49,9 @@ public class ClientController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> createNewClient(@RequestBody ClientModel clientModel) {
-		clientService.save((Client) this.conversionService.convert(clientModel, Object.class));
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    public ResponseEntity<Long> createNewClient(@RequestBody ClientModel clientModel) {
+		Long id = clientService.save((Client) this.conversionService.convert(clientModel, Object.class));
+        return new ResponseEntity<Long>(id,HttpStatus.CREATED);
 
     }
 

@@ -26,8 +26,12 @@ public class CacheMethods {
 
 	}
 
-	public void deleteFromCache() {
-		// TODO delete if update or delete from database
+	public boolean deleteFromCache(String key) {
+		if (concurrentMap.remove(key) == null) {
+			return false;
+		} else {
+			return true;
+		}
 
 	}
 
