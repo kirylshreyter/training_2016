@@ -25,7 +25,7 @@ public class ClientController {
 
 	@Inject
 	private ClientService clientService;
-	
+
 	@Inject
 	private CommonService commonService;
 
@@ -47,12 +47,23 @@ public class ClientController {
 		Object object = commonService.get(new Client(), clientId);
 		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Long> createNewClient(@RequestBody ClientModel clientModel) {
+	public ResponseEntity<Long> createNewClient(@RequestBody ClientModel clientModel) {
 		Long id = clientService.save((Client) this.conversionService.convert(clientModel, Object.class));
-        return new ResponseEntity<Long>(id,HttpStatus.CREATED);
+		return new ResponseEntity<Long>(id, HttpStatus.CREATED);
 
-    }
+	}
 
+	@RequestMapping(value = "/{clientId}", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> updateClient(@RequestBody ClientModel clientModel, @PathVariable Long clientId) {
+		Client client = (Client) this.conversionService.convert(clientModel, Object.class);
+		client.setId(clientId);
+		return new ResponseEntity<Boolean>(clientService.update(client), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{clientId}", method = RequestMethod.DELETE)
+	public ResponseEntity<Boolean> delete(@PathVariable Long clientId) {
+		return new ResponseEntity<Boolean>(commonService.delete(new Client(), clientId), HttpStatus.OK);
+	}
 }

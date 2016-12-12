@@ -7,12 +7,12 @@ import javax.inject.Inject;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -81,7 +81,7 @@ public class CommonController {
 
 	}
 
-	@RequestMapping(value = "/{entityTree}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{entityTree}", method = RequestMethod.POST)
 	private ResponseEntity<Long> createEntity(@RequestBody String data, @PathVariable String entityTree) {
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost request = null;
@@ -98,7 +98,6 @@ public class CommonController {
 			myObject = objectMapper.readValue(response.getEntity().getContent(), Long.class);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			// return new ResponseEntity<Long>(Response);
 		}
 		Object entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree + myObject);
 		if (entityFromCacheToModify != null) {
@@ -106,6 +105,57 @@ public class CommonController {
 			System.out.println("Object was modified and deleted from cache.");
 		}
 		return new ResponseEntity<Long>(myObject, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/{entityTree}/{entityId}", method = RequestMethod.POST)
+	private ResponseEntity<Boolean> updateEntity(@RequestBody String data, @PathVariable String entityTree,
+			@PathVariable Long entityId) {
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpPost request = null;
+		Boolean myObject = null;
+		String temportyUrl = "http://127.0.0.1:808" + getRandomServer() + "/%s/%s";
+		try {
+			String targetUrl = String.format(temportyUrl, entityTree, entityId.toString());
+			request = new HttpPost(targetUrl);
+			ByteArrayEntity bae = new ByteArrayEntity(data.getBytes());
+			request.addHeader("Content-Type", "application/json; charset=UTF-8");
+			request.setEntity(bae);
+			HttpResponse response = httpClient.execute(request);
+			ObjectMapper objectMapper = new ObjectMapper();
+			myObject = objectMapper.readValue(response.getEntity().getContent(), Boolean.class);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		Object entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree + entityId);
+		if (entityFromCacheToModify != null) {
+			cacheMethods.deleteFromCache(entityTree + entityId);
+			System.out.println("Object was modified and deleted from cache.");
+		}
+		return new ResponseEntity<Boolean>(myObject, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/{entityTree}/{entityId}", method = RequestMethod.DELETE)
+	private ResponseEntity<Boolean> deleteEntity(@PathVariable String entityTree, @PathVariable Long entityId) {
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpDelete request = null;
+		Boolean myObject = null;
+		String temportyUrl = "http://127.0.0.1:808" + getRandomServer() + "/%s/%s";
+		try {
+			String targetUrl = String.format(temportyUrl, entityTree, entityId.toString());
+			request = new HttpDelete(targetUrl);
+			HttpResponse response = httpClient.execute(request);
+			ObjectMapper objectMapper = new ObjectMapper();
+			myObject = objectMapper.readValue(response.getEntity().getContent(), Boolean.class);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		Object entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree + entityId);
+		if (entityFromCacheToModify != null) {
+			cacheMethods.deleteFromCache(entityTree + entityId);
+			System.out.println("Object was modified and deleted from cache.");
+		}
+		return new ResponseEntity<Boolean>(myObject, HttpStatus.OK);
+
 	}
 
 }
