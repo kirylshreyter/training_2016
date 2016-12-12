@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +46,10 @@ public class ClientController {
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getById(@PathVariable Long clientId) {
 		Object object = commonService.get(new Client(), clientId);
-		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
+		Object obj = this.conversionService.convert(object, Object.class);
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("entity", obj.getClass().getName());
+		return new ResponseEntity<Object>(obj,headers, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

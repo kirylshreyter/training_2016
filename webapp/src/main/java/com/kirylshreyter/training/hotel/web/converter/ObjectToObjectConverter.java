@@ -43,8 +43,8 @@ public class ObjectToObjectConverter implements Converter<Object, Object> {
 	private Object ObjectToModel(Object object)
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String model = objectIdentifier.idendifyAnObject(object).toString();
-		Class<?> modelClass = Class.forName(model.toString());
-		Object objectModel = modelClass.newInstance();
+		
+		Object objectModel = getInstanceFromObjectString(model);
 
 		final List<String> objectNames = new ArrayList<String>();
 		ReflectionUtils.doWithFields(object.getClass(), new FieldCallback() {
@@ -119,6 +119,13 @@ public class ObjectToObjectConverter implements Converter<Object, Object> {
 		}
 		return objectModel;
 
+	}
+
+	public Object getInstanceFromObjectString(String model)
+			throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+		Class<?> modelClass = Class.forName(model.toString());
+		Object objectModel = modelClass.newInstance();
+		return objectModel;
 	}
 
 }

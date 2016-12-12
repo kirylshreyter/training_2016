@@ -1,10 +1,13 @@
 package com.kirylshreyter.training.hotel.webbalancer.controller;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -22,10 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kirylshreyter.training.hotel.web.cache.CacheMethods;
+import com.kirylshreyter.training.hotel.web.converter.ObjectToObjectConverter;
 
 @RestController
 @RequestMapping("/")
 public class CommonController {
+	
+	@Inject
+	private ObjectToObjectConverter getInstance;
 
 	@Inject
 	private CacheMethods cacheMethods;
@@ -47,6 +54,24 @@ public class CommonController {
 			HttpResponse response = httpClient.execute(request);
 			ObjectMapper objectMapper = new ObjectMapper();
 			myObject = (List<Object>) objectMapper.readValue(response.getEntity().getContent(), Object.class);
+			
+			/*for (int i = 0; i < myObject.size(); i++) {
+				Object obj = new Object();
+			
+				obj = myObject.get(i);
+				int hash = obj.hashCode();
+				if(cacheMethods.getEntityFromCache(hash)==null){
+					cacheMethods.putEntityInCache(objectName + id.toString(), myObject.get(i));
+				Method getMethod;
+				Object object = getInstance.getInstanceFromObjectString(list.get(i).getClass().getName());
+				String objectName = object.getClass().getSimpleName().toLowerCase();
+				getMethod = object.getClass().getMethod("getId");
+				Object id = getMethod.invoke(object);
+				
+					System.out.println(obj.hashCode());
+				
+				
+			}*/
 		} catch (Exception ex) {
 			return new ResponseEntity<List<Object>>(HttpStatus.NOT_FOUND);
 		}
@@ -68,6 +93,12 @@ public class CommonController {
 				HttpResponse response = httpClient.execute(request);
 				ObjectMapper objectMapper = new ObjectMapper();
 				myObject = objectMapper.readValue(response.getEntity().getContent(), Object.class);
+				
+				Object object = getInstance.getInstanceFromObjectString(response.getFirstHeader("entity").getValue());
+				
+				
+				
+				
 			} catch (Exception ex) {
 				return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 			}

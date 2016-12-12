@@ -18,9 +18,9 @@ public class CacheMethods {
 
 	public void putMultiplyEntityInCache(List<String> listKey, List<Object> listValue) {
 		for (int i = 0; i < concurrentMap.size(); i++) {
-			String str = listKey.get(i);
-			if (concurrentMap.get(str) == null) {
-				concurrentMap.put(str, listValue.get(i));
+			String key = listKey.get(i);
+			if (concurrentMap.get(key) == null) {
+				concurrentMap.put(key, listValue.get(i));
 			}
 		}
 
