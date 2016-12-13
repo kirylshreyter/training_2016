@@ -6,7 +6,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.core.convert.ConversionService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,26 +39,24 @@ public class ClientController {
 		for (Object object : all) {
 			converted.add(this.conversionService.convert(object, Object.class));
 		}
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("entity", converted.get(0).getClass().getName());
-		return new ResponseEntity<List<Object>>(converted,headers, HttpStatus.OK);
+		return new ResponseEntity<List<Object>>(converted, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getById(@PathVariable Long clientId) {
+	public ResponseEntity<Object> get(@PathVariable Long clientId) {
 		Object object = commonService.get(new Client(), clientId);
 		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Long> createNewClient(@RequestBody ClientModel clientModel) {
+	public ResponseEntity<Long> create(@RequestBody ClientModel clientModel) {
 		Long id = clientService.save((Client) this.conversionService.convert(clientModel, Object.class));
 		return new ResponseEntity<Long>(id, HttpStatus.CREATED);
 
 	}
 
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.POST)
-	public ResponseEntity<Boolean> updateClient(@RequestBody ClientModel clientModel, @PathVariable Long clientId) {
+	public ResponseEntity<Boolean> update(@RequestBody ClientModel clientModel, @PathVariable Long clientId) {
 		Client client = (Client) this.conversionService.convert(clientModel, Object.class);
 		client.setId(clientId);
 		return new ResponseEntity<Boolean>(clientService.update(client), HttpStatus.OK);

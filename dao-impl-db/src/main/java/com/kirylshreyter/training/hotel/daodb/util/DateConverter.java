@@ -33,6 +33,16 @@ public class DateConverter {
 		}
 	}
 
+	public Date javaSqlDateToJavaUtilDate(java.sql.Date nonConvertedSqlDate) {
+		try {
+			Date convertedDate = new Date(nonConvertedSqlDate.getTime());
+			return convertedDate;
+		} catch (NullPointerException e) {
+			throw new NullPointerException("Date shoud not be null.");
+		}
+
+	}
+
 	public Integer getDiffTwoDate(Date startDate, Date endDate) {
 		Calendar start = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		Calendar end = Calendar.getInstance(TimeZone.getTimeZone("UTC"));

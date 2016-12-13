@@ -12,8 +12,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kirylshreyter.training.hotel.web.cache.CacheMethods;
-import com.kirylshreyter.training.hotel.web.converter.ObjectToObjectConverter;
 
 @RestController
 @RequestMapping("/")
@@ -50,8 +47,8 @@ public class CommonController {
 			HttpResponse response = httpClient.execute(request);
 			ObjectMapper objectMapper = new ObjectMapper();
 			myObject = (List<Object>) objectMapper.readValue(response.getEntity().getContent(), Object.class);
-			JSONObject json = new JSONObject(myObject);
-			System.out.println(json.toString());
+			//JSONObject json = new JSONObject(myObject);
+			//System.out.println(json.toString());
 //			JSONArray dataJsonArray = json.getJSONArray("id");
 //			System.out.println(dataJsonArray.toString());
 				/*for(int i=0; i<dataJsonArray.length; i++) {
