@@ -83,7 +83,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 		LOGGER.info("Trying to update booking request with id = {} in table booking_request.", entity.getId());
 		if (notNullChecker.BookingRequestNotNullChecker(entity)) {
 			jdbcTemplate.update(
-					"UPDATE booking_request SET room_id, client_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
+					"UPDATE booking_request SET room_id = ?, client_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
 					entity.getRoomId(), entity.getClientId(), entity.getArrivalDate(), entity.getDepartureDate(),
 					entity.getId());
 			LOGGER.info("Booking Request was updated, id = {}", entity.getId());
