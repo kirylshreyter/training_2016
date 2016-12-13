@@ -40,16 +40,15 @@ public class ClientController {
 		for (Object object : all) {
 			converted.add(this.conversionService.convert(object, Object.class));
 		}
-		return new ResponseEntity<List<Object>>(converted, HttpStatus.OK);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("entity", converted.get(0).getClass().getName());
+		return new ResponseEntity<List<Object>>(converted,headers, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{clientId}", method = RequestMethod.GET)
 	public ResponseEntity<Object> getById(@PathVariable Long clientId) {
 		Object object = commonService.get(new Client(), clientId);
-		Object obj = this.conversionService.convert(object, Object.class);
-		HttpHeaders headers = new HttpHeaders();
-	    headers.add("entity", obj.getClass().getName());
-		return new ResponseEntity<Object>(obj,headers, HttpStatus.OK);
+		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
