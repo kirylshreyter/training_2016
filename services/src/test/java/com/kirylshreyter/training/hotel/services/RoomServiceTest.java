@@ -79,8 +79,8 @@ public class RoomServiceTest {
 		Assert.assertNotNull("Getted from DB object should not be null.", entity);
 		Assert.assertEquals("Id for inserted and selected objects should be the same.", room.getId(), entity.getId());
 		Assert.assertEquals("Inserted object is not the object which getted from database.", room, entity);
-		commonService.delete(insertedRoomDetails, insertedRoomDetails.getId());
 		commonService.delete(room, room.getId());
+		commonService.delete(insertedRoomDetails, insertedRoomDetails.getId());
 	}
 
 	@Test

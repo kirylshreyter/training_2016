@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.DateTimeException;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.daoapi.IBookingRequestDao;
-import com.kirylshreyter.training.hotel.daodb.mapper.BookingRequestMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.BookingRequestWithAdditionalInfoMapper;
 import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
 import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
@@ -42,13 +40,6 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 	private NotNullChecker notNullChecker;
 
 	@Override
-	public BookingRequest get(Long id) {
-
-		return jdbcTemplate.queryForObject("SELECT * FROM booking_request WHERE id = ?", new Object[] { id },
-				new BookingRequestMapper());
-	}
-
-	@Override
 	public Long insert(BookingRequest entity) {
 		LOGGER.info("Trying to create booking request in table booking_request ...");
 		if (notNullChecker.BookingRequestNotNullChecker(entity)) {
@@ -60,7 +51,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 					final String INSERT_SQL = "INSERT INTO booking_request (room_id,client_id,arrival_date,departure_date) VALUES (?,?,?,?)";
 
 					KeyHolder keyHolder = new GeneratedKeyHolder();
-					
+
 					jdbcTemplate.update(new PreparedStatementCreator() {
 						@Override
 						public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -88,54 +79,19 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 	}
 
 	@Override
-	public void update(BookingRequest entity) {
+	public Boolean update(BookingRequest entity) {
 		LOGGER.info("Trying to update booking request with id = {} in table booking_request.", entity.getId());
 		if (notNullChecker.BookingRequestNotNullChecker(entity)) {
-			try {
-				jdbcTemplate.update(
-						"UPDATE booking_request SET room_id, client_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
-						entity.getRoomId(), entity.getClientId(), entity.getArrivalDate(), entity.getDepartureDate(),
-						entity.getId());
-			} catch (DataIntegrityViolationException e) {
-				StringBuilder sb = new StringBuilder();
-				sb.append("Cannot update booking request with id = ");
-				sb.append(entity.getId());
-				sb.append(". Some of changed fields does not exist.");
-				throw new DataIntegrityViolationException(sb.toString());
-			}
+			jdbcTemplate.update(
+					"UPDATE booking_request SET room_id, client_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
+					entity.getRoomId(), entity.getClientId(), entity.getArrivalDate(), entity.getDepartureDate(),
+					entity.getId());
 			LOGGER.info("Booking Request was updated, id = {}", entity.getId());
-		}
-	}
-
-	@Override
-	public void delete(Long id) {
-		LOGGER.info("Trying to delete booking request with id = {} from table booking_request.", id);
-		Integer deletedRows = null;
-		try {
-			deletedRows = jdbcTemplate.update("DELETE FROM booking_request WHERE id = ?", id);
-		} catch (DataIntegrityViolationException e) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Cannot delete booking request with id = ");
-			sb.append(id);
-			sb.append(". This booking request id-key is used as foreign key in other table.");
-			throw new DataIntegrityViolationException(sb.toString());
-		}
-		if (deletedRows == 0) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Booking Request was NOT deleted. Booking Request with id = ");
-			sb.append(id);
-			sb.append(" does not exist.");
-			LOGGER.info(sb.toString());
-			throw new RuntimeException(sb.toString());
+			return true;
 		} else {
-			LOGGER.info("Booking Request with id = {} was deleted.", id);
+			return false;
 		}
 
-	}
-
-	@Override
-	public List<BookingRequest> getAll() {
-		return jdbcTemplate.query("SELECT * FROM booking_request", new BookingRequestMapper());
 	}
 
 	@Override

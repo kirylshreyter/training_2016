@@ -1,8 +1,5 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -32,24 +29,8 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 	}
 
 	@Override
-	public void update(BookingRequest bookingRequest) {
-		iBookingRequestDao.update(bookingRequest);
-	}
-
-	@Override
-	public BookingRequest get(Long id) {
-		return iBookingRequestDao.get(id);
-	}
-
-	@Override
-	public List<BookingRequest> getAll() {
-		List<BookingRequest> BookingRequestList = new ArrayList<BookingRequest>(iBookingRequestDao.getAll());
-		return BookingRequestList;
-	}
-
-	@Override
-	public void delete(Long id) {
-		iBookingRequestDao.delete(id);
+	public Boolean update(BookingRequest bookingRequest) {
+		return iBookingRequestDao.update(bookingRequest);
 	}
 
 	@Override
