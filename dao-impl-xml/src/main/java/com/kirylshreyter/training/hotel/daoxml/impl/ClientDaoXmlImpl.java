@@ -18,28 +18,6 @@ public class ClientDaoXmlImpl implements IClientDao {
 	@Inject
 	private Common common;
 
-	// private File file;
-
-	/*
-	 * @Override public Book get(Long id) { List<Book> allBooks =
-	 * readCollection();
-	 * 
-	 * for (Book book : allBooks) { if (book.getId().equals(id)) { return book;
-	 * } } return null; }
-	 */
-
-	/*
-	 * @Override public void delete(Long id) { List<Book> allBooks =
-	 * readCollection();
-	 * 
-	 * List<Book> newList = new ArrayList<>(); // TODO: don't iterate whole
-	 * collection for (Book book : allBooks) { if (!book.getId().equals(id)) {
-	 * newList.add(book); } } writeCollection(newList); }
-	 */
-
-	/*
-	 * @Override public List<Book> getAll() { return readCollection(); }
-	 */
 	@Override
 	public Long insert(Client entity) {
 		List<Client> allClients = readCollection(entity);
@@ -52,11 +30,6 @@ public class ClientDaoXmlImpl implements IClientDao {
 		writeCollection(allClients);
 		return id;
 	}
-
-	/*
-	 * @Override public void update(Book entity) { // TODO throw new
-	 * UnsupportedOperationException(); }
-	 */
 
 	private List<Client> readCollection(Client entity) {
 		try {
@@ -81,32 +54,8 @@ public class ClientDaoXmlImpl implements IClientDao {
 	}
 
 	@Override
-	public Client get(Long id) {
-		List<Client> allClients = readCollection(new Client());
-		for (Client client : allClients) {
-			if (client.getId().equals(id)) {
-				return client;
-			}
-		}
-		return null;
-	}
-
-	@Override
 	public Boolean update(Client entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public Boolean delete(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Client> getAll() {
-		Client client = new Client();
-		return readCollection(client);
-	}
-
 }

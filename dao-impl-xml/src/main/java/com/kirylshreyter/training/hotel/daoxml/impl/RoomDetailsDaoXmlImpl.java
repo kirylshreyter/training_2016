@@ -19,17 +19,6 @@ public class RoomDetailsDaoXmlImpl implements IRoomDetailsDao {
 	private Common common;
 
 	@Override
-	public RoomDetails get(Long id) {
-		List<RoomDetails> allRoomDetails = readCollection(new RoomDetails());
-		for (RoomDetails roomDetails : allRoomDetails) {
-			if (roomDetails.getId().equals(id)) {
-				return roomDetails;
-			}
-		}
-		return null;
-	}
-
-	@Override
 	public Long insert(RoomDetails entity) {
 		List<RoomDetails> allRoomDetails = readCollection(entity);
 		Long id = getNextId(allRoomDetails);
@@ -47,20 +36,6 @@ public class RoomDetailsDaoXmlImpl implements IRoomDetailsDao {
 		return null;
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public Boolean delete(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-		
-
-	}
-
-	@Override
-	public List<RoomDetails> getAll() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private List<RoomDetails> readCollection(RoomDetails entity) {

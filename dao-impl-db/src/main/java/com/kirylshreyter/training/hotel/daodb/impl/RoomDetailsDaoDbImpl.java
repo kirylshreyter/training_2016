@@ -32,10 +32,8 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 	@Override
 	public Long insert(RoomDetails entity) {
 		LOGGER.info("Trying to create room details in table room_details...");
-
 		if (notNullChecker.RoomDetailsNotNullChecker(entity)) {
 			final String INSERT_SQL = "INSERT INTO room_details (number_of_places,cost_per_night,room_type,additional_information) VALUES (?,?,?,?)";
-
 			KeyHolder keyHolder = new GeneratedKeyHolder();
 			jdbcTemplate.update(new PreparedStatementCreator() {
 				@Override
@@ -50,10 +48,12 @@ public class RoomDetailsDaoDbImpl implements IRoomDetailsDao {
 			}, keyHolder);
 			;
 			entity.setId(keyHolder.getKey().longValue());
+			Long insertedId = entity.getId();
+			LOGGER.info("Room details was created, id = {}", insertedId);
+			return insertedId;
+		} else {
+			return null;
 		}
-		Long insertedId = entity.getId();
-		LOGGER.info("Room details was created, id = {}", insertedId);
-		return insertedId;
 	}
 
 	@Override

@@ -1,12 +1,9 @@
 package com.kirylshreyter.training.hotel.daodb.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.stereotype.Component;
 
 import com.kirylshreyter.training.hotel.commons.AvailableRoom;
 import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
@@ -31,11 +28,11 @@ import com.kirylshreyter.training.hotel.datamodel.Room;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 
-@Component
 public class MapperInitializer {
-	
-	public Map<Object, Object> initializeMapper() {
-		Map<Object, Object> map = new HashMap<>();
+
+	public static final Map<Object, Object> MAPPERS_MAP = new HashMap<>();
+
+	static {
 		List<Object> arrayOfDatamodelObjects = new ArrayList<Object>();
 		arrayOfDatamodelObjects.add(new AvailableRoom());
 		arrayOfDatamodelObjects.add(new BookingRequest());
@@ -63,10 +60,8 @@ public class MapperInitializer {
 		arrayOfMappers.add(new RoomWithAdditionalInfoMapper());
 
 		for (int i = 0; i < arrayOfDatamodelObjects.size(); i++) {
-			map.put(arrayOfDatamodelObjects.get(i).getClass().getName(), arrayOfMappers.get(i).getClass().getName());
+			MAPPERS_MAP.put(arrayOfDatamodelObjects.get(i).getClass().getName(),
+					arrayOfMappers.get(i).getClass().getName());
 		}
-		return Collections.unmodifiableMap(map);
-
 	}
-
 }

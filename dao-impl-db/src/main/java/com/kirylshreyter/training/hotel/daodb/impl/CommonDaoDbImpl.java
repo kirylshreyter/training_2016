@@ -24,46 +24,34 @@ public class CommonDaoDbImpl implements ICommon {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommonDaoDbImpl.class);
 
-	@Inject
-	private JdbcTemplate jdbcTemplate;
+	Map<Object, Object> map = MapperInitializer.MAPPERS_MAP;
 
 	@Inject
-	private MapperInitializer mapperInitializer;
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public <T> Object get(Object obj, Long id) {
 
-		Map<Object, Object> map = mapperInitializer.initializeMapper();
 		Object object = map.get(obj.getClass().getName());
 		Class<?> modelClass = null;
 		try {
 			modelClass = Class.forName(object.toString());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		Object objectModel = null;
 		try {
 			objectModel = modelClass.newInstance();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		String SELECT_SQL = "SELECT * FROM %s WHERE id = %s";
 		String resultTable = null;
-
 		resultTable = configureAffectedTableName(obj);
 		SELECT_SQL = String.format(SELECT_SQL, resultTable, id);
-
-		try {
-			return jdbcTemplate.queryForObject(SELECT_SQL, (RowMapper<T>) objectModel);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-
-		}
+		return jdbcTemplate.queryForObject(SELECT_SQL, (RowMapper<T>) objectModel);
 	}
 
 	private String configureAffectedTableName(Object obj) {
@@ -85,7 +73,7 @@ public class CommonDaoDbImpl implements ICommon {
 
 	@Override
 	public Boolean delete(Object obj, Long id) {
-		
+
 		String fs = "Trying to delete %s with id = %s.";
 
 		LOGGER.info(String.format(fs, obj.getClass().getSimpleName().toLowerCase(), id));
@@ -102,11 +90,8 @@ public class CommonDaoDbImpl implements ICommon {
 			deletedRows = jdbcTemplate.update(SELECT_SQL);
 
 		} catch (DataIntegrityViolationException e) {
-			String s = "Cannot delete %s with id = %s. Id-key of this object is used as foreign key in other table.";
-			LOGGER.info(String.format(s, obj.getClass().getSimpleName().toLowerCase(), id));
 			return false;
 		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
 			return false;
 		}
 		if (deletedRows == 0) {
@@ -121,25 +106,21 @@ public class CommonDaoDbImpl implements ICommon {
 	}
 
 	@Override
-	public  <T> List<T> getAll(Object obj) {
-		Map<Object, Object> map = mapperInitializer.initializeMapper();
+	public <T> List<T> getAll(Object obj) {
 		Object object = map.get(obj.getClass().getName());
 		Class<?> modelClass = null;
 		try {
 			modelClass = Class.forName(object.toString());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		Object objectModel = null;
 		try {
 			objectModel = modelClass.newInstance();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 		String SELECT_SQL = "SELECT * FROM %s";
 		String resultTable = null;

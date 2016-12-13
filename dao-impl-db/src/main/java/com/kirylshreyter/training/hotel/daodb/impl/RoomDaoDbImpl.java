@@ -1,7 +1,5 @@
 package com.kirylshreyter.training.hotel.daodb.impl;
 
-import static java.lang.Math.toIntExact;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,7 +12,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,30 +45,27 @@ public class RoomDaoDbImpl implements IRoomDao {
 	public Long insert(Room entity) {
 		LOGGER.info("Trying to create room in table room ...");
 		if (notNullChecker.RoomNotNullChecker(entity)) {
-			try {
-				final String INSERT_SQL = "INSERT INTO room (number, room_details_id, status) VALUES (?,?,?)";
+			final String INSERT_SQL = "INSERT INTO room (number, room_details_id, status) VALUES (?,?,?)";
 
-				KeyHolder keyHolder = new GeneratedKeyHolder();
-				jdbcTemplate.update(new PreparedStatementCreator() {
-					@Override
-					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-						PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
-						ps.setString(1, entity.getNumber());
-						ps.setLong(2, entity.getRoomDetailsId());
-						ps.setString(3, entity.getStatus());
-						return ps;
-					}
-				}, keyHolder);
-				;
-				entity.setId(keyHolder.getKey().longValue());
-			} catch (DataIntegrityViolationException e) {
-				throw new DataIntegrityViolationException(
-						"Cannot create room. Some of inserted fields contents a value that provide links to not existing parent rows.");
-			}
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			jdbcTemplate.update(new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+					PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
+					ps.setString(1, entity.getNumber());
+					ps.setLong(2, entity.getRoomDetailsId());
+					ps.setString(3, entity.getStatus());
+					return ps;
+				}
+			}, keyHolder);
+			;
+			entity.setId(keyHolder.getKey().longValue());
+			Long insertedId = entity.getId();
+			LOGGER.info("Room was created, id = {}", insertedId);
+			return insertedId;
+		} else {
+			return null;
 		}
-		Long insertedId = entity.getId();
-		LOGGER.info("Room was created, id = {}", insertedId);
-		return insertedId;
 	}
 
 	@Override
@@ -95,17 +89,12 @@ public class RoomDaoDbImpl implements IRoomDao {
 			roomWithAdditionalInfo = jdbcTemplate.queryForObject(
 					"SELECT r.id,r.number,r.status,rd.room_type,rd.number_of_places,rd.cost_per_night,rd.additional_information FROM room r JOIN room_details rd ON (r.room_details_id=r.id) WHERE r.id=?",
 					new Object[] { id }, new RoomWithAdditionalInfoMapper());
+			return roomWithAdditionalInfo;
 		} catch (EmptyResultDataAccessException e) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Record with id = ");
-			sb.append(id);
-			sb.append(" does not exist.");
-			throw new EmptyResultDataAccessException(sb.toString(), toIntExact(id));
+			return null;
 		} catch (CannotGetJdbcConnectionException e) {
-			throw new CannotGetJdbcConnectionException("Cannot establish connection to database.", new SQLException());
+			return null;
 		}
-
-		return roomWithAdditionalInfo;
 	}
 
 	@Override

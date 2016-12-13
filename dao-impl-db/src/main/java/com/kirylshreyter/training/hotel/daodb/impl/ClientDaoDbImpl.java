@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -36,34 +35,26 @@ public class ClientDaoDbImpl implements IClientDao {
 		if (notNullChecker.clientNotNullChecker(entity)) {
 			final String INSERT_SQL = "INSERT INTO client (first_name, last_name, address,phone,email) VALUES (?,?,?,?,?)";
 			KeyHolder keyHolder = new GeneratedKeyHolder();
-			try {
-				jdbcTemplate.update(new PreparedStatementCreator() {
-					@Override
-					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-						PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
-						ps.setString(1, entity.getFirstName());
-						ps.setString(2, entity.getLastName());
-						ps.setString(3, entity.getAddress());
-						ps.setString(4, entity.getPhone());
-						ps.setString(5, entity.getEmail());
-						return ps;
-					}
-				}, keyHolder);
-				;
-				entity.setId(keyHolder.getKey().longValue());
-
-				LOGGER.info("Client was created, id = {}", entity.getId());
-				return entity.getId();
-			}
-
-			catch (CannotGetJdbcConnectionException e) {
-				throw new CannotGetJdbcConnectionException("Cannot establish connection to database.",
-						new SQLException());
-			}
-		} else {
-			throw new NullPointerException("Some of parameters is null");
+			jdbcTemplate.update(new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+					PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
+					ps.setString(1, entity.getFirstName());
+					ps.setString(2, entity.getLastName());
+					ps.setString(3, entity.getAddress());
+					ps.setString(4, entity.getPhone());
+					ps.setString(5, entity.getEmail());
+					return ps;
+				}
+			}, keyHolder);
+			;
+			entity.setId(keyHolder.getKey().longValue());
+			LOGGER.info("Client was created, id = {}", entity.getId());
+			return entity.getId();
+		}else{
+			return null;
 		}
-
+		
 	}
 
 	@Override

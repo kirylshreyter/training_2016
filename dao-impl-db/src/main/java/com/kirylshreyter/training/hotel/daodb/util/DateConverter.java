@@ -43,5 +43,4 @@ public class DateConverter {
 		return (diff.get(Calendar.DAY_OF_YEAR) - 1);
 
 	}
-
 }

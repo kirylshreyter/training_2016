@@ -15,33 +15,16 @@ import com.kirylshreyter.training.hotel.datamodel.Room;
 public class RoomDaoXmlImpl implements IRoomDao{
 
 	@Override
-	public Room get(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Long insert(Room entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void update(Room entity) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<Room> getAll() {
-		// TODO Auto-generated method stub
+	public Boolean update(Room entity) {
 		return null;
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

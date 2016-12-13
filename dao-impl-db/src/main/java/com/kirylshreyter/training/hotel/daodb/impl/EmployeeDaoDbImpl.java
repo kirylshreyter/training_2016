@@ -50,10 +50,12 @@ public class EmployeeDaoDbImpl implements IEmployeeDao {
 			}, keyHolder);
 			;
 			entity.setId(keyHolder.getKey().longValue());
+			Long insertedId = entity.getId();
+			LOGGER.info("Employee was created, id = {}", insertedId);
+			return insertedId;
+		} else {
+			return null;
 		}
-		Long insertedId = entity.getId();
-		LOGGER.info("Employee was created, id = {}", insertedId);
-		return insertedId;
 
 	}
 
