@@ -1,8 +1,5 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -25,20 +22,7 @@ public class RoomDetailsServiceImpl implements RoomDetailsService {
 
 	@Override
 	public Boolean update(RoomDetails roomDetails) {
-
 		return roomDetailsDao.update(roomDetails);
 
 	}
-
-	@Override
-	public List<RoomDetails> getAll() {
-		List<RoomDetails> roomDetailsList = new ArrayList<RoomDetails>(roomDetailsDao.getAll());
-		return roomDetailsList;
-	}
-
-	@Override
-	public Boolean delete(Long id) {
-		return roomDetailsDao.delete(id);
-	}
-
 }

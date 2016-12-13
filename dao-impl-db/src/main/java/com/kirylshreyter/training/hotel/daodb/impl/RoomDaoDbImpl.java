@@ -29,7 +29,6 @@ import com.kirylshreyter.training.hotel.commons.RoomWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.daoapi.IRoomDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.AvailableRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.NotAvailableRoomMapper;
-import com.kirylshreyter.training.hotel.daodb.mapper.RoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomWithAdditionalInfoMapper;
 import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.Room;
@@ -44,26 +43,6 @@ public class RoomDaoDbImpl implements IRoomDao {
 
 	@Inject
 	private NotNullChecker notNullChecker;
-
-	@Override
-	public Room get(Long id) {
-		Room room = new Room();
-		try {
-			room = jdbcTemplate.queryForObject("SELECT * FROM room WHERE id = ?", new Object[] { id },
-					new RoomMapper());
-		} catch (EmptyResultDataAccessException e) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Record with id = ");
-			sb.append(id);
-			sb.append(" does not exist.");
-			throw new EmptyResultDataAccessException(sb.toString(), toIntExact(id));
-		} catch (CannotGetJdbcConnectionException e) {
-			throw new CannotGetJdbcConnectionException("Cannot establish connection to database.", new SQLException());
-		}
-
-		return room;
-
-	}
 
 	@Override
 	public Long insert(Room entity) {
@@ -96,54 +75,17 @@ public class RoomDaoDbImpl implements IRoomDao {
 	}
 
 	@Override
-	public void update(Room entity) {
+	public Boolean update(Room entity) {
 
 		LOGGER.info("Trying to update room with id = {} in table room.", entity.getId());
 		if (notNullChecker.RoomNotNullChecker(entity)) {
-			try {
-				jdbcTemplate.update("UPDATE room SET number = ?, room_details_id = ?, status = ? where id = ?",
-						entity.getNumber(), entity.getRoomDetailsId(), entity.getStatus(), entity.getId());
-			} catch (DataIntegrityViolationException e) {
-				StringBuilder sb = new StringBuilder();
-				sb.append("Cannot update room with id = ");
-				sb.append(entity.getId());
-				sb.append(". Some of changed fields does not exist.");
-				throw new DataIntegrityViolationException(sb.toString());
-			}
+			jdbcTemplate.update("UPDATE room SET number = ?, room_details_id = ?, status = ? where id = ?",
+					entity.getNumber(), entity.getRoomDetailsId(), entity.getStatus(), entity.getId());
 			LOGGER.info("Room was updated, id = {}", entity.getId());
-		}
-
-	}
-
-	@Override
-	public void delete(Long id) {
-		LOGGER.info("Trying to delete room with id = {} from table room.", id);
-		Integer deletedRows = null;
-		try {
-			deletedRows = jdbcTemplate.update("DELETE FROM employee WHERE id = ?", id);
-		} catch (DataIntegrityViolationException e) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Cannot delete room with id = ");
-			sb.append(id);
-			sb.append(". This room id-key is used as foreign key in other table.");
-			throw new DataIntegrityViolationException(sb.toString());
-		}
-		if (deletedRows == 0) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Room was NOT deleted. Room with id = ");
-			sb.append(id);
-			sb.append(" does not exist.");
-			LOGGER.info(sb.toString());
-			throw new RuntimeException(sb.toString());
+			return true;
 		} else {
-			LOGGER.info("Room with id = {} was deleted.", id);
+			return false;
 		}
-
-	}
-
-	@Override
-	public List<Room> getAll() {
-		return jdbcTemplate.query("SELECT * FROM room", new RoomMapper());
 	}
 
 	@Override

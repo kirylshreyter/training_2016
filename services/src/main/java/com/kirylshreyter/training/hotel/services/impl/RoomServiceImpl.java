@@ -1,6 +1,5 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.kirylshreyter.training.hotel.commons.AvailableRoom;
+import com.kirylshreyter.training.hotel.commons.NotAvailableRoom;
 import com.kirylshreyter.training.hotel.commons.RoomWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.daoapi.IRoomDao;
 import com.kirylshreyter.training.hotel.datamodel.Room;
@@ -26,24 +26,8 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public void update(Room room) {
-		roomDao.update(room);
-	}
-
-	@Override
-	public Room get(Long id) {
-		return roomDao.get(id);
-	}
-
-	@Override
-	public List<Room> getAll() {
-		List<Room> roomList = new ArrayList<Room>(roomDao.getAll());
-		return roomList;
-	}
-
-	@Override
-	public void delete(Long id) {
-		roomDao.delete(id);
+	public Boolean update(Room room) {
+		return roomDao.update(room);
 	}
 
 	@Override
@@ -54,6 +38,11 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public List<AvailableRoom> getAllAvailableRoom(Date arrivalDate, Date departureDate, Integer numberOfPlaces) {
 		return roomDao.getAllAvailableRoom(arrivalDate, departureDate, numberOfPlaces);
+	}
+
+	@Override
+	public List<NotAvailableRoom> getAllNotAvailableRoom(Date arrivalDate, Date departureDate) {
+		return roomDao.getAllNotAvailableRoom(arrivalDate, departureDate);
 	}
 
 }

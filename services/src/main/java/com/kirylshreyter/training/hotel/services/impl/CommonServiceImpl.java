@@ -1,5 +1,7 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +23,11 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public Boolean delete(Object obj, Long id) {
 		return iCommon.delete(obj, id);
+	}
+
+	@Override
+	public <T> List<T> getAll(Object obj) {
+		return iCommon.getAll(obj);
 	}
 
 }

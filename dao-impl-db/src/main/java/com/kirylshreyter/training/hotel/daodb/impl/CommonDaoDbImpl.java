@@ -119,4 +119,39 @@ public class CommonDaoDbImpl implements ICommon {
 			return true;
 		}
 	}
+
+	@Override
+	public  <T> List<T> getAll(Object obj) {
+		Map<Object, Object> map = mapperInitializer.initializeMapper();
+		Object object = map.get(obj.getClass().getName());
+		Class<?> modelClass = null;
+		try {
+			modelClass = Class.forName(object.toString());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Object objectModel = null;
+		try {
+			objectModel = modelClass.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String SELECT_SQL = "SELECT * FROM %s";
+		String resultTable = null;
+
+		resultTable = configureAffectedTableName(obj);
+		SELECT_SQL = String.format(SELECT_SQL, resultTable);
+
+		try {
+			return jdbcTemplate.query(SELECT_SQL, (RowMapper<T>) objectModel);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+
+		}
+	}
 }

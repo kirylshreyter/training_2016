@@ -35,7 +35,7 @@ public class ClientController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Object>> getAll() {
-		List<Object> all = new ArrayList<Object>(clientService.getAll());
+		List<Object> all = new ArrayList<Object>(commonService.getAll(new Client()));
 		List<Object> converted = new ArrayList<>();
 		for (Object object : all) {
 			converted.add(this.conversionService.convert(object, Object.class));

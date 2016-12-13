@@ -1,7 +1,5 @@
 package com.kirylshreyter.training.hotel.services.impl;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -15,6 +13,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Inject
 	private IClientDao clientDao;
+	
 
 	@Override
 	public Long save(Client client) {
@@ -26,15 +25,4 @@ public class ClientServiceImpl implements ClientService {
 		return clientDao.update(client);
 
 	}
-
-	@Override
-	public List<Client> getAll() {
-		return clientDao.getAll();
-	}
-
-	@Override
-	public Boolean delete(Long id) {
-		return clientDao.delete(id);
-	}
-
 }

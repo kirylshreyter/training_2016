@@ -10,15 +10,9 @@ import com.kirylshreyter.training.hotel.datamodel.Room;
 
 public interface IRoomDao {
 
-	Room get(Long id);
-
 	Long insert(Room entity);
 
-	void update(Room entity);
-
-	void delete(Long id);
-
-	List<Room> getAll();
+	Boolean update(Room entity);
 
 	RoomWithAdditionalInfo getWithAdditionalInfo(Long id);
 

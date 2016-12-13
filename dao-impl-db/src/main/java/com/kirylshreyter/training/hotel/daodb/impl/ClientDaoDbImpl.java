@@ -3,13 +3,11 @@ package com.kirylshreyter.training.hotel.daodb.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -18,7 +16,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.daoapi.IClientDao;
-import com.kirylshreyter.training.hotel.daodb.mapper.ClientMapper;
 import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.Client;
 
@@ -83,42 +80,4 @@ public class ClientDaoDbImpl implements IClientDao {
 			return false;
 		}
 	}
-
-	@Override
-	public Boolean delete(Long id) {
-		LOGGER.info("Trying to delete client with id = {} from table client.", id);
-		Integer deletedRows = null;
-		try {
-			deletedRows = jdbcTemplate.update("DELETE FROM client WHERE id = ?", id);
-		} catch (DataIntegrityViolationException e) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Cannot delete client with id = ");
-			sb.append(id);
-			sb.append(". This client id-key is used as foreign key in other table.");
-			LOGGER.info(sb.toString());
-			return false;
-			// throw new DataIntegrityViolationException(sb.toString());
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
-			return false;
-		}
-		if (deletedRows == 0) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Client was NOT deleted. Client with id = ");
-			sb.append(id);
-			sb.append(" does not exist.");
-			LOGGER.info(sb.toString());
-			return false;
-			// throw new RuntimeException(sb.toString());
-		} else {
-			LOGGER.info("Client with id = {} was deleted.", id);
-			return true;
-		}
-	}
-
-	@Override
-	public List<Client> getAll() {
-		return jdbcTemplate.query("SELECT * FROM client", new ClientMapper());
-	}
-
 }
