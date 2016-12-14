@@ -24,8 +24,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kirylshreyter.training.hotel.web.cache.CacheMethods;
 
 @RestController
-@RequestMapping("/")
-public class CommonController {
+@RequestMapping("/secured")
+public class SecuredController {
 
 	@Inject
 	private CacheMethods cacheMethods;
@@ -64,9 +64,6 @@ public class CommonController {
 					Object id = getMethod.invoke(object);
 				}
 			}*/
-			
-			
-			
 			
 		} catch (Exception ex) {
 			return new ResponseEntity<List<Object>>(HttpStatus.NOT_FOUND);

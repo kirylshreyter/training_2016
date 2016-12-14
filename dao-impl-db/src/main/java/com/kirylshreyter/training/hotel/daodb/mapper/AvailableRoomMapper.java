@@ -17,7 +17,7 @@ public class AvailableRoomMapper implements RowMapper<AvailableRoom> {
 		entity.setCostPerNight(rs.getDouble("cost_per_night"));
 		entity.setAdditionalInformation(rs.getString("additional_information"));
 		entity.setRoomId(rs.getLong("room_id"));
-		return null;
+		return entity;
 	}
 
 }

@@ -148,7 +148,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	// @Ignore
+	//@Ignore
 	@Transactional
 	public void getTest() {
 		Employee employee = prepareEmployeeWithInsert();
@@ -178,7 +178,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	// @Ignore
+	//@Ignore
 	@Transactional
 	public void deleteTest() {
 		Employee employee = prepareEmployeeWithInsert();
@@ -205,7 +205,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	// @Ignore
+	//@Ignore
 	@Transactional
 	public void saveTest() {
 		Employee employee = prepareEmployeeWithInsert();
@@ -235,7 +235,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	// @Ignore
+	//@Ignore
 	@Transactional
 	public void updateTest() {
 		Employee employee = prepareEmployeeWithInsert();
@@ -273,7 +273,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	// @Ignore
+	//@Ignore
 	@Transactional
 	public void getAllTest() {
 		List<RoomOrder> objectList = createObjectListWithInsert();
@@ -282,5 +282,4 @@ public class RoomOrderServiceTest {
 				selectedObjects);
 		deleteObjectList(selectedObjects);
 	}
-
 }

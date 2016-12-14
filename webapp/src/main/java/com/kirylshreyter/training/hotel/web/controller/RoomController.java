@@ -38,19 +38,31 @@ public class RoomController {
 		for (Object object : all) {
 			converted.add(this.conversionService.convert(object, Object.class));
 		}
-		return new ResponseEntity<List<Object>>(converted, HttpStatus.OK);
+		if (converted.size() > 0) {
+			return new ResponseEntity<List<Object>>(converted, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<Object>>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@RequestMapping(value = "/{roomId}", method = RequestMethod.GET)
 	public ResponseEntity<Object> get(@PathVariable Long roomId) {
 		Object object = commonService.get(new Room(), roomId);
-		return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
+		if (object != null) {
+			return new ResponseEntity<Object>(this.conversionService.convert(object, Object.class), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Long> create(@RequestBody RoomModel roomModel) {
 		Long id = roomService.save((Room) this.conversionService.convert(roomModel, Object.class));
-		return new ResponseEntity<Long>(id, HttpStatus.CREATED);
+		if (id != null) {
+			return new ResponseEntity<Long>(id, HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<Long>(HttpStatus.NOT_FOUND);
+		}
 
 	}
 
@@ -58,12 +70,21 @@ public class RoomController {
 	public ResponseEntity<Boolean> update(@RequestBody RoomModel roomModel, @PathVariable Long roomId) {
 		Room room = (Room) this.conversionService.convert(roomModel, Object.class);
 		room.setId(roomId);
-		return new ResponseEntity<Boolean>(roomService.update(room), HttpStatus.OK);
+		Boolean status = roomService.update(room);
+		if (status == true) {
+			return new ResponseEntity<Boolean>(status, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Boolean>(status, HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@RequestMapping(value = "/{roomId}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> delete(@PathVariable Long roomId) {
-		return new ResponseEntity<Boolean>(commonService.delete(new Room(), roomId), HttpStatus.OK);
+		Boolean status = commonService.delete(new Room(), roomId);
+		if (status == true) {
+			return new ResponseEntity<Boolean>(status, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Boolean>(status, HttpStatus.NOT_FOUND);
+		}
 	}
-
 }

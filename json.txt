@@ -1,0 +1,5 @@
+{
+"arrivalDate": "2016-12-20",
+"departureDate": "2016-12-25",
+"numberOfPlaces": 1
+}
