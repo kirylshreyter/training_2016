@@ -52,7 +52,7 @@ public class RoomOrderServiceTest {
 	@Transactional
 	private List<RoomOrder> createObjectListWithInsert() {
 		List<RoomOrder> objectList = new ArrayList<RoomOrder>();
-		for (Integer i = 0; i < 5; i++) {
+		for (Integer i = 0; i < 25; i++) {
 			Employee employee = prepareEmployeeWithInsert();
 			RoomDetails roomDetails = prepareRoomDetailsWithInsert();
 			Room room = new Room();
@@ -148,7 +148,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional
 	public void getTest() {
 		Employee employee = prepareEmployeeWithInsert();
@@ -178,7 +178,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional
 	public void deleteTest() {
 		Employee employee = prepareEmployeeWithInsert();
@@ -205,7 +205,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional
 	public void saveTest() {
 		Employee employee = prepareEmployeeWithInsert();
@@ -235,7 +235,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional
 	public void updateTest() {
 		Employee employee = prepareEmployeeWithInsert();
@@ -273,7 +273,7 @@ public class RoomOrderServiceTest {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	@Transactional
 	public void getAllTest() {
 		List<RoomOrder> objectList = createObjectListWithInsert();
@@ -281,5 +281,10 @@ public class RoomOrderServiceTest {
 		Assert.assertEquals("List of selected objects is different from list of inserted objects.", objectList,
 				selectedObjects);
 		deleteObjectList(selectedObjects);
+	}
+	@Test
+	public void createList() {
+		createObjectListWithInsert();
+		
 	}
 }

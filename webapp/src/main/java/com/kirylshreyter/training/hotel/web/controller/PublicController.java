@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,7 @@ public class PublicController {
 	 * return new ResponseEntity<List<Object>>(converted, HttpStatus.OK); }
 	 */
 
+	@CrossOrigin(origins = "http://localhost:8888")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<List<Object>> getAvailableRoom(@RequestBody String body) {
 

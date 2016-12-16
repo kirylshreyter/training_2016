@@ -14,6 +14,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +35,10 @@ public class PublicController {
 		Integer i = ThreadLocalRandom.current().nextInt(1, 3 + 1);
 		return i;
 	}
-
+	@CrossOrigin(origins = "http://localhost:8888")
 	@RequestMapping(value = "/{entityTree}", method = RequestMethod.POST)
-	private ResponseEntity<List<Object>> getAllAvailableRoom(@RequestBody String data,@PathVariable String entityTree) {
+	private ResponseEntity<List<Object>> getAllAvailableRoom(@RequestBody String data,
+			@PathVariable String entityTree) {
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost request = null;
 		List<Object> myObject = null;
@@ -48,10 +50,8 @@ public class PublicController {
 			request.addHeader("Content-Type", "application/json; charset=UTF-8");
 			request.setEntity(bae);
 			HttpResponse response = httpClient.execute(request);
-			if (response.getStatusLine().getStatusCode() == 200) {
-				ObjectMapper objectMapper = new ObjectMapper();
-				myObject = (List<Object>) objectMapper.readValue(response.getEntity().getContent(), Object.class);
-			}
+			ObjectMapper objectMapper = new ObjectMapper();
+			myObject = (List<Object>) objectMapper.readValue(response.getEntity().getContent(), Object.class);
 			// JSONObject json = new JSONObject(myObject);
 			// System.out.println(json.toString());
 			// JSONArray dataJsonArray = json.getJSONArray("id");
@@ -74,107 +74,90 @@ public class PublicController {
 
 	}
 
-	/*@RequestMapping(value = "/{entityTree}/{entityId}", method = RequestMethod.GET)
-	private ResponseEntity<Object> getEntity(@PathVariable String entityTree, @PathVariable Long entityId) {
-		Object entityFromCache = cacheMethods.getEntityFromCache(entityTree + entityId);
-		if (entityFromCache == null) {
-			HttpClient httpClient = HttpClientBuilder.create().build();
-			HttpGet request = null;
-			Object myObject = null;
-			String temportyUrl = "http://127.0.0.1:808" + getRandomServer() + "/%s/%s";
-			try {
-				String targetUrl = String.format(temportyUrl, entityTree, entityId.toString());
-				request = new HttpGet(targetUrl);
-				HttpResponse response = httpClient.execute(request);
-				ObjectMapper objectMapper = new ObjectMapper();
-				myObject = objectMapper.readValue(response.getEntity().getContent(), Object.class);
-			} catch (Exception ex) {
-				return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
-			}
-			cacheMethods.putEntityInCache(entityTree + entityId, myObject);
-			System.out.println("Object returned from database");
-			return new ResponseEntity<Object>(myObject, HttpStatus.OK);
-		} else {
-			System.out.println("Object returned from cache");
-			return new ResponseEntity<Object>(entityFromCache, HttpStatus.OK);
-		}
-
-	}
-
-	@RequestMapping(value = "/{entityTree}", method = RequestMethod.POST)
-	private ResponseEntity<Long> createEntity(@RequestBody String data, @PathVariable String entityTree) {
-		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost request = null;
-		Long myObject = null;
-		String temportyUrl = "http://127.0.0.1:808" + getRandomServer() + "/%s";
-		try {
-			String targetUrl = String.format(temportyUrl, entityTree);
-			request = new HttpPost(targetUrl);
-			ByteArrayEntity bae = new ByteArrayEntity(data.getBytes());
-			request.addHeader("Content-Type", "application/json; charset=UTF-8");
-			request.setEntity(bae);
-			HttpResponse response = httpClient.execute(request);
-			ObjectMapper objectMapper = new ObjectMapper();
-			myObject = objectMapper.readValue(response.getEntity().getContent(), Long.class);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		Object entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree + myObject);
-		if (entityFromCacheToModify != null) {
-			cacheMethods.deleteFromCache(entityTree + myObject);
-			System.out.println("Object was modified and deleted from cache.");
-		}
-		return new ResponseEntity<Long>(myObject, HttpStatus.CREATED);
-	}
-
-	@RequestMapping(value = "/{entityTree}/{entityId}", method = RequestMethod.POST)
-	private ResponseEntity<Boolean> updateEntity(@RequestBody String data, @PathVariable String entityTree,
-			@PathVariable Long entityId) {
-		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost request = null;
-		Boolean myObject = null;
-		String temportyUrl = "http://127.0.0.1:808" + getRandomServer() + "/%s/%s";
-		try {
-			String targetUrl = String.format(temportyUrl, entityTree, entityId.toString());
-			request = new HttpPost(targetUrl);
-			ByteArrayEntity bae = new ByteArrayEntity(data.getBytes());
-			request.addHeader("Content-Type", "application/json; charset=UTF-8");
-			request.setEntity(bae);
-			HttpResponse response = httpClient.execute(request);
-			ObjectMapper objectMapper = new ObjectMapper();
-			myObject = objectMapper.readValue(response.getEntity().getContent(), Boolean.class);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		Object entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree + entityId);
-		if (entityFromCacheToModify != null) {
-			cacheMethods.deleteFromCache(entityTree + entityId);
-			System.out.println("Object was modified and deleted from cache.");
-		}
-		return new ResponseEntity<Boolean>(myObject, HttpStatus.CREATED);
-	}
-
-	@RequestMapping(value = "/{entityTree}/{entityId}", method = RequestMethod.DELETE)
-	private ResponseEntity<Boolean> deleteEntity(@PathVariable String entityTree, @PathVariable Long entityId) {
-		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpDelete request = null;
-		Boolean myObject = null;
-		String temportyUrl = "http://127.0.0.1:808" + getRandomServer() + "/%s/%s";
-		try {
-			String targetUrl = String.format(temportyUrl, entityTree, entityId.toString());
-			request = new HttpDelete(targetUrl);
-			HttpResponse response = httpClient.execute(request);
-			ObjectMapper objectMapper = new ObjectMapper();
-			myObject = objectMapper.readValue(response.getEntity().getContent(), Boolean.class);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		Object entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree + entityId);
-		if (entityFromCacheToModify != null) {
-			cacheMethods.deleteFromCache(entityTree + entityId);
-			System.out.println("Object was modified and deleted from cache.");
-		}
-		return new ResponseEntity<Boolean>(myObject, HttpStatus.OK);
-
-	}*/
+	/*
+	 * @RequestMapping(value = "/{entityTree}/{entityId}", method =
+	 * RequestMethod.GET) private ResponseEntity<Object> getEntity(@PathVariable
+	 * String entityTree, @PathVariable Long entityId) { Object entityFromCache
+	 * = cacheMethods.getEntityFromCache(entityTree + entityId); if
+	 * (entityFromCache == null) { HttpClient httpClient =
+	 * HttpClientBuilder.create().build(); HttpGet request = null; Object
+	 * myObject = null; String temportyUrl = "http://127.0.0.1:808" +
+	 * getRandomServer() + "/%s/%s"; try { String targetUrl =
+	 * String.format(temportyUrl, entityTree, entityId.toString()); request =
+	 * new HttpGet(targetUrl); HttpResponse response =
+	 * httpClient.execute(request); ObjectMapper objectMapper = new
+	 * ObjectMapper(); myObject =
+	 * objectMapper.readValue(response.getEntity().getContent(), Object.class);
+	 * } catch (Exception ex) { return new
+	 * ResponseEntity<Object>(HttpStatus.NOT_FOUND); }
+	 * cacheMethods.putEntityInCache(entityTree + entityId, myObject);
+	 * System.out.println("Object returned from database"); return new
+	 * ResponseEntity<Object>(myObject, HttpStatus.OK); } else {
+	 * System.out.println("Object returned from cache"); return new
+	 * ResponseEntity<Object>(entityFromCache, HttpStatus.OK); }
+	 * 
+	 * }
+	 * 
+	 * @RequestMapping(value = "/{entityTree}", method = RequestMethod.POST)
+	 * private ResponseEntity<Long> createEntity(@RequestBody String
+	 * data, @PathVariable String entityTree) { HttpClient httpClient =
+	 * HttpClientBuilder.create().build(); HttpPost request = null; Long
+	 * myObject = null; String temportyUrl = "http://127.0.0.1:808" +
+	 * getRandomServer() + "/%s"; try { String targetUrl =
+	 * String.format(temportyUrl, entityTree); request = new
+	 * HttpPost(targetUrl); ByteArrayEntity bae = new
+	 * ByteArrayEntity(data.getBytes()); request.addHeader("Content-Type",
+	 * "application/json; charset=UTF-8"); request.setEntity(bae); HttpResponse
+	 * response = httpClient.execute(request); ObjectMapper objectMapper = new
+	 * ObjectMapper(); myObject =
+	 * objectMapper.readValue(response.getEntity().getContent(), Long.class); }
+	 * catch (Exception ex) { ex.printStackTrace(); } Object
+	 * entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree +
+	 * myObject); if (entityFromCacheToModify != null) {
+	 * cacheMethods.deleteFromCache(entityTree + myObject);
+	 * System.out.println("Object was modified and deleted from cache."); }
+	 * return new ResponseEntity<Long>(myObject, HttpStatus.CREATED); }
+	 * 
+	 * @RequestMapping(value = "/{entityTree}/{entityId}", method =
+	 * RequestMethod.POST) private ResponseEntity<Boolean>
+	 * updateEntity(@RequestBody String data, @PathVariable String entityTree,
+	 * 
+	 * @PathVariable Long entityId) { HttpClient httpClient =
+	 * HttpClientBuilder.create().build(); HttpPost request = null; Boolean
+	 * myObject = null; String temportyUrl = "http://127.0.0.1:808" +
+	 * getRandomServer() + "/%s/%s"; try { String targetUrl =
+	 * String.format(temportyUrl, entityTree, entityId.toString()); request =
+	 * new HttpPost(targetUrl); ByteArrayEntity bae = new
+	 * ByteArrayEntity(data.getBytes()); request.addHeader("Content-Type",
+	 * "application/json; charset=UTF-8"); request.setEntity(bae); HttpResponse
+	 * response = httpClient.execute(request); ObjectMapper objectMapper = new
+	 * ObjectMapper(); myObject =
+	 * objectMapper.readValue(response.getEntity().getContent(), Boolean.class);
+	 * } catch (Exception ex) { ex.printStackTrace(); } Object
+	 * entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree +
+	 * entityId); if (entityFromCacheToModify != null) {
+	 * cacheMethods.deleteFromCache(entityTree + entityId);
+	 * System.out.println("Object was modified and deleted from cache."); }
+	 * return new ResponseEntity<Boolean>(myObject, HttpStatus.CREATED); }
+	 * 
+	 * @RequestMapping(value = "/{entityTree}/{entityId}", method =
+	 * RequestMethod.DELETE) private ResponseEntity<Boolean>
+	 * deleteEntity(@PathVariable String entityTree, @PathVariable Long
+	 * entityId) { HttpClient httpClient = HttpClientBuilder.create().build();
+	 * HttpDelete request = null; Boolean myObject = null; String temportyUrl =
+	 * "http://127.0.0.1:808" + getRandomServer() + "/%s/%s"; try { String
+	 * targetUrl = String.format(temportyUrl, entityTree, entityId.toString());
+	 * request = new HttpDelete(targetUrl); HttpResponse response =
+	 * httpClient.execute(request); ObjectMapper objectMapper = new
+	 * ObjectMapper(); myObject =
+	 * objectMapper.readValue(response.getEntity().getContent(), Boolean.class);
+	 * } catch (Exception ex) { ex.printStackTrace(); } Object
+	 * entityFromCacheToModify = cacheMethods.getEntityFromCache(entityTree +
+	 * entityId); if (entityFromCacheToModify != null) {
+	 * cacheMethods.deleteFromCache(entityTree + entityId);
+	 * System.out.println("Object was modified and deleted from cache."); }
+	 * return new ResponseEntity<Boolean>(myObject, HttpStatus.OK);
+	 * 
+	 * }
+	 */
 }

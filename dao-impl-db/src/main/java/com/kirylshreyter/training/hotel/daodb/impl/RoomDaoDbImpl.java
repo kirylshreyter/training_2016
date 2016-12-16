@@ -119,7 +119,7 @@ public class RoomDaoDbImpl implements IRoomDao {
 		ListIterator<NotAvailableRoom> a = listOfNotAvailableRoom.listIterator();
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				"SELECT r.id as room_id,r.number,rd.room_type,rd.cost_per_night,rd.additional_information FROM room r JOIN room_details rd ON (r.room_details_id=rd.id) WHERE status='1' AND rd.number_of_places='");
+				"SELECT r.id as room_id,r.number,rd.room_type,rd.cost_per_night,rd.additional_information FROM room r JOIN room_details rd ON (r.room_details_id=rd.id) WHERE status='available' AND rd.number_of_places='");
 		sb.append(numberOfPlaces);
 		sb.append("'");
 		try {

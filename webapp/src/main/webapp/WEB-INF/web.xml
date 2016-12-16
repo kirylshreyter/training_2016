@@ -28,9 +28,6 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-
-
-
 	<!-- <filter> <filter-name>LogFilter</filter-name> <filter-class>com.kirylshreyter.training.hotel.web.filter.CommonFilter</filter-class> 
 		</filter> <filter-mapping> <filter-name>LogFilter</filter-name> <url-pattern>/</url-pattern> 
 		</filter-mapping> -->
