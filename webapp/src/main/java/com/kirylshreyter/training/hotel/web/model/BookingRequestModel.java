@@ -1,6 +1,6 @@
 package com.kirylshreyter.training.hotel.web.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class BookingRequestModel extends ParentModel {
 

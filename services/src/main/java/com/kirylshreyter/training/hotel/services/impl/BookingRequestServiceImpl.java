@@ -16,17 +16,9 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 
 	@Inject
 	private IBookingRequestDao iBookingRequestDao;
+	
 	@Inject
 	private IClientDao iClientDao;
-
-	@Override
-	public Long save(BookingRequest bookingRequest, Client client) {
-		Long insertedClientId = null;
-			insertedClientId = iClientDao.insert(client);
-		bookingRequest.setClientId(insertedClientId);
-		Long insertedBookingRequestId = iBookingRequestDao.insert(bookingRequest);
-		return insertedBookingRequestId;
-	}
 
 	@Override
 	public Boolean update(BookingRequest bookingRequest) {
@@ -41,6 +33,13 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 	@Override
 	public BookingRequestWithAdditionalInfo getWithAdditionalInfo(Long id) {
 		return iBookingRequestDao.getWithAdditionalInfo(id);
+	}
+
+	@Override
+	public Long save2steps(BookingRequest bookingRequest, Client client) {
+		Long clientId = iClientDao.insert(client);
+		bookingRequest.setClientId(clientId);
+		return iBookingRequestDao.insert(bookingRequest);
 	}
 
 }

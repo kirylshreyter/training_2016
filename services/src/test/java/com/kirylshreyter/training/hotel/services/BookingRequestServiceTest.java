@@ -211,7 +211,7 @@ public class BookingRequestServiceTest {
 	}
 
 	@Test
-	// @Ignore
+	//@Ignore
 	public void getAllTest() {
 		List<BookingRequest> objectList = createObjectListWithInsert();
 		List<BookingRequest> selectedObjects = new ArrayList<BookingRequest>(

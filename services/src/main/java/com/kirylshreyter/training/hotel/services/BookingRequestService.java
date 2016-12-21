@@ -10,8 +10,8 @@ public interface BookingRequestService {
 
 	Boolean update(BookingRequest bookingRequest);
 
-	Long save(BookingRequest bookingRequest, Client client);
-
 	BookingRequestWithAdditionalInfo getWithAdditionalInfo(Long id);
+	
+	Long save2steps(BookingRequest bookingRequest, Client client);
 
 }

@@ -12,10 +12,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,24 +50,6 @@ public class SecuredController {
 			HttpResponse response = httpClient.execute(request);
 			ObjectMapper objectMapper = new ObjectMapper();
 			myObject = (List<Object>) objectMapper.readValue(response.getEntity().getContent(), Object.class);
-			//JSONObject json = new JSONObject(myObject);
-			//System.out.println(json.toString());
-//			JSONArray dataJsonArray = json.getJSONArray("id");
-//			System.out.println(dataJsonArray.toString());
-				/*for(int i=0; i<dataJsonArray.length; i++) {
-				   JSONObject dataObj = dataJsonArray.get(i);
-				   String id = dataObj.getString("id");
-				   //Similarly you can extract for other fields.
-				}
-				Object object = getInstance.getInstanceFromObjectString(response.getFirstHeader("entity").getValue());
-				for (int i = 0; i < myObject.size(); i++){
-					Object obj = myObject.get(i);
-					Method getMethod;
-					getMethod = object.getClass().getMethod("getId");
-					Object id = getMethod.invoke(object);
-				}
-			}*/
-			
 		} catch (Exception ex) {
 			return new ResponseEntity<List<Object>>(HttpStatus.NOT_FOUND);
 		}
@@ -175,5 +160,7 @@ public class SecuredController {
 		return new ResponseEntity<Boolean>(myObject, HttpStatus.OK);
 
 	}
+
+	
 
 }

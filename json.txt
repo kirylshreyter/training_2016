@@ -1,5 +1,0 @@
-{
-"arrivalDate": "2017-12-20",
-"departureDate": "2017-12-25",
-"numberOfPlaces": 1
-}

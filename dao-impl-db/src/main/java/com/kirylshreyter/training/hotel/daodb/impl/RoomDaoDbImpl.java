@@ -27,6 +27,7 @@ import com.kirylshreyter.training.hotel.daoapi.IRoomDao;
 import com.kirylshreyter.training.hotel.daodb.mapper.AvailableRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.NotAvailableRoomMapper;
 import com.kirylshreyter.training.hotel.daodb.mapper.RoomWithAdditionalInfoMapper;
+import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
 import com.kirylshreyter.training.hotel.daodb.util.NotNullChecker;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 
@@ -40,6 +41,9 @@ public class RoomDaoDbImpl implements IRoomDao {
 
 	@Inject
 	private NotNullChecker notNullChecker;
+
+	@Inject
+	private DateConverter dateConverter;
 
 	@Override
 	public Long insert(Room entity) {
@@ -99,15 +103,16 @@ public class RoomDaoDbImpl implements IRoomDao {
 
 	@Override
 	public List<NotAvailableRoom> getAllNotAvailableRoom(Date arrivalDate, Date departureDate) {
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT room_id FROM booking_request WHERE ((arrival_date = '");
-		sb.append(departureDate);
+		sb.append(dateConverter.javaUtilDateToJavaSqlDateConverter(departureDate));
 		sb.append("') OR (arrival_date<'");
-		sb.append(departureDate);
+		sb.append(dateConverter.javaUtilDateToJavaSqlDateConverter(departureDate));
 		sb.append("')) AND ((departure_date='");
-		sb.append(arrivalDate);
+		sb.append(dateConverter.javaUtilDateToJavaSqlDateConverter(arrivalDate));
 		sb.append("') OR (departure_date>'");
-		sb.append(arrivalDate);
+		sb.append(dateConverter.javaUtilDateToJavaSqlDateConverter(arrivalDate));
 		sb.append("'))");
 		return jdbcTemplate.query(sb.toString(), new NotAvailableRoomMapper());
 	}
@@ -124,10 +129,10 @@ public class RoomDaoDbImpl implements IRoomDao {
 		sb.append("'");
 		try {
 			while (a.hasNext() == true) {
-				sb.append(" AND id<>");
+				sb.append(" AND r.id<>'");
 				int i = a.nextIndex();
-				NotAvailableRoom notAvailableRoom = listOfNotAvailableRoom.get(i);
-				sb.append(notAvailableRoom.getRoomId());
+				sb.append(listOfNotAvailableRoom.get(i).getRoomId());
+				sb.append("'");
 				a.next();
 			}
 		} catch (Exception e) {
@@ -136,11 +141,15 @@ public class RoomDaoDbImpl implements IRoomDao {
 			sb.append(";");
 		}
 		List<AvailableRoom> listAvailableRoom = new ArrayList<AvailableRoom>();
-		listAvailableRoom = jdbcTemplate.query(sb.toString(), new AvailableRoomMapper());
+		try {
+			listAvailableRoom = jdbcTemplate.query(sb.toString(), new AvailableRoomMapper());
+		} catch (Exception e) {
+			return null;
+		}
 		if (listAvailableRoom.isEmpty()) {
-			throw new RuntimeException("Sorry, we are have not free numbers for you on this dates.");
+			return null;
 		} else {
-			return jdbcTemplate.query(sb.toString(), new AvailableRoomMapper());
+			return listAvailableRoom;
 		}
 	}
 }

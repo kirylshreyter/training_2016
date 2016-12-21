@@ -6,6 +6,109 @@ import com.kirylshreyter.training.hotel.datamodel.AbstractModel;
 
 public class BookingRequestWithAdditionalInfo extends AbstractModel {
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((additionalInformation == null) ? 0 : additionalInformation.hashCode());
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
+		result = prime * result + ((costPerNight == null) ? 0 : costPerNight.hashCode());
+		result = prime * result + ((departureDate == null) ? 0 : departureDate.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((number == null) ? 0 : number.hashCode());
+		result = prime * result + ((numberOfPlaces == null) ? 0 : numberOfPlaces.hashCode());
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + ((roomType == null) ? 0 : roomType.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BookingRequestWithAdditionalInfo other = (BookingRequestWithAdditionalInfo) obj;
+		if (additionalInformation == null) {
+			if (other.additionalInformation != null)
+				return false;
+		} else if (!additionalInformation.equals(other.additionalInformation))
+			return false;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (arrivalDate == null) {
+			if (other.arrivalDate != null)
+				return false;
+		} else if (!arrivalDate.equals(other.arrivalDate))
+			return false;
+		if (costPerNight == null) {
+			if (other.costPerNight != null)
+				return false;
+		} else if (!costPerNight.equals(other.costPerNight))
+			return false;
+		if (departureDate == null) {
+			if (other.departureDate != null)
+				return false;
+		} else if (!departureDate.equals(other.departureDate))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (number == null) {
+			if (other.number != null)
+				return false;
+		} else if (!number.equals(other.number))
+			return false;
+		if (numberOfPlaces == null) {
+			if (other.numberOfPlaces != null)
+				return false;
+		} else if (!numberOfPlaces.equals(other.numberOfPlaces))
+			return false;
+		if (phone == null) {
+			if (other.phone != null)
+				return false;
+		} else if (!phone.equals(other.phone))
+			return false;
+		if (roomType == null) {
+			if (other.roomType != null)
+				return false;
+		} else if (!roomType.equals(other.roomType))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		return true;
+	}
+
 	private String number;
 	private String roomType;
 	private Integer numberOfPlaces;
