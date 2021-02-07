@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<common.project.version>1.0</common.project.version>
 		<spring.version>5.3.3</spring.version>
-		<jetty9.version>9.3.14.v20161028</jetty9.version>
+		<jetty9.version>11.0.0</jetty9.version>
 		<java.version>15</java.version>
 	</properties>
 
