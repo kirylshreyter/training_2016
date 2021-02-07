@@ -1,15 +1,2 @@
-.project
-datamodel/.settings/
-webapp/.settings/
-services/.settings/
-services/.classpath
-webapp/.classpath
-.settings/org.eclipse.core.resources.prefs
-dao-api/.settings/
-dao-api/.classpath
-dao-impl-db/.classpath
-.settings/
-datamodel/.classpath
-dao-impl-xml/.classpath
 .idea
 parent-project.iml

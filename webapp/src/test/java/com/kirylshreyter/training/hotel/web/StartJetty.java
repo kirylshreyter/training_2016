@@ -39,7 +39,6 @@ public class StartJetty {
         server.addConnector(http);
 
         WebAppContext bb = new WebAppContext();
-        bb.setOverrideDescriptor("src/main/webapp/WEB-INF/web.xml");
         bb.setServer(server);
         bb.setContextPath("/");
         bb.setWar("src/main/webapp");
