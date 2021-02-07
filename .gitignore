@@ -12,3 +12,4 @@ dao-impl-db/.classpath
 datamodel/.classpath
 dao-impl-xml/.classpath
 .idea
+parent-project.iml
