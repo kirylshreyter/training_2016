@@ -11,3 +11,4 @@ dao-impl-db/.classpath
 .settings/
 datamodel/.classpath
 dao-impl-xml/.classpath
+.idea

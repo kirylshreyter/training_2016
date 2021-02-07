@@ -8,7 +8,7 @@ import com.google.common.cache.CacheBuilder;
 public class CacheInitializer {
 
 	static Cache<String, Object> CACHE;
-	private static final int TIMEOUT_IN_MILLIS = 600000;//10 minutes TTL for CacheEntity
+	private static final int TIMEOUT_IN_MILLIS = 600000;
 
 	static {
 		CACHE = CacheBuilder.newBuilder().expireAfterWrite(TIMEOUT_IN_MILLIS, TimeUnit.MILLISECONDS).build();

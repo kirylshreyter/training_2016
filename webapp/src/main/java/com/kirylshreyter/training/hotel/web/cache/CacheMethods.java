@@ -1,42 +1,33 @@
 package com.kirylshreyter.training.hotel.web.cache;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class CacheMethods {
 
-	private ConcurrentMap<String, Object> concurrentMap = CacheInitializer.CACHE.asMap();
+    private final ConcurrentMap<String, Object> concurrentMap = CacheInitializer.CACHE.asMap();
 
-	public void putEntityInCache(String key, Object value) {
-		if (concurrentMap.get(key) == null) {
-			concurrentMap.put(key, value);
-		}
-	}
+    public void putEntityInCache(String key, Object value) {
+        concurrentMap.putIfAbsent(key, value);
+    }
 
-	public void putMultiplyEntityInCache(List<String> listKey, List<Object> listValue) {
-		for (int i = 0; i < concurrentMap.size(); i++) {
-			String key = listKey.get(i);
-			if (concurrentMap.get(key) == null) {
-				concurrentMap.put(key, listValue.get(i));
-			}
-		}
+    public void putMultiplyEntityInCache(List<String> listKey, List<Object> listValue) {
+        for (int i = 0; i < concurrentMap.size(); i++) {
+            String key = listKey.get(i);
+            int finalI = i;
+            concurrentMap.computeIfAbsent(key, k -> listValue.get(finalI));
+        }
 
-	}
+    }
 
-	public boolean deleteFromCache(String key) {
-		if (concurrentMap.remove(key) == null) {
-			return false;
-		} else {
-			return true;
-		}
+    public void deleteFromCache(String key) {
+        concurrentMap.remove(key);
+    }
 
-	}
-
-	public Object getEntityFromCache(String key) {
-		return concurrentMap.get(key);
-	}
-
+    public Object getEntityFromCache(String key) {
+        return concurrentMap.get(key);
+    }
 }
