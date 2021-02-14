@@ -4,7 +4,6 @@ CREATE TABLE "client" (
 	"last_name" varchar(255) NOT NULL,
 	"phone" varchar(16) NOT NULL,
 	"email" varchar(128) NOT NULL,
-	"address" varchar(512) NOT NULL,
 	CONSTRAINT "client_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -55,7 +54,6 @@ CREATE TABLE "employee" (
 	"last_name" varchar(255) NOT NULL,
 	"phone" varchar(16) NOT NULL,
 	"email" varchar(128) NOT NULL,
-	"address" varchar(512) NOT NULL,
 	"position" varchar(16) NOT NULL,
 	CONSTRAINT "employee_pk" PRIMARY KEY ("id")
 ) WITH (

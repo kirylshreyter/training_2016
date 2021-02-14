@@ -31,7 +31,6 @@ public class ClientServiceTest {
 		client.setLastName("Иванов");
 		client.setPhone("+375297800000");
 		client.setEmail("ivanov@gmail.com");
-		client.setAddress("Республика Беларусь, г. Минск, ул. В. Хоружей, д.1, кв. 1");
 		client.setId(clientService.save(client));
 		return client;
 	}
@@ -42,7 +41,6 @@ public class ClientServiceTest {
 		client.setLastName("Иванов");
 		client.setPhone("+375297800000");
 		client.setEmail("ivanov@gmail.com");
-		client.setAddress("Республика Беларусь, г. Минск, ул. В. Хоружей, д.1, кв. 1");
 		return client;
 	}
 
@@ -122,7 +120,6 @@ public class ClientServiceTest {
 				gettedEntity);
 		Client newEntity = new Client();
 		newEntity = prepareWithoutInsertEntity();
-		newEntity.setAddress("г. Гродно");
 		Assert.assertNotEquals("Objects must have a differense.", newEntity, gettedEntity);
 		newEntity.setId(gettedEntity.getId());
 		Assert.assertTrue("Object in DB was not updated.", clientService.update(newEntity));

@@ -31,14 +31,12 @@ public class RoomOrderWithAdditionalInfo extends AbstractModel {
 	private String ClientLastName;
 	private String ClientPhone;
 	private String ClientEmail;
-	private String ClientAddress;
 	private Date arrivalDate;
 	private Date departureDate;
 	private String EmployeeFirstName;
 	private String EmployeeLastName;
 	private String EmployeePhone;
 	private String EmployeeEmail;
-	private String EmployeeAddress;
 	private String EmployeePosition;
 	private Double totalCost;
 
@@ -193,21 +191,6 @@ public class RoomOrderWithAdditionalInfo extends AbstractModel {
 	}
 
 	/**
-	 * @return the clientAddress
-	 */
-	public String getClientAddress() {
-		return ClientAddress;
-	}
-
-	/**
-	 * @param clientAddress
-	 *            the clientAddress to set
-	 */
-	public void setClientAddress(String clientAddress) {
-		ClientAddress = clientAddress;
-	}
-
-	/**
 	 * @return the arrivalDate
 	 */
 	public Date getArrivalDate() {
@@ -295,21 +278,6 @@ public class RoomOrderWithAdditionalInfo extends AbstractModel {
 	 */
 	public void setEmployeeEmail(String employeeEmail) {
 		EmployeeEmail = employeeEmail;
-	}
-
-	/**
-	 * @return the employeeAddress
-	 */
-	public String getEmployeeAddress() {
-		return EmployeeAddress;
-	}
-
-	/**
-	 * @param employeeAddress
-	 *            the employeeAddress to set
-	 */
-	public void setEmployeeAddress(String employeeAddress) {
-		EmployeeAddress = employeeAddress;
 	}
 
 	/**

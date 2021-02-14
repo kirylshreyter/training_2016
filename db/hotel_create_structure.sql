@@ -4,7 +4,6 @@ CREATE TABLE client (
 	last_name VARCHAR(256) NOT NULL,
 	phone VARCHAR(16) NOT NULL,
 	email VARCHAR(128) NOT NULL,
-	address VARCHAR(512) NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -23,7 +22,6 @@ CREATE TABLE employee (
 	last_name VARCHAR(256) NOT NULL,
 	phone VARCHAR(16) NOT NULL,
 	email VARCHAR(128) NOT NULL,
-	address VARCHAR(512) NOT NULL,
 	position VARCHAR(16) NOT NULL,
 	PRIMARY KEY (id)
 );

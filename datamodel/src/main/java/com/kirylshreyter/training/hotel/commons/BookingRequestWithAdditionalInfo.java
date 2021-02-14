@@ -14,7 +14,6 @@ public class BookingRequestWithAdditionalInfo extends AbstractModel {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((additionalInformation == null) ? 0 : additionalInformation.hashCode());
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
 		result = prime * result + ((costPerNight == null) ? 0 : costPerNight.hashCode());
 		result = prime * result + ((departureDate == null) ? 0 : departureDate.hashCode());
@@ -45,11 +44,6 @@ public class BookingRequestWithAdditionalInfo extends AbstractModel {
 			if (other.additionalInformation != null)
 				return false;
 		} else if (!additionalInformation.equals(other.additionalInformation))
-			return false;
-		if (address == null) {
-			if (other.address != null)
-				return false;
-		} else if (!address.equals(other.address))
 			return false;
 		if (arrivalDate == null) {
 			if (other.arrivalDate != null)
@@ -119,7 +113,6 @@ public class BookingRequestWithAdditionalInfo extends AbstractModel {
 	private String lastName;
 	private String phone;
 	private String email;
-	private String address;
 	private Date arrivalDate;
 	private Date departureDate;
 
@@ -271,21 +264,6 @@ public class BookingRequestWithAdditionalInfo extends AbstractModel {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address
-	 *            the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	/**

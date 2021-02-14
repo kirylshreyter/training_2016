@@ -88,7 +88,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 	public BookingRequestWithAdditionalInfo getWithAdditionalInfo(Long id) {
 		BookingRequestWithAdditionalInfo bookingRequestWithAdditionalInfo = new BookingRequestWithAdditionalInfo();
 		bookingRequestWithAdditionalInfo = jdbcTemplate.queryForObject(
-				"SELECT br.id,br.arrival_date,br.departure_date,r.number,r.status,rd.room_type,rd.number_of_places,rd.cost_per_night,rd.additional_information,c.first_name,c.last_name,c.phone,c.email,c.address FROM booking_request br JOIN room r ON (br.room_id=r.id) JOIN client c ON (br.client_id=c.id) JOIN room_details rd ON (r.room_details_id=rd.id) WHERE br.id=?",
+				"SELECT br.id,br.arrival_date,br.departure_date,r.number,r.status,rd.room_type,rd.number_of_places,rd.cost_per_night,rd.additional_information,c.first_name,c.last_name,c.phone,c.email FROM booking_request br JOIN room r ON (br.room_id=r.id) JOIN client c ON (br.client_id=c.id) JOIN room_details rd ON (r.room_details_id=rd.id) WHERE br.id=?",
 				new Object[] { id }, new BookingRequestWithAdditionalInfoMapper());
 		return bookingRequestWithAdditionalInfo;
 	}

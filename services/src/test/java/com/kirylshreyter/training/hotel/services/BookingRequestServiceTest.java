@@ -104,7 +104,6 @@ public class BookingRequestServiceTest {
 		client.setLastName("Иванов");
 		client.setPhone("+375297800000");
 		client.setEmail("ivanov@gmail.com");
-		client.setAddress("Республика Беларусь, г. Минск, ул. В. Хоружей, д.1, кв. 1");
 		client.setId(clientService.save(client));
 		return client;
 	}

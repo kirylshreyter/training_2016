@@ -23,7 +23,6 @@ public class BookingRequestWithAdditionalInfoMapper implements RowMapper<Booking
 		entity.setLastName(rs.getString("last_name"));
 		entity.setPhone(rs.getString("phone"));
 		entity.setEmail(rs.getString("email"));
-		entity.setAddress(rs.getString("address"));
 		entity.setArrivalDate(rs.getDate("arrival_date"));
 		entity.setDepartureDate(rs.getDate("departure_date"));
 		return entity;

@@ -32,7 +32,7 @@ public class EmployeeDaoDbImpl implements IEmployeeDao {
 	public Long insert(Employee entity) {
 		LOGGER.info("Trying to create employee in table employee ...");
 		if (notNullChecker.EmployeeNotNullChecker(entity)) {
-			final String INSERT_SQL = "INSERT INTO employee (first_name,last_name,phone,email,address,position) VALUES (?,?,?,?,?,?)";
+			final String INSERT_SQL = "INSERT INTO employee (first_name,last_name,phone,email,position) VALUES (?,?,?,?,?)";
 
 			KeyHolder keyHolder = new GeneratedKeyHolder();
 			jdbcTemplate.update(new PreparedStatementCreator() {
@@ -43,7 +43,6 @@ public class EmployeeDaoDbImpl implements IEmployeeDao {
 					ps.setString(2, entity.getLastName());
 					ps.setString(3, entity.getPhone());
 					ps.setString(4, entity.getEmail());
-					ps.setString(5, entity.getAddress());
 					ps.setString(6, entity.getPosition());
 					return ps;
 				}
@@ -64,9 +63,9 @@ public class EmployeeDaoDbImpl implements IEmployeeDao {
 		LOGGER.info("Trying to update employee with id = {} in table employee...", entity.getId());
 		if (notNullChecker.EmployeeNotNullChecker(entity)) {
 			jdbcTemplate.update(
-					"UPDATE employee SET first_name = ?, last_name = ?, phone = ?, email = ?, position = ?, address = ?  where id = ?",
+					"UPDATE employee SET first_name = ?, last_name = ?, phone = ?, email = ?, position = ? where id = ?",
 					entity.getFirstName(), entity.getLastName(), entity.getPhone(), entity.getEmail(),
-					entity.getPosition(), entity.getAddress(), entity.getId());
+					entity.getPosition(), entity.getId());
 			LOGGER.info("Employee was updated, id = {}", entity.getId());
 			return true;
 		} else {

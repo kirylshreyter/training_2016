@@ -9,7 +9,6 @@ public class Client extends AbstractModel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
@@ -29,11 +28,6 @@ public class Client extends AbstractModel {
 		if (getClass() != obj.getClass())
 			return false;
 		Client other = (Client) obj;
-		if (address == null) {
-			if (other.address != null)
-				return false;
-		} else if (!address.equals(other.address))
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -61,7 +55,6 @@ public class Client extends AbstractModel {
 	private String lastName;
 	private String phone;
 	private String email;
-	private String address;
 
 	/**
 	 * @return the firstName
@@ -121,20 +114,5 @@ public class Client extends AbstractModel {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address
-	 *            the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
 	}
 }

@@ -33,7 +33,7 @@ public class ClientDaoDbImpl implements IClientDao {
 	public Long insert(Client entity) {
 		LOGGER.info("Trying to create client in table client...");
 		if (notNullChecker.clientNotNullChecker(entity)) {
-			final String INSERT_SQL = "INSERT INTO client (first_name, last_name, address,phone,email) VALUES (?,?,?,?,?)";
+			final String INSERT_SQL = "INSERT INTO client (first_name, last_name, phone,email) VALUES (?,?,?,?)";
 			KeyHolder keyHolder = new GeneratedKeyHolder();
 			jdbcTemplate.update(new PreparedStatementCreator() {
 				@Override
@@ -41,7 +41,6 @@ public class ClientDaoDbImpl implements IClientDao {
 					PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
 					ps.setString(1, entity.getFirstName());
 					ps.setString(2, entity.getLastName());
-					ps.setString(3, entity.getAddress());
 					ps.setString(4, entity.getPhone());
 					ps.setString(5, entity.getEmail());
 					return ps;
@@ -62,8 +61,8 @@ public class ClientDaoDbImpl implements IClientDao {
 		LOGGER.info("Trying to update client with id = {} in table client...", entity.getId());
 		if (notNullChecker.clientNotNullChecker(entity)) {
 			jdbcTemplate.update(
-					"UPDATE client SET first_name = ?, last_name = ?, address = ?, phone = ?, email = ?  where id = ?",
-					entity.getFirstName(), entity.getLastName(), entity.getAddress(), entity.getPhone(),
+					"UPDATE client SET first_name = ?, last_name = ?, phone = ?, email = ?  where id = ?",
+					entity.getFirstName(), entity.getLastName(), entity.getPhone(),
 					entity.getEmail(), entity.getId());
 			LOGGER.info("Client was updated, id = {}", entity.getId());
 			return true;

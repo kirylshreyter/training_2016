@@ -30,7 +30,6 @@ public class EmployeeServiceTest {
 		employee.setLastName("Иванов");
 		employee.setPhone("+375297800000");
 		employee.setEmail("ivanov@gmail.com");
-		employee.setAddress("Республика Беларусь, г. Минск, ул. В. Хоружей, д.1, кв. 1");
 		employee.setPosition("administrator");
 		employee.setId(employeeService.save(employee));
 		return employee;
@@ -42,7 +41,6 @@ public class EmployeeServiceTest {
 		employee.setLastName("Иванов");
 		employee.setPhone("+375297800000");
 		employee.setEmail("ivanov@gmail.com");
-		employee.setAddress("Республика Беларусь, г. Минск, ул. В. Хоружей, д.1, кв. 1");
 		employee.setPosition("administrator");
 		return employee;
 	}
@@ -123,7 +121,6 @@ public class EmployeeServiceTest {
 				gettedEntity);
 		Employee newEntity = new Employee();
 		newEntity = prepareWithoutInsertEntity();
-		newEntity.setAddress("г. Гродно");
 		Assert.assertNotEquals("Objects must have a differense.", newEntity, gettedEntity);
 		newEntity.setId(gettedEntity.getId());
 		Assert.assertTrue("Object in DB was not updated.", employeeService.update(newEntity));

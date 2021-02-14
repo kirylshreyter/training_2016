@@ -103,7 +103,6 @@ public class AvailableRoomController {
 		clientModel.setLastName(jsonResult.getString("lastName"));
 		clientModel.setPhone(jsonResult.getString("phone"));
 		clientModel.setEmail(jsonResult.getString("email"));
-		clientModel.setAddress(jsonResult.getString("address"));
 		Long clientId = clientService.save((Client) this.conversionService.convert(clientModel, Object.class));
 		BookingRequestModel bookingRequestModel = new BookingRequestModel();
 		bookingRequestModel.setId(jsonResult.getLong("id"));

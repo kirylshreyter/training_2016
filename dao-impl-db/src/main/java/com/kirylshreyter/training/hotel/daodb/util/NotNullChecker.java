@@ -25,9 +25,6 @@ public class NotNullChecker {
 		if (entity.getEmail() == null) {
 			throw new RuntimeException("Client's email is not setted.");
 		}
-		if (entity.getAddress() == null) {
-			throw new RuntimeException("Client's address is not setted.");
-		}
 		return true;
 	}
 
@@ -59,9 +56,6 @@ public class NotNullChecker {
 		}
 		if (entity.getEmail() == null) {
 			throw new RuntimeException("Employee's email is not setted.");
-		}
-		if (entity.getAddress() == null) {
-			throw new RuntimeException("Employee's address is not setted.");
 		}
 		if (entity.getPosition() == null) {
 			throw new RuntimeException("Employee's position is not setted.");

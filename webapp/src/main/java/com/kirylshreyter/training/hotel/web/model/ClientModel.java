@@ -6,7 +6,6 @@ public class ClientModel extends ParentModel {
 	private String lastName;
 	private String phone;
 	private String email;
-	private String address;
 
 	/**
 	 * @return the firstName
@@ -66,20 +65,5 @@ public class ClientModel extends ParentModel {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	/**
-	 * @return the address
-	 */
-	public String getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address
-	 *            the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
 	}
 }
