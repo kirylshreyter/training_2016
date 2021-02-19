@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.datamodel.User;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 import com.thoughtworks.xstream.XStream;
 
@@ -20,7 +20,7 @@ public class Common {
 	@Value("${basePath}")
 	private String basePath;
 
-	public void intialize(Client entity) throws IOException {
+	public void intialize(User entity) throws IOException {
 		initialize(entity);
 	}
 	public void intialize(RoomDetails entity) throws IOException {

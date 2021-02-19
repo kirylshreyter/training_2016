@@ -2,7 +2,7 @@ package com.kirylshreyter.training.hotel.services;
 
 import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
-import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.datamodel.User;
 
 public interface BookingRequestService {
 
@@ -12,6 +12,6 @@ public interface BookingRequestService {
 
 	BookingRequestWithAdditionalInfo getWithAdditionalInfo(Long id);
 	
-	Long save2steps(BookingRequest bookingRequest, Client client);
+	Long save2steps(BookingRequest bookingRequest, User user);
 
 }

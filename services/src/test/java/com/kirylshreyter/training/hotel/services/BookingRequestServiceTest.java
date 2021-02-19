@@ -6,7 +6,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
-import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.datamodel.User;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 
@@ -24,7 +23,7 @@ import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
 public class BookingRequestServiceTest {
 
 	@Inject
-	private ClientService clientService;
+	private UserService userService;
 
 	@Inject
 	private CommonService commonService;
@@ -52,10 +51,10 @@ public class BookingRequestServiceTest {
 			room.setStatus("available");
 			room.setRoomDetailsId(roomDetails.getId());
 			room.setId(roomService.save(room));
-			Client client = prepareClientWithInsert();
+			User user = prepareUserWithInsert();
 			BookingRequest bookingRequest = new BookingRequest();
 			bookingRequest.setRoomId(room.getId());
-			bookingRequest.setClientId(client.getId());
+			bookingRequest.setUserId(user.getId());
 			bookingRequest.setArrivalDate(dateConverter.stringToJavaUtilDateConverter("2017-01-01"));
 			bookingRequest.setDepartureDate(dateConverter.stringToJavaUtilDateConverter("2017-01-05"));
 			Long id = bookingRequestService.save(bookingRequest);
@@ -67,14 +66,14 @@ public class BookingRequestServiceTest {
 
 	@Transactional
 	private void deleteObjectList(List<BookingRequest> selectedObjects) {
-		for (int i = 0; i < selectedObjects.size(); i++) {
-			Long clientId = selectedObjects.get(i).getClientId();
-			Long roomId = selectedObjects.get(i).getRoomId();
+		for (BookingRequest selectedObject : selectedObjects) {
+			Long userId = selectedObject.getUserId();
+			Long roomId = selectedObject.getRoomId();
 			Room room = (Room) commonService.get(new Room(), roomId);
 			RoomDetails roomDetails = (RoomDetails) commonService.get(new RoomDetails(), room.getRoomDetailsId());
-			commonService.delete(new BookingRequest(), selectedObjects.get(i).getId());
+			commonService.delete(new BookingRequest(), selectedObject.getId());
 			commonService.delete(new Room(), roomId);
-			commonService.delete(new Client(), clientId);
+			commonService.delete(new User(), userId);
 			commonService.delete(new RoomDetails(), roomDetails.getId());
 		}
 	}
@@ -98,14 +97,12 @@ public class BookingRequestServiceTest {
 		return room;
 	}
 
-	private Client prepareClientWithInsert() {
-		Client client = new Client();
-		client.setFirstName("Иван");
-		client.setLastName("Иванов");
-		client.setPhone("+375297800000");
-		client.setEmail("ivanov@gmail.com");
-		client.setId(clientService.save(client));
-		return client;
+	private User prepareUserWithInsert() {
+		User user = new User();
+		user.setName("Иван");
+		user.setEmail("ivanov@gmail.com");
+		user.setId(userService.save(user));
+		return user;
 	}
 
 	@Test
@@ -114,10 +111,10 @@ public class BookingRequestServiceTest {
 	public void getTest() {
 		RoomDetails insertedRoomDetails = prepareRoomDetailsWithInsert();
 		Room room = prepareRoomWithInsert(insertedRoomDetails);
-		Client client = prepareClientWithInsert();
+		User user = prepareUserWithInsert();
 		BookingRequest bookingRequest = new BookingRequest();
 		bookingRequest.setRoomId(room.getId());
-		bookingRequest.setClientId(client.getId());
+		bookingRequest.setUserId(user.getId());
 		bookingRequest.setArrivalDate(dateConverter.stringToJavaUtilDateConverter("2017-01-01"));
 		bookingRequest.setDepartureDate(dateConverter.stringToJavaUtilDateConverter("2017-01-05"));
 		bookingRequest.setId(bookingRequestService.save(bookingRequest));
@@ -127,7 +124,7 @@ public class BookingRequestServiceTest {
 				entity.getId());
 		Assert.assertEquals("Inserted object is not the object which getted from database.", bookingRequest, entity);
 		commonService.delete(entity, entity.getId());
-		commonService.delete(client, client.getId());
+		commonService.delete(user, user.getId());
 		commonService.delete(room, room.getId());
 		commonService.delete(insertedRoomDetails, insertedRoomDetails.getId());
 	}
@@ -138,10 +135,10 @@ public class BookingRequestServiceTest {
 	public void deleteTest() {
 		RoomDetails insertedRoomDetails = prepareRoomDetailsWithInsert();
 		Room room = prepareRoomWithInsert(insertedRoomDetails);
-		Client client = prepareClientWithInsert();
+		User user = prepareUserWithInsert();
 		BookingRequest bookingRequest = new BookingRequest();
 		bookingRequest.setRoomId(room.getId());
-		bookingRequest.setClientId(client.getId());
+		bookingRequest.setUserId(user.getId());
 		bookingRequest.setArrivalDate(dateConverter.stringToJavaUtilDateConverter("2017-01-01"));
 		bookingRequest.setDepartureDate(dateConverter.stringToJavaUtilDateConverter("2017-01-05"));
 		bookingRequest.setId(bookingRequestService.save(bookingRequest));
@@ -149,7 +146,7 @@ public class BookingRequestServiceTest {
 		Assert.assertNotNull("Getted from DB object should not be null.", entity);
 		Assert.assertTrue("Object should be deleted, but it's not.",
 				commonService.delete(bookingRequest, bookingRequest.getId()));
-		Assert.assertTrue("Object should be deleted, but it's not.", commonService.delete(client, client.getId()));
+		Assert.assertTrue("Object should be deleted, but it's not.", commonService.delete(user, user.getId()));
 		Assert.assertTrue("Object should be deleted, but it's not.", commonService.delete(room, room.getId()));
 		Assert.assertTrue("Object should be deleted, but it's not.",
 				commonService.delete(insertedRoomDetails, insertedRoomDetails.getId()));
@@ -161,10 +158,10 @@ public class BookingRequestServiceTest {
 	public void saveTest() {
 		RoomDetails insertedRoomDetails = prepareRoomDetailsWithInsert();
 		Room room = prepareRoomWithInsert(insertedRoomDetails);
-		Client client = prepareClientWithInsert();
+		User user = prepareUserWithInsert();
 		BookingRequest bookingRequest = new BookingRequest();
 		bookingRequest.setRoomId(room.getId());
-		bookingRequest.setClientId(client.getId());
+		bookingRequest.setUserId(user.getId());
 		bookingRequest.setArrivalDate(dateConverter.stringToJavaUtilDateConverter("2017-01-01"));
 		bookingRequest.setDepartureDate(dateConverter.stringToJavaUtilDateConverter("2017-01-05"));
 		bookingRequest.setId(bookingRequestService.save(bookingRequest));
@@ -173,7 +170,7 @@ public class BookingRequestServiceTest {
 				entity.getId());
 		Assert.assertEquals("Inserted object is not the object which getted from database.", bookingRequest, entity);
 		commonService.delete(bookingRequest, bookingRequest.getId());
-		commonService.delete(client, client.getId());
+		commonService.delete(user, user.getId());
 		commonService.delete(room, room.getId());
 		commonService.delete(insertedRoomDetails, insertedRoomDetails.getId());
 	}
@@ -184,10 +181,10 @@ public class BookingRequestServiceTest {
 	public void updateTest() {
 		RoomDetails insertedRoomDetails = prepareRoomDetailsWithInsert();
 		Room room = prepareRoomWithInsert(insertedRoomDetails);
-		Client client = prepareClientWithInsert();
+		User user = prepareUserWithInsert();
 		BookingRequest bookingRequest = new BookingRequest();
 		bookingRequest.setRoomId(room.getId());
-		bookingRequest.setClientId(client.getId());
+		bookingRequest.setUserId(user.getId());
 		bookingRequest.setArrivalDate(dateConverter.stringToJavaUtilDateConverter("2017-01-01"));
 		bookingRequest.setDepartureDate(dateConverter.stringToJavaUtilDateConverter("2017-01-05"));
 		bookingRequest.setId(bookingRequestService.save(bookingRequest));
@@ -204,7 +201,7 @@ public class BookingRequestServiceTest {
 		entity = (BookingRequest) commonService.get(new BookingRequest(), bookingRequest.getId());
 		Assert.assertEquals("Objects must to be similar.", bookingRequest, entity);
 		commonService.delete(bookingRequest, bookingRequest.getId());
-		commonService.delete(client, client.getId());
+		commonService.delete(user, user.getId());
 		commonService.delete(room, room.getId());
 		commonService.delete(insertedRoomDetails, insertedRoomDetails.getId());
 	}

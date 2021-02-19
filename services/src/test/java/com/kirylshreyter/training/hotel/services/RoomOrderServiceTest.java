@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
-import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.datamodel.User;
 import com.kirylshreyter.training.hotel.datamodel.Employee;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
@@ -26,7 +26,7 @@ import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 public class RoomOrderServiceTest {
 
 	@Inject
-	private ClientService clientService;
+	private UserService userService;
 
 	@Inject
 	private CommonService commonService;
@@ -60,8 +60,8 @@ public class RoomOrderServiceTest {
 			room.setStatus("available");
 			room.setRoomDetailsId(roomDetails.getId());
 			room.setId(roomService.save(room));
-			Client client = prepareClientWithInsert();
-			BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), client.getId());
+			User user = prepareUserWithInsert();
+			BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), user.getId());
 			RoomOrder roomOrder = new RoomOrder();
 			roomOrder.setBookingRequestId(bookingRequest.getId());
 			roomOrder.setEmployeeId(employee.getId());
@@ -76,20 +76,20 @@ public class RoomOrderServiceTest {
 
 	@Transactional
 	private void deleteObjectList(List<RoomOrder> selectedObjects) {
-		for (int i = 0; i < selectedObjects.size(); i++) {
-			Long roomOrderId = selectedObjects.get(i).getId();
-			Long employeeId = selectedObjects.get(i).getEmployeeId();
-			Long bookingRequestId = selectedObjects.get(i).getBookingRequestId();
+		for (RoomOrder selectedObject : selectedObjects) {
+			Long roomOrderId = selectedObject.getId();
+			Long employeeId = selectedObject.getEmployeeId();
+			Long bookingRequestId = selectedObject.getBookingRequestId();
 			BookingRequest bookingRequest = new BookingRequest();
 			bookingRequest = (BookingRequest) commonService.get(new BookingRequest(), bookingRequestId);
-			Long clientId = bookingRequest.getClientId();
+			Long userId = bookingRequest.getUserId();
 			Long roomId = bookingRequest.getRoomId();
 			Room room = (Room) commonService.get(new Room(), roomId);
 			Long roomDetailsId = room.getRoomDetailsId();
 			commonService.delete(new RoomOrder(), roomOrderId);
 			commonService.delete(new Employee(), employeeId);
 			commonService.delete(new BookingRequest(), bookingRequestId);
-			commonService.delete(new Client(), clientId);
+			commonService.delete(new User(), userId);
 			commonService.delete(new Room(), roomId);
 			commonService.delete(new RoomDetails(), roomDetailsId);
 		}
@@ -114,14 +114,12 @@ public class RoomOrderServiceTest {
 		return room;
 	}
 
-	private Client prepareClientWithInsert() {
-		Client client = new Client();
-		client.setFirstName("Иван");
-		client.setLastName("Иванов");
-		client.setPhone("+375297800000");
-		client.setEmail("ivanov@gmail.com");
-		client.setId(clientService.save(client));
-		return client;
+	private User prepareUserWithInsert() {
+		User user = new User();
+		user.setName("Иван");
+		user.setEmail("ivanov@gmail.com");
+		user.setId(userService.save(user));
+		return user;
 	}
 
 	private Employee prepareEmployeeWithInsert() {
@@ -135,10 +133,10 @@ public class RoomOrderServiceTest {
 		return employee;
 	}
 
-	private BookingRequest prepareBookingRequestWithInsert(Long roomId, Long clientId) {
+	private BookingRequest prepareBookingRequestWithInsert(Long roomId, Long userId) {
 		BookingRequest bookingRequest = new BookingRequest();
 		bookingRequest.setRoomId(roomId);
-		bookingRequest.setClientId(clientId);
+		bookingRequest.setUserId(userId);
 		bookingRequest.setArrivalDate(dateConverter.stringToJavaUtilDateConverter("2017-01-01"));
 		bookingRequest.setDepartureDate(dateConverter.stringToJavaUtilDateConverter("2017-01-05"));
 		bookingRequest.setId(bookingRequestService.save(bookingRequest));
@@ -152,8 +150,8 @@ public class RoomOrderServiceTest {
 		Employee employee = prepareEmployeeWithInsert();
 		RoomDetails roomDetails = prepareRoomDetailsWithInsert();
 		Room room = prepareRoomWithInsert(roomDetails);
-		Client client = prepareClientWithInsert();
-		BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), client.getId());
+		User user = prepareUserWithInsert();
+		BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), user.getId());
 		RoomOrder roomOrder = new RoomOrder();
 		roomOrder.setBookingRequestId(bookingRequest.getId());
 		roomOrder.setEmployeeId(employee.getId());
@@ -170,7 +168,7 @@ public class RoomOrderServiceTest {
 		commonService.delete(recievedRoomOrder, recievedRoomOrder.getId());
 		commonService.delete(bookingRequest, bookingRequest.getId());
 		commonService.delete(employee, employee.getId());
-		commonService.delete(client, client.getId());
+		commonService.delete(user, user.getId());
 		commonService.delete(room, room.getId());
 		commonService.delete(roomDetails, roomDetails.getId());
 	}
@@ -182,8 +180,8 @@ public class RoomOrderServiceTest {
 		Employee employee = prepareEmployeeWithInsert();
 		RoomDetails roomDetails = prepareRoomDetailsWithInsert();
 		Room room = prepareRoomWithInsert(roomDetails);
-		Client client = prepareClientWithInsert();
-		BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), client.getId());
+		User user = prepareUserWithInsert();
+		BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), user.getId());
 		RoomOrder roomOrder = new RoomOrder();
 		roomOrder.setBookingRequestId(bookingRequest.getId());
 		roomOrder.setEmployeeId(employee.getId());
@@ -197,7 +195,7 @@ public class RoomOrderServiceTest {
 				commonService.delete(recievedRoomOrder, recievedRoomOrder.getId()));
 		commonService.delete(bookingRequest, bookingRequest.getId());
 		commonService.delete(employee, employee.getId());
-		commonService.delete(client, client.getId());
+		commonService.delete(user, user.getId());
 		commonService.delete(room, room.getId());
 		commonService.delete(roomDetails, roomDetails.getId());
 	}
@@ -209,8 +207,8 @@ public class RoomOrderServiceTest {
 		Employee employee = prepareEmployeeWithInsert();
 		RoomDetails roomDetails = prepareRoomDetailsWithInsert();
 		Room room = prepareRoomWithInsert(roomDetails);
-		Client client = prepareClientWithInsert();
-		BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), client.getId());
+		User user = prepareUserWithInsert();
+		BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), user.getId());
 		RoomOrder roomOrder = new RoomOrder();
 		roomOrder.setBookingRequestId(bookingRequest.getId());
 		roomOrder.setEmployeeId(employee.getId());
@@ -227,7 +225,7 @@ public class RoomOrderServiceTest {
 		commonService.delete(recievedRoomOrder, recievedRoomOrder.getId());
 		commonService.delete(bookingRequest, bookingRequest.getId());
 		commonService.delete(employee, employee.getId());
-		commonService.delete(client, client.getId());
+		commonService.delete(user, user.getId());
 		commonService.delete(room, room.getId());
 		commonService.delete(roomDetails, roomDetails.getId());
 	}
@@ -239,8 +237,8 @@ public class RoomOrderServiceTest {
 		Employee employee = prepareEmployeeWithInsert();
 		RoomDetails roomDetails = prepareRoomDetailsWithInsert();
 		Room room = prepareRoomWithInsert(roomDetails);
-		Client client = prepareClientWithInsert();
-		BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), client.getId());
+		User user = prepareUserWithInsert();
+		BookingRequest bookingRequest = prepareBookingRequestWithInsert(room.getId(), user.getId());
 		RoomOrder roomOrder = new RoomOrder();
 		roomOrder.setBookingRequestId(bookingRequest.getId());
 		roomOrder.setEmployeeId(employee.getId());
@@ -265,7 +263,7 @@ public class RoomOrderServiceTest {
 		commonService.delete(recievedRoomOrder, recievedRoomOrder.getId());
 		commonService.delete(bookingRequest, bookingRequest.getId());
 		commonService.delete(employee, employee.getId());
-		commonService.delete(client, client.getId());
+		commonService.delete(user, user.getId());
 		commonService.delete(room, room.getId());
 		commonService.delete(roomDetails, roomDetails.getId());
 	}

@@ -14,7 +14,7 @@ public class BookingRequestMapper implements RowMapper<BookingRequest> {
 		BookingRequest entity = new BookingRequest();
 		entity.setId(rs.getLong("id"));
 		entity.setRoomId(rs.getLong("room_id"));
-		entity.setClientId(rs.getLong("client_id"));
+		entity.setUserId(rs.getLong("user_id"));
 		entity.setArrivalDate(rs.getDate("arrival_date"));
 		entity.setDepartureDate(rs.getDate("departure_date"));
 		return entity;

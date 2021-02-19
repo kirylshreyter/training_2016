@@ -9,39 +9,39 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Repository;
 
-import com.kirylshreyter.training.hotel.daoapi.IClientDao;
-import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.daoapi.IUserDao;
+import com.kirylshreyter.training.hotel.datamodel.User;
 
 @Repository
-public class ClientDaoXmlImpl implements IClientDao {
+public class UserDaoXmlImpl implements IUserDao {
 
 	@Inject
 	private Common common;
 
 	@Override
-	public Long insert(Client entity) {
-		List<Client> allClients = readCollection(entity);
-		Long id = getNextId(allClients);
+	public Long insert(User entity) {
+		List<User> allUsers = readCollection(entity);
+		Long id = getNextId(allUsers);
 
-		allClients.add(entity);
+		allUsers.add(entity);
 
 		entity.setId(new Long(id));
 
-		writeCollection(allClients);
+		writeCollection(allUsers);
 		return id;
 	}
 
-	private List<Client> readCollection(Client entity) {
+	private List<User> readCollection(User entity) {
 		try {
 			common.intialize(entity);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return (List<Client>) Common.xstream.fromXML(Common.file);
+		return (List<User>) Common.xstream.fromXML(Common.file);
 	}
 
-	private void writeCollection(List<Client> newList) {
+	private void writeCollection(List<User> newList) {
 		try {
 			Common.xstream.toXML(newList, new FileOutputStream(Common.file));
 		} catch (FileNotFoundException e) {
@@ -49,12 +49,12 @@ public class ClientDaoXmlImpl implements IClientDao {
 		}
 	}
 
-	private long getNextId(List<Client> allClients) {
-		return allClients.isEmpty() ? 1l : allClients.get(allClients.size() - 1).getId() + 1;
+	private long getNextId(List<User> allUsers) {
+		return allUsers.isEmpty() ? 1l : allUsers.get(allUsers.size() - 1).getId() + 1;
 	}
 
 	@Override
-	public Boolean update(Client entity) {
+	public Boolean update(User entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}

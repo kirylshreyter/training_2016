@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kirylshreyter.training.hotel.daodb.util.DateConverter;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
-import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.datamodel.User;
 import com.kirylshreyter.training.hotel.services.BookingRequestService;
-import com.kirylshreyter.training.hotel.services.ClientService;
+import com.kirylshreyter.training.hotel.services.UserService;
 import com.kirylshreyter.training.hotel.services.RoomService;
 import com.kirylshreyter.training.hotel.web.model.BookingRequestModel;
-import com.kirylshreyter.training.hotel.web.model.ClientModel;
+import com.kirylshreyter.training.hotel.web.model.UserModel;
 
 @RestController
 @RequestMapping("/")
@@ -43,7 +43,7 @@ public class AvailableRoomController {
 	private DateConverter dateConverter;
 	
 	@Inject
-	private ClientService clientService;
+	private UserService userService;
 
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public
@@ -83,10 +83,10 @@ public class AvailableRoomController {
 	
 	/*@CrossOrigin(origins = "http://127.0.0.1:8888")
 	@RequestMapping(value="/insert",method = RequestMethod.POST)
-	public ResponseEntity<Long> insertClient(@RequestBody ClientModel clientModel,
+	public ResponseEntity<Long> insertUser(@RequestBody UserModel userModel,
 			@RequestHeader(value = "Origin") String origin) {
 		HttpHeaders headers = new HttpHeaders();
-		Long id = clientService.save((Client) this.conversionService.convert(clientModel, Object.class));
+		Long id = userService.save((User) this.conversionService.convert(userModel, Object.class));
 		headers.add("Access-Control-Allow-Origin", origin);
 		return new ResponseEntity<Long>(id, HttpStatus.CREATED);
 	}*/
@@ -97,16 +97,14 @@ public class AvailableRoomController {
 			@RequestHeader(value = "Origin") String origin) {
 		HttpHeaders headers = new HttpHeaders();
 		JSONObject jsonResult = new JSONObject(body);
-		ClientModel clientModel = new ClientModel();
-		clientModel.setId(jsonResult.getLong("id"));
-		clientModel.setFirstName(jsonResult.getString("firstName"));
-		clientModel.setLastName(jsonResult.getString("lastName"));
-		clientModel.setPhone(jsonResult.getString("phone"));
-		clientModel.setEmail(jsonResult.getString("email"));
-		Long clientId = clientService.save((Client) this.conversionService.convert(clientModel, Object.class));
+		UserModel userModel = new UserModel();
+		userModel.setId(jsonResult.getLong("id"));
+		userModel.setName(jsonResult.getString("firstName"));
+		userModel.setEmail(jsonResult.getString("email"));
+		Long userId = userService.save((User) this.conversionService.convert(userModel, Object.class));
 		BookingRequestModel bookingRequestModel = new BookingRequestModel();
 		bookingRequestModel.setId(jsonResult.getLong("id"));
-		bookingRequestModel.setClientId(clientId);
+		bookingRequestModel.setUserId(userId);
 		bookingRequestModel.setRoomId(jsonResult.getLong("roomId"));
 		bookingRequestModel.setArrivalDate(dateConverter.stringToJavaUtilDateConverter(jsonResult.getString("arrivalDate")));
 		bookingRequestModel.setDepartureDate(dateConverter.stringToJavaUtilDateConverter(jsonResult.getString("departureDate")));

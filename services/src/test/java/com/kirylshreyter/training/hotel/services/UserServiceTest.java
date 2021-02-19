@@ -13,53 +13,49 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.datamodel.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:service-context.xml")
-public class ClientServiceTest {
+public class UserServiceTest {
 
 	@Inject
-	private ClientService clientService;
+	private UserService userService;
 
 	@Inject
 	private CommonService commonService;
 
-	private Client prepareWithInsertEntity() {
-		Client client = new Client();
-		client.setFirstName("Иван");
-		client.setLastName("Иванов");
-		client.setPhone("+375297800000");
-		client.setEmail("ivanov@gmail.com");
-		client.setId(clientService.save(client));
-		return client;
+	private User prepareWithInsertEntity() {
+		User user = new User();
+		user.setName("Иван");
+		user.setEmail("ivanov@gmail.com");
+		user.setId(userService.save(user));
+		return user;
 	}
 
-	private Client prepareWithoutInsertEntity() {
-		Client client = new Client();
-		client.setFirstName("Иван");
-		client.setLastName("Иванов");
-		client.setPhone("+375297800000");
-		client.setEmail("ivanov@gmail.com");
-		return client;
+	private User prepareWithoutInsertEntity() {
+		User user = new User();
+		user.setName("Иван");
+		user.setEmail("ivanov@gmail.com");
+		return user;
 	}
 
 	@Transactional
-	private void deleteObjectList(List<Client> selectedObjects) {
+	private void deleteObjectList(List<User> selectedObjects) {
 		for (int i = 0; i < selectedObjects.size(); i++) {
 			commonService.delete(selectedObjects.get(i), selectedObjects.get(i).getId());
 		}
 	}
 
 	@Transactional
-	private List<Client> createObjectListWithInsert() {
-		List<Client> objectList = new ArrayList<Client>();
+	private List<User> createObjectListWithInsert() {
+		List<User> objectList = new ArrayList<User>();
 		for (int i = 0; i < 5; i++) {
-			Client client = new Client();
-			client = prepareWithoutInsertEntity();
-			Long id = clientService.save(client);
-			client.setId(id);
-			objectList.add(client);
+			User user = new User();
+			user = prepareWithoutInsertEntity();
+			Long id = userService.save(user);
+			user.setId(id);
+			objectList.add(user);
 		}
 		return objectList;
 	}
@@ -67,9 +63,9 @@ public class ClientServiceTest {
 	@Test
 	// @Ignore
 	public void getTest() {
-		Client insertedEntity = new Client();
+		User insertedEntity = new User();
 		insertedEntity = prepareWithInsertEntity();
-		Client entity = (Client) commonService.get(new Client(), insertedEntity.getId());
+		User entity = (User) commonService.get(new User(), insertedEntity.getId());
 		Assert.assertNotNull("Getted from DB object should not be null.", entity);
 		Assert.assertEquals("Id for inserted and selected objects should be the same.", insertedEntity.getId(),
 				entity.getId());
@@ -81,9 +77,9 @@ public class ClientServiceTest {
 	// @Ignore
 	@Transactional
 	public void deleteTest() {
-		Client insertedEntity = new Client();
+		User insertedEntity = new User();
 		insertedEntity = prepareWithInsertEntity();
-		Client entity = (Client) commonService.get(new Client(), insertedEntity.getId());
+		User entity = (User) commonService.get(new User(), insertedEntity.getId());
 		Assert.assertNotNull("Getted from DB object should not be null.", entity);
 		Assert.assertTrue("Object should be deleted, but it's not.",
 				commonService.delete(insertedEntity, insertedEntity.getId()));
@@ -93,11 +89,11 @@ public class ClientServiceTest {
 	// @Ignore
 	@Transactional
 	public void saveTest() {
-		Client nonInsertedEntity = new Client();
+		User nonInsertedEntity = new User();
 		nonInsertedEntity = prepareWithoutInsertEntity();
-		Long insertedEntityId = clientService.save(nonInsertedEntity);
-		Client insertedEntity = new Client();
-		insertedEntity = (Client) commonService.get(new Client(), insertedEntityId);
+		Long insertedEntityId = userService.save(nonInsertedEntity);
+		User insertedEntity = new User();
+		insertedEntity = (User) commonService.get(new User(), insertedEntityId);
 		insertedEntity.setId(insertedEntityId);
 		Assert.assertEquals("Id for inserted and selected objects should be the same.", nonInsertedEntity.getId(),
 				insertedEntity.getId());
@@ -110,20 +106,20 @@ public class ClientServiceTest {
 	// @Ignore
 	@Transactional
 	public void updateTest() {
-		Client insertedEntity = new Client();
+		User insertedEntity = new User();
 		insertedEntity = prepareWithInsertEntity();
-		Client gettedEntity = (Client) commonService.get(new Client(), insertedEntity.getId());
+		User gettedEntity = (User) commonService.get(new User(), insertedEntity.getId());
 		Assert.assertNotNull("Getted from DB object should not be null.", gettedEntity);
 		Assert.assertEquals("Id for inserted and selected object must be the same.", insertedEntity.getId(),
 				gettedEntity.getId());
 		Assert.assertEquals("Inserted object is not the object which getted from database.", insertedEntity,
 				gettedEntity);
-		Client newEntity = new Client();
+		User newEntity = new User();
 		newEntity = prepareWithoutInsertEntity();
 		Assert.assertNotEquals("Objects must have a differense.", newEntity, gettedEntity);
 		newEntity.setId(gettedEntity.getId());
-		Assert.assertTrue("Object in DB was not updated.", clientService.update(newEntity));
-		gettedEntity = (Client) commonService.get(new Client(), newEntity.getId());
+		Assert.assertTrue("Object in DB was not updated.", userService.update(newEntity));
+		gettedEntity = (User) commonService.get(new User(), newEntity.getId());
 		Assert.assertEquals("Objects must to be similar.", newEntity, gettedEntity);
 		commonService.delete(gettedEntity, gettedEntity.getId());
 
@@ -132,9 +128,9 @@ public class ClientServiceTest {
 	@Test
 	// @Ignore
 	public void getAllTest() {
-		List<Client> objectList = createObjectListWithInsert();
-		List<Client> selectedObjects = new ArrayList<Client>();
-		selectedObjects = commonService.getAll(new Client());
+		List<User> objectList = createObjectListWithInsert();
+		List<User> selectedObjects = new ArrayList<User>();
+		selectedObjects = commonService.getAll(new User());
 		Assert.assertEquals("List of selected objects is different from list of inserted objects.", objectList,
 				selectedObjects);
 		deleteObjectList(selectedObjects);
@@ -144,17 +140,17 @@ public class ClientServiceTest {
 	@Test
 	@Ignore
 	public void saveXmlTest() {
-		Client client = prepareWithoutInsertEntity();
-		client.setId(clientService.save(client));
+		User user = prepareWithoutInsertEntity();
+		user.setId(userService.save(user));
 
 	}
 
 	@Test
 	@Ignore
 	public void getXmlTest() {
-		Client client = (Client) commonService.get(new Client(), 1L);
-		Assert.assertNotNull("book for id=1 should not be null", client);
-		Assert.assertEquals(new Long(1), client.getId());
-		System.out.println(client.toString());
+		User user = (User) commonService.get(new User(), 1L);
+		Assert.assertNotNull("book for id=1 should not be null", user);
+		Assert.assertEquals(new Long(1), user.getId());
+		System.out.println(user.toString());
 	}
 }

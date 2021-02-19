@@ -21,10 +21,8 @@ public class RoomOrderWithAdditionalInfoMapper implements RowMapper<RoomOrderWit
 		entity.setId(rs.getLong("id"));
 		entity.setArrivalDate(rs.getDate("arrival_date"));
 		entity.setDepartureDate(rs.getDate("departure_date"));
-		entity.setClientFirstName(rs.getString("client_first_name"));
-		entity.setClientLastName(rs.getString("client_last_name"));
-		entity.setClientPhone(rs.getString("client_phone"));
-		entity.setClientEmail(rs.getString("client_email"));
+		entity.setUserName(rs.getString("user_name"));
+		entity.setUserEmail(rs.getString("user_email"));
 		entity.setEmployeeFirstName(rs.getString("employee_first_name"));
 		entity.setEmployeeLastName(rs.getString("employee_last_name"));
 		entity.setEmployeePhone(rs.getString("employee_phone"));

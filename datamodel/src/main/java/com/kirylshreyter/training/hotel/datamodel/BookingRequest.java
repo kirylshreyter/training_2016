@@ -12,7 +12,7 @@ public class BookingRequest extends AbstractModel {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
-		result = prime * result + ((clientId == null) ? 0 : clientId.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result + ((departureDate == null) ? 0 : departureDate.hashCode());
 		result = prime * result + ((roomId == null) ? 0 : roomId.hashCode());
 		return result;
@@ -35,10 +35,10 @@ public class BookingRequest extends AbstractModel {
 				return false;
 		} else if (!arrivalDate.equals(other.arrivalDate))
 			return false;
-		if (clientId == null) {
-			if (other.clientId != null)
+		if (userId == null) {
+			if (other.userId != null)
 				return false;
-		} else if (!clientId.equals(other.clientId))
+		} else if (!userId.equals(other.userId))
 			return false;
 		if (departureDate == null) {
 			if (other.departureDate != null)
@@ -54,7 +54,7 @@ public class BookingRequest extends AbstractModel {
 	}
 
 	private Long roomId;
-	private Long clientId;
+	private Long userId;
 	private Date arrivalDate;
 	private Date departureDate;
 
@@ -73,19 +73,12 @@ public class BookingRequest extends AbstractModel {
 		this.roomId = roomId;
 	}
 
-	/**
-	 * @return the clientId
-	 */
-	public Long getClientId() {
-		return clientId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	/**
-	 * @param clientId
-	 *            the clientId to set
-	 */
-	public void setClientId(Long clientId) {
-		this.clientId = clientId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	/**

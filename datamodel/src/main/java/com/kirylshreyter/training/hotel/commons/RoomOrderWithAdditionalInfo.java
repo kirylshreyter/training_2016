@@ -27,10 +27,8 @@ public class RoomOrderWithAdditionalInfo extends AbstractModel {
 	private Double costPerNight;
 	private String additionalInformation;
 	private String status;
-	private String ClientFirstName;
-	private String ClientLastName;
-	private String ClientPhone;
-	private String ClientEmail;
+	private String userName;
+	private String userEmail;
 	private Date arrivalDate;
 	private Date departureDate;
 	private String EmployeeFirstName;
@@ -130,64 +128,20 @@ public class RoomOrderWithAdditionalInfo extends AbstractModel {
 		this.status = status;
 	}
 
-	/**
-	 * @return the clientFirstName
-	 */
-	public String getClientFirstName() {
-		return ClientFirstName;
+	public String getUserName() {
+		return userName;
 	}
 
-	/**
-	 * @param clientFirstName
-	 *            the clientFirstName to set
-	 */
-	public void setClientFirstName(String clientFirstName) {
-		ClientFirstName = clientFirstName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	/**
-	 * @return the clientLastName
-	 */
-	public String getClientLastName() {
-		return ClientLastName;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	/**
-	 * @param clientLastName
-	 *            the clientLastName to set
-	 */
-	public void setClientLastName(String clientLastName) {
-		ClientLastName = clientLastName;
-	}
-
-	/**
-	 * @return the clientPhone
-	 */
-	public String getClientPhone() {
-		return ClientPhone;
-	}
-
-	/**
-	 * @param clientPhone
-	 *            the clientPhone to set
-	 */
-	public void setClientPhone(String clientPhone) {
-		ClientPhone = clientPhone;
-	}
-
-	/**
-	 * @return the clientEmail
-	 */
-	public String getClientEmail() {
-		return ClientEmail;
-	}
-
-	/**
-	 * @param clientEmail
-	 *            the clientEmail to set
-	 */
-	public void setClientEmail(String clientEmail) {
-		ClientEmail = clientEmail;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	/**

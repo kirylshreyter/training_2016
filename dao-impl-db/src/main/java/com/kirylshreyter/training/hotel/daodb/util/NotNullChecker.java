@@ -3,7 +3,6 @@ package com.kirylshreyter.training.hotel.daodb.util;
 import org.springframework.stereotype.Repository;
 
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
-import com.kirylshreyter.training.hotel.datamodel.Client;
 import com.kirylshreyter.training.hotel.datamodel.Employee;
 import com.kirylshreyter.training.hotel.datamodel.Room;
 import com.kirylshreyter.training.hotel.datamodel.RoomDetails;
@@ -11,26 +10,9 @@ import com.kirylshreyter.training.hotel.datamodel.RoomOrder;
 
 @Repository
 public class NotNullChecker {
-
-	public Boolean clientNotNullChecker(Client entity) {
-		if (entity.getFirstName() == null) {
-			throw new RuntimeException("Client's first name is not setted.");
-		}
-		if (entity.getLastName() == null) {
-			throw new RuntimeException("Client's last name is not setted.");
-		}
-		if (entity.getPhone() == null) {
-			throw new RuntimeException("Client's phone number is not setted.");
-		}
-		if (entity.getEmail() == null) {
-			throw new RuntimeException("Client's email is not setted.");
-		}
-		return true;
-	}
-
 	public Boolean BookingRequestNotNullChecker(BookingRequest entity) {
-		if (entity.getClientId() == null) {
-			throw new RuntimeException("Client Id is not setted.");
+		if (entity.getUserId() == null) {
+			throw new RuntimeException("User Id is not setted.");
 		}
 		if (entity.getRoomId() == null) {
 			throw new RuntimeException("Room Id is not setted.");
@@ -78,13 +60,13 @@ public class NotNullChecker {
 
 	public Boolean RoomDetailsNotNullChecker(RoomDetails entity) {
 		if (entity.getNumberOfPlaces() == null) {
-			throw new RuntimeException("Client's first name is not setted.");
+			throw new RuntimeException();
 		}
 		if (entity.getCostPerNight() == null) {
-			throw new RuntimeException("Client's last name is not setted.");
+			throw new RuntimeException();
 		}
 		if (entity.getRoomType() == null) {
-			throw new RuntimeException("Client's phone number is not setted.");
+			throw new RuntimeException();
 		}
 		return true;
 	}

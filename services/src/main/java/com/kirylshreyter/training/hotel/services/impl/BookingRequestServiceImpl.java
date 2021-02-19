@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.kirylshreyter.training.hotel.commons.BookingRequestWithAdditionalInfo;
 import com.kirylshreyter.training.hotel.daoapi.IBookingRequestDao;
-import com.kirylshreyter.training.hotel.daoapi.IClientDao;
+import com.kirylshreyter.training.hotel.daoapi.IUserDao;
 import com.kirylshreyter.training.hotel.datamodel.BookingRequest;
-import com.kirylshreyter.training.hotel.datamodel.Client;
+import com.kirylshreyter.training.hotel.datamodel.User;
 import com.kirylshreyter.training.hotel.services.BookingRequestService;
 
 @Service
@@ -18,7 +18,7 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 	private IBookingRequestDao iBookingRequestDao;
 	
 	@Inject
-	private IClientDao iClientDao;
+	private IUserDao iUserDao;
 
 	@Override
 	public Boolean update(BookingRequest bookingRequest) {
@@ -36,9 +36,9 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 	}
 
 	@Override
-	public Long save2steps(BookingRequest bookingRequest, Client client) {
-		Long clientId = iClientDao.insert(client);
-		bookingRequest.setClientId(clientId);
+	public Long save2steps(BookingRequest bookingRequest, User user) {
+		Long userId = iUserDao.insert(user);
+		bookingRequest.setUserId(userId);
 		return iBookingRequestDao.insert(bookingRequest);
 	}
 

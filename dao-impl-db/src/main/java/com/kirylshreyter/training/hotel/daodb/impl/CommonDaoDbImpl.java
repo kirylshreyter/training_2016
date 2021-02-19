@@ -95,7 +95,7 @@ public class CommonDaoDbImpl implements ICommon {
 			return false;
 		}
 		if (deletedRows == 0) {
-			String s = "%s was NOT deleted. Client with id = %s does not exist.";
+			String s = "%s was NOT deleted. User with id = %s does not exist.";
 			LOGGER.info(String.format(s, obj.getClass().getSimpleName(), id));
 			return false;
 		} else {

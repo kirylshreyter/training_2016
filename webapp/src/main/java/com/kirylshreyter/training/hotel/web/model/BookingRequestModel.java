@@ -5,7 +5,7 @@ import java.util.Date;
 public class BookingRequestModel extends ParentModel {
 
 	private Long roomId;
-	private Long clientId;
+	private Long userId;
 	private Date arrivalDate;
 	private Date departureDate;
 
@@ -24,19 +24,12 @@ public class BookingRequestModel extends ParentModel {
 		this.roomId = roomId;
 	}
 
-	/**
-	 * @return the clientId
-	 */
-	public Long getClientId() {
-		return clientId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	/**
-	 * @param clientId
-	 *            the clientId to set
-	 */
-	public void setClientId(Long clientId) {
-		this.clientId = clientId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	/**

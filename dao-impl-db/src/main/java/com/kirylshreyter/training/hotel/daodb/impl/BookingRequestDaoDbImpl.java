@@ -41,7 +41,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 			if (entity.getArrivalDate().getTime() > entity.getDepartureDate().getTime()) {
 				throw new DateTimeException("Arrival date cannot be more than departure date.");
 			} else {
-				final String INSERT_SQL = "INSERT INTO booking_request (room_id,client_id,arrival_date,departure_date) VALUES (?,?,?,?)";
+				final String INSERT_SQL = "INSERT INTO booking_request (room_id,user_id,arrival_date,departure_date) VALUES (?,?,?,?)";
 
 				KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -50,7 +50,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 					public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 						PreparedStatement ps = con.prepareStatement(INSERT_SQL, new String[] { "id" });
 						ps.setLong(1, entity.getRoomId());
-						ps.setLong(2, entity.getClientId());
+						ps.setLong(2, entity.getUserId());
 						ps.setDate(3, dateConverter.javaUtilDateToJavaSqlDateConverter(entity.getArrivalDate()));
 						ps.setDate(4, dateConverter.javaUtilDateToJavaSqlDateConverter(entity.getDepartureDate()));
 						return ps;
@@ -73,8 +73,8 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 		LOGGER.info("Trying to update booking request with id = {} in table booking_request.", entity.getId());
 		if (notNullChecker.BookingRequestNotNullChecker(entity)) {
 			jdbcTemplate.update(
-					"UPDATE booking_request SET room_id = ?, client_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
-					entity.getRoomId(), entity.getClientId(), entity.getArrivalDate(), entity.getDepartureDate(),
+					"UPDATE booking_request SET room_id = ?, user_id = ?, arrival_date = ?, departure_date = ?  where id = ?",
+					entity.getRoomId(), entity.getUserId(), entity.getArrivalDate(), entity.getDepartureDate(),
 					entity.getId());
 			LOGGER.info("Booking Request was updated, id = {}", entity.getId());
 			return true;
@@ -88,7 +88,7 @@ public class BookingRequestDaoDbImpl implements IBookingRequestDao {
 	public BookingRequestWithAdditionalInfo getWithAdditionalInfo(Long id) {
 		BookingRequestWithAdditionalInfo bookingRequestWithAdditionalInfo = new BookingRequestWithAdditionalInfo();
 		bookingRequestWithAdditionalInfo = jdbcTemplate.queryForObject(
-				"SELECT br.id,br.arrival_date,br.departure_date,r.number,r.status,rd.room_type,rd.number_of_places,rd.cost_per_night,rd.additional_information,c.first_name,c.last_name,c.phone,c.email FROM booking_request br JOIN room r ON (br.room_id=r.id) JOIN client c ON (br.client_id=c.id) JOIN room_details rd ON (r.room_details_id=rd.id) WHERE br.id=?",
+				"SELECT br.id,br.arrival_date,br.departure_date,r.number,r.status,rd.room_type,rd.number_of_places,rd.cost_per_night,rd.additional_information,c.first_name,c.last_name,c.phone,c.email FROM booking_request br JOIN room r ON (br.room_id=r.id) JOIN users c ON (br.user_id=c.id) JOIN room_details rd ON (r.room_details_id=rd.id) WHERE br.id=?",
 				new Object[] { id }, new BookingRequestWithAdditionalInfoMapper());
 		return bookingRequestWithAdditionalInfo;
 	}
