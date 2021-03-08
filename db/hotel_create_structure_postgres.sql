@@ -3,6 +3,7 @@ CREATE TABLE "users" (
 	"email" varchar(255) NOT NULL,
 	"encrypted_password" varchar(255) NOT NULL,
 	"name" varchar(255) NOT NULL,
+	"enabled" BOOLEAN NOT NULL DEFAULT 'FALSE',
 	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

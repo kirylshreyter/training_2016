@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.kirylshreyter.hotels-reservation</groupId>
+        <groupId>com.kirylshreyter.hotel</groupId>
         <artifactId>parent-project</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -12,15 +12,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.kirylshreyter.hotels-reservation</groupId>
+            <groupId>com.kirylshreyter.hotel</groupId>
             <artifactId>dao-impl-db</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.kirylshreyter.hotels-reservation</groupId>
+            <groupId>com.kirylshreyter.hotel</groupId>
             <artifactId>dao-impl-xml</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.kirylshreyter.hotels-reservation</groupId>
+            <groupId>com.kirylshreyter.hotel</groupId>
             <artifactId>dao-api</artifactId>
         </dependency>
 
@@ -71,6 +71,20 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
         </dependency>
     </dependencies>
 </project>
